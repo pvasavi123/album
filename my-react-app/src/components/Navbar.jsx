@@ -20,12 +20,15 @@ export const Navbar = ({ onPlayMovie, activeSection, onNavigate, isAudioPlaying,
     <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-4">
         <nav className="glass-gold rounded-full px-6 py-3.5 flex items-center justify-between shadow-gold-subtle border border-[#D4AF37]/25">
-          {/* Brand Wordmark */}
+          {/* Brand Wordmark with subtle love heart motif */}
           <div 
             onClick={() => handleLinkClick('timeline')}
-            className="flex items-center space-x-3 cursor-pointer group"
+            className="flex items-center space-x-2.5 cursor-pointer group"
           >
-            <span className="font-cinzel text-xl sm:text-2xl font-bold tracking-[0.25em] text-white group-hover:text-[#F3E5AB] transition-colors">
+            <div className="w-6 h-6 rounded-full bg-[#D4AF37]/15 border border-[#D4AF37]/40 flex items-center justify-center group-hover:scale-110 transition-transform shadow-[0_0_10px_rgba(212,175,55,0.3)]">
+              <span className="text-[#D4AF37] text-xs animate-heart-float">♥</span>
+            </div>
+            <span className="font-cinzel text-lg sm:text-2xl font-bold tracking-[0.2em] sm:tracking-[0.25em] text-white group-hover:text-[#F3E5AB] transition-colors">
               EVERLASTING
             </span>
           </div>

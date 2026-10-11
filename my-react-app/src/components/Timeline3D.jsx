@@ -365,7 +365,7 @@ export const Timeline3D = ({ chaptersList, onSelectChapter, onAddMemory, onPlayM
       {/* ========================================================= */}
       <div className="relative z-20 mx-auto max-w-7xl w-full px-4 sm:px-6 pt-4 sm:pt-6 flex flex-wrap items-center justify-between gap-3">
         {/* Active Chapter Index Counter */}
-        <div className="flex items-center space-x-2.5 sm:space-x-3">
+        <div className="flex items-center space-x-2 sm:space-x-3">
           <div className="flex items-baseline space-x-1 font-cinzel">
             <span className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-[#D4AF37] tracking-wider">
               {String(activeIndex + 1).padStart(2, '0')}
@@ -376,9 +376,12 @@ export const Timeline3D = ({ chaptersList, onSelectChapter, onAddMemory, onPlayM
             </span>
           </div>
           <div className="h-4 w-[1px] bg-[#D4AF37]/30" />
-          <span className="text-[11px] sm:text-xs uppercase tracking-[0.16em] sm:tracking-[0.2em] text-[#F3E5AB]/80 font-sans font-medium line-clamp-1">
-            {activeChapter.title.split('–')[0]?.trim()}
-          </span>
+          <div className="flex items-center space-x-1">
+            <span className="text-[11px] sm:text-xs uppercase tracking-[0.16em] sm:tracking-[0.2em] text-[#F3E5AB]/80 font-sans font-medium line-clamp-1">
+              {activeChapter.title.split('–')[0]?.trim()}
+            </span>
+            <span className="text-[#D4AF37] text-[10px] animate-heart-float">♥</span>
+          </div>
         </div>
 
         {/* Action Buttons: Add Memory & Play Cinematic Reel */}
@@ -407,10 +410,10 @@ export const Timeline3D = ({ chaptersList, onSelectChapter, onAddMemory, onPlayM
       {/* ========================================================= */}
       {/* 3D Spatial Carousel Stage */}
       {/* ========================================================= */}
-      <div className="relative z-10 w-full flex-1 flex items-center justify-center overflow-visible py-2 sm:py-6 px-3">
+      <div className="relative z-10 w-full flex-1 flex items-center justify-center overflow-visible py-2 sm:py-6 px-2 sm:px-3">
         <div
           ref={cardsWrapperRef}
-          className="relative w-[280px] xs:w-[320px] sm:w-[420px] md:w-[480px] lg:w-[500px] h-[390px] xs:h-[420px] sm:h-[460px] md:h-[490px] flex items-center justify-center"
+          className="relative w-[290px] xs:w-[330px] sm:w-[420px] md:w-[480px] lg:w-[500px] h-[400px] xs:h-[430px] sm:h-[460px] md:h-[490px] flex items-center justify-center max-w-[94vw]"
           style={{ transformStyle: 'preserve-3d' }}
         >
           {chaptersList.map((chapter, idx) => {
@@ -435,26 +438,29 @@ export const Timeline3D = ({ chaptersList, onSelectChapter, onAddMemory, onPlayM
                 {/* Gold Highlight top edge */}
                 <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent opacity-80" />
 
-                {/* Card Header: Year, Date, Badge */}
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-2">
-                    <span className="font-cinzel text-lg sm:text-xl md:text-2xl font-bold text-[#D4AF37] tracking-wider">
+                {/* Card Header: Year, Date, Badge & Subtle Love Icon */}
+                <div className="flex items-center justify-between gap-2">
+                  <div className="flex items-center space-x-1.5 sm:space-x-2 min-w-0">
+                    <span className="font-cinzel text-base sm:text-xl md:text-2xl font-bold text-[#D4AF37] tracking-wider shrink-0">
                       {chapter.year}
                     </span>
-                    <span className="h-3 w-[1px] bg-[#D4AF37]/40" />
-                    <div className="flex items-center text-[10px] sm:text-[11px] text-[#F3E5AB]/70 tracking-widest uppercase font-sans">
-                      <CalendarIcon className="w-3 sm:w-3.5 h-3 sm:h-3.5 mr-1 text-[#D4AF37]" />
-                      <span className="truncate max-w-[110px] sm:max-w-none">{chapter.date}</span>
+                    <span className="h-3 w-[1px] bg-[#D4AF37]/40 shrink-0" />
+                    <div className="flex items-center text-[9px] sm:text-[11px] text-[#F3E5AB]/70 tracking-widest uppercase font-sans truncate">
+                      <CalendarIcon className="w-2.5 sm:w-3.5 h-2.5 sm:h-3.5 mr-1 text-[#D4AF37] shrink-0" />
+                      <span className="truncate">{chapter.date}</span>
                     </div>
                   </div>
 
-                  <span className="px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full text-[9px] sm:text-[10px] font-sans font-semibold uppercase tracking-widest bg-white/5 border border-[#D4AF37]/30 text-[#F3E5AB]">
-                    {chapter.badge}
-                  </span>
+                  <div className="flex items-center space-x-1 shrink-0">
+                    <span className="px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-[8px] sm:text-[10px] font-sans font-semibold uppercase tracking-widest bg-white/5 border border-[#D4AF37]/35 text-[#F3E5AB] whitespace-nowrap">
+                      {chapter.badge}
+                    </span>
+                    <span className="text-[#D4AF37]/70 text-[10px] hidden xs:inline animate-heart-float">♥</span>
+                  </div>
                 </div>
 
                 {/* Card Media Preview (HTML5 Looping Video) */}
-                <div className="relative w-full h-44 sm:h-52 md:h-60 rounded-2xl overflow-hidden border border-white/10 group-hover:border-[#D4AF37]/50 transition-colors my-2 sm:my-3 bg-black">
+                <div className="relative w-full h-40 xs:h-44 sm:h-52 md:h-60 rounded-2xl overflow-hidden border border-white/10 group-hover:border-[#D4AF37]/50 transition-colors my-1.5 sm:my-3 bg-black">
                   {chapter.videoUrl ? (
                     <video
                       ref={(el) => {
@@ -480,8 +486,8 @@ export const Timeline3D = ({ chaptersList, onSelectChapter, onAddMemory, onPlayM
 
                   {/* Play / Expand Button Node */}
                   <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                    <div className="w-11 sm:w-13 h-11 sm:h-13 rounded-full bg-black/60 backdrop-blur-md border border-[#D4AF37] flex items-center justify-center text-[#D4AF37] shadow-[0_0_20px_rgba(212,175,55,0.6)] group-hover:scale-110 group-hover:bg-[#D4AF37] group-hover:text-black transition-all">
-                      <PlayIcon className="w-5 sm:w-6 h-5 sm:h-6 ml-0.5" />
+                    <div className="w-10 sm:w-13 h-10 sm:h-13 rounded-full bg-black/60 backdrop-blur-md border border-[#D4AF37] flex items-center justify-center text-[#D4AF37] shadow-[0_0_20px_rgba(212,175,55,0.6)] group-hover:scale-110 group-hover:bg-[#D4AF37] group-hover:text-black transition-all">
+                      <PlayIcon className="w-4 sm:w-6 h-4 sm:h-6 ml-0.5" />
                     </div>
                   </div>
 
@@ -493,7 +499,7 @@ export const Timeline3D = ({ chaptersList, onSelectChapter, onAddMemory, onPlayM
                         e.stopPropagation();
                         setUnmutedCardId((prev) => (prev === chapter.id ? null : chapter.id));
                       }}
-                      className="absolute top-2.5 right-2.5 z-20 p-2 rounded-full bg-black/70 backdrop-blur-md border border-[#D4AF37]/60 text-[#D4AF37] hover:bg-[#D4AF37] hover:text-black transition-all shadow-md group/btn"
+                      className="absolute top-2 right-2 z-20 p-1.5 sm:p-2 rounded-full bg-black/75 backdrop-blur-md border border-[#D4AF37]/70 text-[#D4AF37] hover:bg-[#D4AF37] hover:text-black transition-all shadow-lg group/btn"
                       title={unmutedCardId === chapter.id ? "Mute video audio" : "Play video audio"}
                     >
                       {unmutedCardId === chapter.id ? (
@@ -505,9 +511,9 @@ export const Timeline3D = ({ chaptersList, onSelectChapter, onAddMemory, onPlayM
                   )}
 
                   {/* Location Tag */}
-                  <div className="absolute bottom-2 left-2 sm:bottom-2.5 sm:left-2.5 flex items-center space-x-1 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-lg bg-black/60 backdrop-blur-md text-[9px] sm:text-[10px] text-[#F3E5AB] border border-white/10 z-10 pointer-events-none">
-                    <MapPinIcon className="w-2.5 sm:w-3 h-2.5 sm:h-3 text-[#D4AF37]" />
-                    <span className="truncate max-w-[140px] sm:max-w-none">{chapter.location}</span>
+                  <div className="absolute bottom-2 left-2 sm:bottom-2.5 sm:left-2.5 flex items-center space-x-1 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-lg bg-black/60 backdrop-blur-md text-[9px] sm:text-[10px] text-[#F3E5AB] border border-white/10 z-10 pointer-events-none max-w-[80%]">
+                    <MapPinIcon className="w-2.5 sm:w-3 h-2.5 sm:h-3 text-[#D4AF37] shrink-0" />
+                    <span className="truncate">{chapter.location}</span>
                   </div>
                 </div>
 
@@ -543,7 +549,7 @@ export const Timeline3D = ({ chaptersList, onSelectChapter, onAddMemory, onPlayM
       {/* ========================================================= */}
       {/* Floating Keepsakes & Navigation Controls Footer */}
       {/* ========================================================= */}
-      <div className="relative z-20 mx-auto max-w-7xl w-full px-4 sm:px-6 flex flex-row items-center justify-between gap-2 sm:gap-4 flex-wrap sm:flex-nowrap">
+      <div className="relative z-20 mx-auto max-w-7xl w-full px-3 sm:px-6 flex flex-row items-center justify-between gap-2 sm:gap-4 flex-wrap sm:flex-nowrap pb-2">
         
         {/* Left: Floating "Play Wedding Vows" audio player pill */}
         <div className="order-1 flex items-center">
@@ -554,19 +560,22 @@ export const Timeline3D = ({ chaptersList, onSelectChapter, onAddMemory, onPlayM
               const el = document.getElementById('vault');
               if (el) el.scrollIntoView({ behavior: 'smooth' });
             }}
-            className="flex items-center space-x-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full glass-gold border border-[#D4AF37]/50 text-[#F3E5AB] text-[10px] sm:text-xs font-sans tracking-wide hover:border-[#D4AF37] hover:bg-[#D4AF37]/15 transition-all shadow-[0_0_15px_rgba(212,175,55,0.2)] group"
+            className="flex items-center space-x-1.5 sm:space-x-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full glass-gold border border-[#D4AF37]/50 text-[#F3E5AB] text-[10px] sm:text-xs font-sans tracking-wide hover:border-[#D4AF37] hover:bg-[#D4AF37]/15 transition-all shadow-[0_0_15px_rgba(212,175,55,0.2)] group"
           >
             <div className="w-4 sm:w-6 h-4 sm:h-6 rounded-full bg-[#D4AF37]/20 flex items-center justify-center space-x-[2px] px-0.5 text-[#D4AF37]">
               <span className="inline-block w-[1.5px] sm:w-[2px] h-2.5 sm:h-3.5 bg-[#D4AF37] rounded-full animate-pulse" />
               <span className="inline-block w-[1.5px] sm:w-[2px] h-1.5 sm:h-2 bg-[#D4AF37] rounded-full animate-ping" />
               <span className="inline-block w-[1.5px] sm:w-[2px] h-3 sm:h-4 bg-[#D4AF37] rounded-full animate-pulse" />
             </div>
-            <span className="font-medium whitespace-nowrap">Play Wedding Vows</span>
+            <span className="font-medium whitespace-nowrap flex items-center space-x-1">
+              <span>Play Vows</span>
+              <span className="text-[#D4AF37] text-[10px] hidden xs:inline animate-heart-float">♥</span>
+            </span>
           </button>
         </div>
 
         {/* Center: Interactive Stepper & Timeline Progress Scrub */}
-        <div className="order-3 sm:order-2 w-full sm:w-auto flex justify-center items-center space-x-2 sm:space-x-3 mt-2 sm:mt-0">
+        <div className="order-3 sm:order-2 w-full sm:w-auto flex justify-center items-center space-x-2 sm:space-x-3 mt-1 sm:mt-0">
           <button
             onClick={() => jumpTo(activeIndex - 1)}
             disabled={activeIndex === 0}
@@ -618,8 +627,9 @@ export const Timeline3D = ({ chaptersList, onSelectChapter, onAddMemory, onPlayM
             <canvas ref={ringCanvasRef} className="w-full h-full" />
           </div>
           <div className="text-left pr-1 sm:pr-2">
-            <span className="block text-[10px] sm:text-xs font-serif font-bold text-white group-hover:text-[#F3E5AB] transition-colors whitespace-nowrap">
-              3D Vault
+            <span className="flex items-center space-x-1 text-[10px] sm:text-xs font-serif font-bold text-white group-hover:text-[#F3E5AB] transition-colors whitespace-nowrap">
+              <span>3D Vault</span>
+              <span className="text-[#D4AF37] text-[10px] animate-heart-float">♥</span>
             </span>
             <span className="hidden xs:block text-[9px] sm:text-[10px] text-[#F3E5AB]/70 font-sans mt-0.5 whitespace-nowrap">
               Solitaire Ring
