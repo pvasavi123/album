@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Our Forever Journey — Interactive 3D Wedding Video Archive</title>
+  <title>Rahul &amp; Sneha: Our Forever Journey</title>
 
   <!-- Google Fonts: Playfair Display & Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -17,7 +17,7 @@
       theme: {
         extend: {
           colors: {
-            midnight: '#080911',
+            midnight: '#07080E',
             gold: {
               300: '#F6E05E',
               400: '#ECC94B',
@@ -34,7 +34,7 @@
     }
   </script>
 
-  <!-- GSAP & Three.js Libraries -->
+  <!-- GSAP 3 & Three.js CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
@@ -45,41 +45,42 @@
       -webkit-user-select: none;
     }
     body {
-      background-color: #080911;
-      color: #F7FAFC;
+      background-color: #07080E;
+      color: #FFFFFF;
       font-family: 'Plus Jakarta Sans', sans-serif;
       overflow: hidden;
       margin: 0;
       padding: 0;
     }
 
-    /* Glassmorphism Styles */
+    /* Ultra-luxurious Glassmorphism */
     .glass-card {
-      background: rgba(14, 16, 26, 0.72);
+      background: rgba(13, 15, 25, 0.75);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border: 1px solid rgba(212, 175, 55, 0.28);
-      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.65), inset 0 0 15px rgba(212, 175, 55, 0.05);
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.7), inset 0 0 15px rgba(212, 175, 55, 0.05);
     }
 
+    /* Active Center Video Card Glowing Gold Border */
     .active-gold-glow {
       border-color: #D4AF37 !important;
-      box-shadow: 0 0 45px rgba(212, 175, 55, 0.45), 0 25px 60px rgba(0, 0, 0, 0.85) !important;
+      box-shadow: 0 0 50px rgba(212, 175, 55, 0.5), 0 25px 65px rgba(0, 0, 0, 0.85) !important;
     }
 
-    .text-gold-gradient {
+    .gold-gradient-text {
       background: linear-gradient(135deg, #FFF6D6 0%, #D4AF37 50%, #B7950B 100%);
       -webkit-background-clip: text;
       background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
-    /* Custom Scrollbar for Modal */
+    /* Custom Scrollbar for Modal Story */
     ::-webkit-scrollbar {
       width: 5px;
     }
     ::-webkit-scrollbar-track {
-      background: #080911;
+      background: #07080E;
     }
     ::-webkit-scrollbar-thumb {
       background: #D4AF37;
@@ -89,60 +90,62 @@
 </head>
 <body class="relative w-screen h-screen overflow-hidden flex flex-col justify-between">
 
-  <!-- Background Floating Gold Dust Particles Canvas -->
+  <!-- Background Floating Gold Stardust Particle Canvas -->
   <canvas id="particleCanvas" class="absolute inset-0 pointer-events-none z-0"></canvas>
 
-  <!-- Atmospheric Background Glow -->
-  <div class="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_50%_45%,rgba(212,175,55,0.07)_0%,transparent_65%)] z-0"></div>
-  <div class="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-[#080911] to-transparent pointer-events-none z-10"></div>
-  <div class="absolute bottom-0 left-0 right-0 h-36 bg-gradient-to-t from-[#080911] via-[#080911]/80 to-transparent pointer-events-none z-10"></div>
+  <!-- Atmospheric Glow Overlays -->
+  <div class="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_50%_45%,rgba(212,175,55,0.08)_0%,transparent_65%)] z-0"></div>
+  <div class="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-[#07080E] to-transparent pointer-events-none z-10"></div>
+  <div class="absolute bottom-0 left-0 right-0 h-36 bg-gradient-to-t from-[#07080E] via-[#07080E]/80 to-transparent pointer-events-none z-10"></div>
 
   <!-- ========================================== -->
-  <!-- 1. TOP NAVIGATION -->
+  <!-- 1. TOP HEADER -->
   <!-- ========================================== -->
-  <header class="relative z-30 mx-auto max-w-7xl w-full px-4 sm:px-6 pt-5 sm:pt-6 flex items-center justify-between">
-    <!-- Brand Title -->
-    <div class="flex items-center space-x-3">
-      <div class="w-8 h-8 rounded-full border border-[#D4AF37]/50 flex items-center justify-center bg-[#D4AF37]/10">
-        <svg class="w-4 h-4 text-[#D4AF37]" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-        </svg>
+  <header class="relative z-30 mx-auto max-w-7xl w-full px-4 sm:px-6 pt-5 sm:pt-6 flex flex-wrap items-center justify-between gap-3">
+    <!-- Couple Monogram & Names -->
+    <div class="flex items-center space-x-3.5">
+      <div class="w-10 h-10 rounded-full border border-[#D4AF37] flex items-center justify-center bg-[#D4AF37]/15 shadow-[0_0_15px_rgba(212,175,55,0.25)]">
+        <span class="font-serif font-bold text-sm tracking-wider text-[#F3E5AB]">R&amp;S</span>
       </div>
       <div>
-        <h1 class="font-serif text-lg sm:text-2xl font-bold tracking-wide text-gold-gradient">
-          Our Forever Journey
-        </h1>
-        <p class="text-[10px] sm:text-xs text-[#E2E8F0]/60 font-sans tracking-wider uppercase">
-          A Married Couple's Video Archive
+        <div class="flex items-center space-x-2">
+          <h1 class="font-serif text-lg sm:text-2xl font-bold tracking-wide gold-gradient-text">
+            Rahul &amp; Sneha
+          </h1>
+          <span class="text-xs text-[#D4AF37]/60 hidden xs:inline">•</span>
+          <span class="text-xs font-serif italic text-[#F3E5AB]/90 hidden xs:inline">Our Forever Journey</span>
+        </div>
+        <p class="text-[10px] sm:text-xs text-[#F3E5AB]/70 font-sans tracking-wider uppercase mt-0.5">
+          Together since 2018 • Married Nov 24, 2024
         </p>
       </div>
     </div>
 
-    <!-- Active Memory Counter & Controls -->
-    <div class="flex items-center space-x-3 sm:space-x-4">
-      <!-- Memory Counter -->
-      <div class="hidden sm:flex items-center space-x-2 px-3 py-1.5 rounded-full glass-card text-xs">
+    <!-- Right Header Actions -->
+    <div class="flex items-center space-x-2.5 sm:space-x-3.5">
+      <!-- Active Memory Counter -->
+      <div class="hidden md:flex items-center space-x-2 px-3.5 py-1.5 rounded-full glass-card text-xs">
         <span class="w-2 h-2 rounded-full bg-[#D4AF37] animate-pulse"></span>
-        <span id="counterText" class="font-medium text-[#F7FAFC]">Memory 3 of 7</span>
+        <span id="counterText" class="font-medium text-[#F3E5AB]">Memory 4 of 7</span>
       </div>
 
-      <!-- Add Memory Button -->
+      <!-- Add Our Memory Button -->
       <button 
         id="openAddModalBtn"
-        class="px-3.5 sm:px-4 py-1.5 rounded-full glass-card border border-[#D4AF37]/40 text-[#F7FAFC] text-xs font-sans font-medium tracking-wider hover:border-[#D4AF37] hover:bg-[#D4AF37]/15 transition-all flex items-center space-x-1.5"
+        class="px-3.5 sm:px-4 py-1.5 rounded-full glass-card border border-[#D4AF37]/40 text-[#F3E5AB] text-xs font-sans font-medium tracking-wider hover:border-[#D4AF37] hover:bg-[#D4AF37]/15 hover:text-white transition-all flex items-center space-x-1.5"
       >
         <svg class="w-3.5 h-3.5 text-[#D4AF37]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M12 5v14M5 12h14"/>
         </svg>
-        <span>Add Memory</span>
+        <span>Add Our Memory</span>
       </button>
 
-      <!-- Watch Full Movie CTA -->
+      <!-- Play Full Wedding Film CTA Button -->
       <button 
         id="watchMovieBtn"
         class="px-4 sm:px-5 py-1.5 rounded-full bg-gradient-to-r from-[#F6E05E] to-[#D4AF37] text-black text-xs font-sans font-semibold tracking-wider hover:shadow-[0_0_20px_rgba(212,175,55,0.6)] hover:scale-105 active:scale-95 transition-all"
       >
-        Watch Full Movie
+        Play Wedding Film
       </button>
     </div>
   </header>
@@ -162,28 +165,29 @@
   </main>
 
   <!-- ========================================== -->
-  <!-- 3. BOTTOM KEEPSAKES & STEPPER FOOTER -->
+  <!-- 3. BOTTOM CONTROLS & THREE.JS RING KEEPSAKE -->
   <!-- ========================================== -->
   <footer class="relative z-30 mx-auto max-w-7xl w-full px-4 sm:px-6 pb-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-    <!-- Left: Floating Audio Keepsake -->
+    <!-- Left: Ceremony Audio Player Pill -->
     <div class="flex items-center space-x-3">
       <button 
         id="audioVowsBtn"
-        class="flex items-center space-x-2.5 px-4 py-2 rounded-full glass-card border border-[#D4AF37]/50 text-xs text-[#F7FAFC] hover:border-[#D4AF37] hover:bg-[#D4AF37]/15 transition-all shadow-[0_0_15px_rgba(212,175,55,0.2)]"
+        class="flex items-center space-x-2.5 px-4 py-2 rounded-full glass-card border border-[#D4AF37]/50 text-xs text-[#F3E5AB] hover:border-[#D4AF37] hover:bg-[#D4AF37]/15 transition-all shadow-[0_0_15px_rgba(212,175,55,0.2)]"
       >
+        <!-- Animated Audio Waveform -->
         <div class="w-6 h-6 rounded-full bg-[#D4AF37]/20 flex items-center justify-center space-x-[2px] px-1 text-[#D4AF37]">
           <span class="inline-block w-[2px] h-3.5 bg-[#D4AF37] rounded-full animate-pulse"></span>
           <span class="inline-block w-[2px] h-2 bg-[#D4AF37] rounded-full animate-ping"></span>
           <span class="inline-block w-[2px] h-4 bg-[#D4AF37] rounded-full animate-pulse"></span>
           <span class="inline-block w-[2px] h-2.5 bg-[#D4AF37] rounded-full animate-bounce"></span>
         </div>
-        <span class="font-medium">Listen to Our Wedding Vows</span>
+        <span class="font-medium">Listen to our wedding vows</span>
       </button>
     </div>
 
     <!-- Center: Interactive Memory Stepper Dots -->
     <div class="flex items-center space-x-3">
-      <button id="prevBtn" class="p-2 rounded-full glass-card border border-[#D4AF37]/40 text-[#F7FAFC] hover:bg-[#D4AF37]/20 transition-all">
+      <button id="prevBtn" class="p-2 rounded-full glass-card border border-[#D4AF37]/40 text-[#F3E5AB] hover:bg-[#D4AF37]/20 transition-all">
         <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M15 18l-6-6 6-6"/>
         </svg>
@@ -193,25 +197,25 @@
         <!-- Dots injected via JS -->
       </div>
 
-      <button id="nextBtn" class="p-2 rounded-full glass-card border border-[#D4AF37]/40 text-[#F7FAFC] hover:bg-[#D4AF37]/20 transition-all">
+      <button id="nextBtn" class="p-2 rounded-full glass-card border border-[#D4AF37]/40 text-[#F3E5AB] hover:bg-[#D4AF37]/20 transition-all">
         <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M9 18l6-6-6-6"/>
         </svg>
       </button>
     </div>
 
-    <!-- Right: 3D Wedding Ring Vault (Three.js 360° Rotatable) -->
+    <!-- Right: 3D Wedding Ring Keepsake (Three.js 360° Rotatable) -->
     <div 
       id="ringVaultWidget"
-      title="Click and drag to rotate our wedding ring in 3D"
+      title="Click and drag to rotate Rahul & Sneha's wedding ring in 3D"
       class="hidden sm:flex items-center space-x-3 p-2 rounded-2xl glass-card border border-[#D4AF37]/40 hover:border-[#D4AF37] cursor-pointer transition-all shadow-lg"
     >
-      <div class="w-13 h-13 w-[52px] h-[52px] relative rounded-xl overflow-hidden bg-gradient-to-b from-white/5 to-transparent flex items-center justify-center">
+      <div class="w-[52px] h-[52px] relative rounded-xl overflow-hidden bg-gradient-to-b from-white/5 to-transparent flex items-center justify-center">
         <canvas id="ringCanvas" class="w-full h-full"></canvas>
       </div>
       <div class="text-left pr-2">
-        <span class="block text-xs font-serif font-bold text-white">3D Wedding Ring</span>
-        <span class="block text-[10px] text-[#E2E8F0]/70 font-sans">Drag to rotate 360°</span>
+        <span class="block text-xs font-serif font-bold text-white">Our 3D Wedding Ring</span>
+        <span class="block text-[10px] text-[#F3E5AB]/70 font-sans">Drag to rotate 360°</span>
       </div>
     </div>
   </footer>
@@ -222,11 +226,11 @@
   <div id="videoModal" class="fixed inset-0 z-50 hidden items-center justify-center p-3 sm:p-6 bg-black/90 backdrop-blur-2xl">
     <div class="relative w-full max-w-5xl rounded-3xl overflow-hidden glass-card border border-[#D4AF37]/50 shadow-2xl flex flex-col">
       <!-- Modal Top Bar -->
-      <div class="flex items-center justify-between px-6 py-4 border-b border-[#D4AF37]/25 bg-[#080911]/90">
+      <div class="flex items-center justify-between px-6 py-4 border-b border-[#D4AF37]/25 bg-[#07080E]/90">
         <div class="flex items-center space-x-3">
           <span id="modalYear" class="font-serif text-xl font-bold text-[#D4AF37]">2024</span>
           <span class="h-4 w-[1px] bg-[#D4AF37]/40"></span>
-          <h2 id="modalTitle" class="font-serif text-lg sm:text-xl font-bold text-white">Our Wedding Ceremony</h2>
+          <h2 id="modalTitle" class="font-serif text-lg sm:text-xl font-bold text-white">Our Wedding Vows</h2>
         </div>
         <button id="closeModalBtn" class="w-8 h-8 rounded-full border border-white/20 text-white/70 hover:text-white hover:border-[#D4AF37] flex items-center justify-center transition-colors">
           ✕
@@ -239,10 +243,10 @@
       </div>
 
       <!-- Modal Bottom Story Caption -->
-      <div class="p-6 bg-[#080911]/90 border-t border-[#D4AF37]/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div class="p-6 bg-[#07080E]/90 border-t border-[#D4AF37]/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <span class="text-[10px] uppercase tracking-widest text-[#D4AF37] font-semibold block mb-1">Our Memory</span>
-          <p id="modalStory" class="text-sm text-[#E2E8F0]/90 leading-relaxed max-w-3xl font-sans"></p>
+          <span class="text-[10px] uppercase tracking-widest text-[#D4AF37] font-semibold block mb-1">Rahul &amp; Sneha's Memory</span>
+          <p id="modalStory" class="text-sm text-[#F3E5AB]/90 leading-relaxed max-w-3xl font-sans"></p>
         </div>
         <button id="closeModalBtn2" class="px-5 py-2 rounded-full bg-[#D4AF37] text-black text-xs font-semibold hover:bg-[#F6E05E] transition-colors shrink-0">
           Close Player
@@ -252,7 +256,7 @@
   </div>
 
   <!-- ========================================== -->
-  <!-- 5. "ADD NEW MEMORY" MODAL POPUP -->
+  <!-- 5. "ADD OUR MEMORY" MODAL POPUP -->
   <!-- ========================================== -->
   <div id="addMemoryModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/85 backdrop-blur-xl">
     <div class="relative w-full max-w-md glass-card rounded-3xl p-6 sm:p-7 border border-[#D4AF37]/50 shadow-2xl overflow-hidden">
@@ -261,8 +265,8 @@
 
       <div class="flex items-center justify-between mb-5">
         <div>
-          <h2 class="font-serif text-xl font-bold text-white">Add a New Memory</h2>
-          <p class="text-xs text-[#E2E8F0]/70 mt-0.5">Add a new chapter to our 3D journey</p>
+          <h2 class="font-serif text-xl font-bold text-white">Add Our Memory</h2>
+          <p class="text-xs text-[#F3E5AB]/70 mt-0.5">Add a new chapter to our love story</p>
         </div>
         <button id="closeAddModalBtn" class="w-8 h-8 rounded-full border border-white/20 text-white/70 hover:text-white hover:border-[#D4AF37] flex items-center justify-center transition-colors">
           ✕
@@ -271,19 +275,19 @@
 
       <form id="addMemoryForm" class="space-y-4 text-xs">
         <div>
-          <label class="block text-[#E2E8F0]/90 font-medium mb-1 uppercase tracking-wider text-[10px]">Memory Title</label>
+          <label class="block text-[#F3E5AB]/90 font-medium mb-1 uppercase tracking-wider text-[10px]">Memory Title</label>
           <input 
             type="text" 
             id="inputTitle" 
             required 
-            placeholder="e.g. A Weekend in the Mountains" 
+            placeholder="e.g. Our Weekend in Goa" 
             class="w-full px-3.5 py-2.5 rounded-xl bg-black/60 border border-[#D4AF37]/30 text-white placeholder-white/30 focus:border-[#D4AF37] focus:outline-none transition-colors"
           />
         </div>
 
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="block text-[#E2E8F0]/90 font-medium mb-1 uppercase tracking-wider text-[10px]">Year</label>
+            <label class="block text-[#F3E5AB]/90 font-medium mb-1 uppercase tracking-wider text-[10px]">Year</label>
             <input 
               type="text" 
               id="inputYear" 
@@ -293,19 +297,19 @@
             />
           </div>
           <div>
-            <label class="block text-[#E2E8F0]/90 font-medium mb-1 uppercase tracking-wider text-[10px]">Tag Badge</label>
+            <label class="block text-[#F3E5AB]/90 font-medium mb-1 uppercase tracking-wider text-[10px]">Tag Badge</label>
             <input 
               type="text" 
               id="inputBadge" 
-              placeholder="Our Adventure" 
-              value="Our Adventure"
+              placeholder="Special Day" 
+              value="Special Day"
               class="w-full px-3.5 py-2.5 rounded-xl bg-black/60 border border-[#D4AF37]/30 text-white placeholder-white/30 focus:border-[#D4AF37] focus:outline-none transition-colors"
             />
           </div>
         </div>
 
         <div>
-          <label class="block text-[#E2E8F0]/90 font-medium mb-1 uppercase tracking-wider text-[10px]">Video URL (.mp4)</label>
+          <label class="block text-[#F3E5AB]/90 font-medium mb-1 uppercase tracking-wider text-[10px]">Video URL (.mp4)</label>
           <input 
             type="url" 
             id="inputVideo" 
@@ -317,12 +321,12 @@
         </div>
 
         <div>
-          <label class="block text-[#E2E8F0]/90 font-medium mb-1 uppercase tracking-wider text-[10px]">Memory Story</label>
+          <label class="block text-[#F3E5AB]/90 font-medium mb-1 uppercase tracking-wider text-[10px]">Memory Story</label>
           <textarea 
             id="inputStory" 
             rows="3" 
             required
-            placeholder="Write a few sentences about this memory in simple words..." 
+            placeholder="Tell the story of what happened in simple, heartfelt words..." 
             class="w-full px-3.5 py-2.5 rounded-xl bg-black/60 border border-[#D4AF37]/30 text-white placeholder-white/30 focus:border-[#D4AF37] focus:outline-none transition-colors resize-none"
           ></textarea>
         </div>
@@ -331,7 +335,7 @@
           <button 
             type="button" 
             id="cancelAddBtn"
-            class="px-4 py-2 rounded-full border border-white/20 text-[#E2E8F0]/70 hover:text-white transition-colors"
+            class="px-4 py-2 rounded-full border border-white/20 text-[#F3E5AB]/70 hover:text-white transition-colors"
           >
             Cancel
           </button>
@@ -351,81 +355,88 @@
   <!-- ========================================== -->
   <script>
     // -------------------------------------------------------------
-    // 1. Working Royalty-Free Video Memories Data (Relatable Story)
+    // 1. Rahul & Sneha's Love Story Milestones (With Working Video Clips)
     // -------------------------------------------------------------
     const initialMemories = [
       {
-        id: "mem-1",
+        id: "rs-mem-1",
         year: "2018",
-        title: "How We Met",
-        badge: "The Beginning",
+        title: "The First Coffee",
+        chapter: "Chapter 1",
+        badge: "How We Met",
         videoUrl: "https://assets.mixkit.co/videos/42835/42835-720.mp4",
         poster: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=1200&q=80",
-        story: "It was a rainy Sunday afternoon at a crowded coffee shop. We ended up sharing the only empty table. A quick 10-minute coffee turned into a 3-hour conversation about our favorite books and travel dreams."
+        story: "A rainy Sunday evening at our neighborhood cafe. We shared the last empty table, ordered two cappuccinos, and talked until the cafe closed."
       },
       {
-        id: "mem-2",
+        id: "rs-mem-2",
         year: "2020",
         title: "Our First Road Trip",
+        chapter: "Chapter 2",
         badge: "Adventure",
         videoUrl: "https://assets.mixkit.co/videos/42825/42825-720.mp4",
         poster: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=1200&q=80",
-        story: "Our old car ran out of gas halfway up the hill. Instead of worrying, we sat on the hood, watched the clouds, shared a packet of chips, and laughed the whole afternoon."
+        story: "Our first trip out of the city. We lost cell network, played our favorite playlist on repeat, and watched the sunset from the hilltop."
       },
       {
-        id: "mem-3",
+        id: "rs-mem-3",
         year: "2022",
-        title: "The Sunset Proposal",
+        title: "The Quiet Proposal",
+        chapter: "Chapter 3",
         badge: "The Promise",
         videoUrl: "https://assets.mixkit.co/videos/42797/42797-720.mp4",
         poster: "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=1200&q=80",
-        story: "No cameras, no flash mob. Just a quiet walk on the beach as the sun went down. He stopped, held my hand, and asked the question. We both had happy tears."
+        story: "No stage, no crowd. Just an evening walk by the sea. He stopped, pulled out a ring, and asked to spend forever together."
       },
       {
-        id: "mem-4",
+        id: "rs-mem-4",
         year: "2024",
-        title: "Our Wedding Ceremony",
+        title: "Our Wedding Vows",
+        chapter: "Chapter 4",
         badge: "The Big Day",
         videoUrl: "https://assets.mixkit.co/videos/42813/42813-720.mp4",
         poster: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80",
-        story: "Surrounded by our parents and closest friends. Standing together at the altar, holding hands, and making promises we will keep for a lifetime."
+        story: "November 24, 2024. Surrounded by our parents and closest family, we took our pheras and promised to be partners for life."
       },
       {
-        id: "mem-5",
+        id: "rs-mem-5",
         year: "2024",
-        title: "Our First Dance",
-        badge: "Under The Lights",
+        title: "The Reception Dance",
+        chapter: "Chapter 5",
+        badge: "First Dance",
         videoUrl: "https://assets.mixkit.co/videos/42807/42807-720.mp4",
         poster: "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=1200&q=80",
-        story: "The room was full of guests, but in that moment, it felt like it was just the two of us dancing to our song under the fairy lights."
+        story: "Our first dance as husband and wife. With all our friends cheering, it still felt like the world was completely quiet around us."
       },
       {
-        id: "mem-6",
+        id: "rs-mem-6",
         year: "2025",
-        title: "Our First Home",
-        badge: "New Chapter",
+        title: "Keys to Our First Home",
+        chapter: "Chapter 6",
+        badge: "Our Sanctuary",
         videoUrl: "https://assets.mixkit.co/videos/42823/42823-720.mp4",
         poster: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80",
-        story: "Sitting on the floor of our empty new apartment with our keys, eating takeout pizza from cardboard boxes, and talking about how we will decorate every room."
+        story: "Our first apartment together. Sitting on the bare wooden floor, eating takeout from paper plates, and putting our nameplate on the door."
       },
       {
-        id: "mem-7",
+        id: "rs-mem-7",
         year: "2026",
         title: "Everyday Married Life",
-        badge: "Simple Joy",
+        chapter: "Chapter 7",
+        badge: "Forever Starts Here",
         videoUrl: "https://assets.mixkit.co/videos/42819/42819-720.mp4",
         poster: "https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=1200&q=80",
-        story: "Real love after marriage is in the small moments—making dinner together after work, silly inside jokes, and having your best friend right next to you."
+        story: "Real marriage is in the small things: grocery runs on Sunday, cooking together after a long work day, and having your favorite person to come home to."
       }
     ];
 
     let memories = [...initialMemories];
-    let currentIndex = 2; // Starts at Chapter 3 (The Sunset Proposal)
-    let currentProgress = 2.0; // Lerped fractional progress
-    let targetIndex = 2;
+    let currentIndex = 3; // Starts focused on Chapter 4 (Our Wedding Vows - Nov 24, 2024)
+    let currentProgress = 3.0; // Fractional progress for smooth lerp
+    let targetIndex = 3;
 
     // -------------------------------------------------------------
-    // 2. Floating Gold Dust Canvas Animation
+    // 2. Floating Golden Stardust Particle System (HTML5 Canvas)
     // -------------------------------------------------------------
     const particleCanvas = document.getElementById('particleCanvas');
     const pCtx = particleCanvas.getContext('2d');
@@ -433,13 +444,13 @@
     let pHeight = (particleCanvas.height = window.innerHeight);
 
     const particles = [];
-    const pCount = window.innerWidth < 768 ? 40 : 75;
+    const pCount = window.innerWidth < 768 ? 45 : 85;
     for (let i = 0; i < pCount; i++) {
       particles.push({
         x: Math.random() * pWidth,
         y: Math.random() * pHeight,
         r: Math.random() * 2.2 + 0.8,
-        vx: (Math.random() - 0.5) * 0.4,
+        vx: (Math.random() - 0.5) * 0.35,
         vy: -Math.random() * 0.5 - 0.1,
         alpha: Math.random() * 0.7 + 0.2,
         pulse: Math.random() * 0.02 + 0.01
@@ -488,14 +499,14 @@
       dotsContainer.innerHTML = '';
 
       memories.forEach((mem, idx) => {
-        // Build 3D Card
+        // Build 3D Card Element
         const card = document.createElement('div');
         card.className = 'spatial-card absolute top-0 left-0 w-full h-full glass-card rounded-3xl p-4 sm:p-6 flex flex-col justify-between cursor-pointer transition-shadow duration-300';
         card.style.transformStyle = 'preserve-3d';
         card.setAttribute('data-index', idx);
 
         card.innerHTML = `
-          <!-- Shimmer Top Line -->
+          <!-- Shimmer Top Edge -->
           <div class="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent opacity-80"></div>
 
           <!-- Card Header -->
@@ -503,12 +514,12 @@
             <div class="flex items-center space-x-2">
               <span class="font-serif text-xl sm:text-2xl font-bold text-[#D4AF37]">${mem.year}</span>
               <span class="h-3 w-[1px] bg-[#D4AF37]/40"></span>
-              <span class="text-xs uppercase tracking-widest text-[#E2E8F0]/70 font-semibold font-sans">Chapter ${idx + 1}</span>
+              <span class="text-xs uppercase tracking-widest text-[#F3E5AB]/70 font-semibold font-sans">${mem.chapter}</span>
             </div>
-            <span class="px-3 py-1 rounded-full text-[10px] font-sans font-semibold uppercase tracking-wider bg-white/5 border border-[#D4AF37]/30 text-[#E2E8F0]">${mem.badge}</span>
+            <span class="px-3 py-1 rounded-full text-[10px] font-sans font-semibold uppercase tracking-wider bg-white/5 border border-[#D4AF37]/30 text-[#F3E5AB]">${mem.badge}</span>
           </div>
 
-          <!-- Video Box with Loop -->
+          <!-- Video Clip Container -->
           <div class="relative w-full h-48 sm:h-56 rounded-2xl overflow-hidden border border-white/10 my-3 group">
             <video 
               id="card-video-${idx}"
@@ -520,7 +531,7 @@
               playsinline 
               class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
             ></video>
-            <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-black/25 pointer-events-none"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/25 pointer-events-none"></div>
 
             <!-- Play Overlay Badge -->
             <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
@@ -531,21 +542,23 @@
               </div>
             </div>
 
-            <div class="absolute bottom-2.5 left-2.5 px-2.5 py-1 rounded-lg bg-black/60 backdrop-blur-md text-[10px] text-[#E2E8F0] border border-white/10 pointer-events-none">
-              ▶ Click to Play Full Video
+            <!-- Video Status Indicator Tag -->
+            <div class="absolute bottom-2.5 left-2.5 px-2.5 py-1 rounded-lg bg-black/60 backdrop-blur-md text-[10px] text-[#F3E5AB] border border-white/10 pointer-events-none flex items-center space-x-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-[#D4AF37] animate-ping"></span>
+              <span>Click for Full Screen &amp; Audio</span>
             </div>
           </div>
 
-          <!-- Story Narrative -->
+          <!-- Story Caption -->
           <div class="pointer-events-none">
             <h3 class="font-serif text-lg sm:text-xl font-bold text-white leading-snug">${mem.title}</h3>
-            <p class="mt-1 text-xs text-[#E2E8F0]/75 line-clamp-2 leading-relaxed font-sans">${mem.story}</p>
+            <p class="mt-1 text-xs text-[#F3E5AB]/80 line-clamp-2 leading-relaxed font-sans">${mem.story}</p>
           </div>
 
           <!-- Bottom Prompt -->
           <div class="pt-2 border-t border-[#D4AF37]/20 flex items-center justify-between text-[11px] text-[#D4AF37] font-sans pointer-events-none">
-            <span class="uppercase tracking-wider font-semibold">Open Memory →</span>
-            <span class="text-[10px] text-[#E2E8F0]/50">${idx + 1} of ${memories.length}</span>
+            <span class="uppercase tracking-wider font-semibold">Relive Memory →</span>
+            <span class="text-[10px] text-[#F3E5AB]/50">Rahul &amp; Sneha • ${idx + 1} of ${memories.length}</span>
           </div>
         `;
 
@@ -558,7 +571,7 @@
           }
         });
 
-        // Hover Play Preview on Center Card
+        // Hover play preview for the center card
         card.addEventListener('mouseenter', () => {
           if (idx === currentIndex) {
             const vid = document.getElementById(`card-video-${idx}`);
@@ -568,7 +581,7 @@
 
         stage.appendChild(card);
 
-        // Build Dot
+        // Build Stepper Dot
         const dot = document.createElement('button');
         dot.className = 'h-2 rounded-full transition-all duration-300 ' + (idx === currentIndex ? 'w-6 bg-[#D4AF37] shadow-[0_0_10px_#D4AF37]' : 'w-2 bg-white/20');
         dot.addEventListener('click', () => jumpTo(idx));
@@ -632,7 +645,7 @@
       });
     }
 
-    // Continuous RAF Lerp Loop
+    // Continuous RAF Lerp Loop with GSAP Damping
     let isDragging = false;
     let startX = 0;
     let lastX = 0;
@@ -703,7 +716,7 @@
     window.addEventListener('touchmove', (e) => onDragMove(e.touches[0].clientX), { passive: true });
     window.addEventListener('touchend', onDragEnd);
 
-    // Wheel scrub
+    // Mouse Wheel scrub
     container.addEventListener('wheel', (e) => {
       e.preventDefault();
       const delta = e.deltaY || e.deltaX;
@@ -762,13 +775,13 @@
       if (e.target === videoModal) closeVideoModal();
     });
 
-    // Watch Full Movie (starts Chapter 1 video in modal)
+    // "Play Full Wedding Film" button (plays Chapter 4: Our Wedding Vows)
     document.getElementById('watchMovieBtn').addEventListener('click', () => {
-      openVideoModal(memories[0]);
+      openVideoModal(memories[3]);
     });
 
     // -------------------------------------------------------------
-    // 7. Add New Memory Modal Popup
+    // 7. "Add Our Memory" Modal Popup
     // -------------------------------------------------------------
     const addMemoryModal = document.getElementById('addMemoryModal');
     const openAddModalBtn = document.getElementById('openAddModalBtn');
@@ -804,9 +817,10 @@
       if (!title || !videoUrl) return;
 
       const newMem = {
-        id: `mem-${Date.now()}`,
+        id: `rs-mem-${Date.now()}`,
         year,
         title,
+        chapter: `Chapter ${memories.length + 1}`,
         badge,
         videoUrl,
         poster: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80',
@@ -821,7 +835,7 @@
     });
 
     // -------------------------------------------------------------
-    // 8. Three.js 3D Interactive Wedding Ring Vault
+    // 8. Three.js 3D Interactive Wedding Ring Keepsake
     // -------------------------------------------------------------
     const ringCanvas = document.getElementById('ringCanvas');
     if (window.THREE && ringCanvas) {
@@ -882,7 +896,7 @@
       ringGroup.rotation.y = 0.3;
       scene.add(ringGroup);
 
-      // Auto-rotation + Interactive drag rotation
+      // Auto-spin + 360° mouse drag interaction
       let isRingDragging = false;
       let prevRingX = 0;
       let prevRingY = 0;
@@ -918,9 +932,9 @@
       animateRing();
     }
 
-    // Audio vows button click feedback
+    // Ceremony Audio Vows Alert Feedback
     document.getElementById('audioVowsBtn').addEventListener('click', () => {
-      alert("“I choose you today, in this quiet moment and in every storm to come, for all my tomorrows.” — Julian & Elena");
+      alert("“Rahul & Sneha • Wedding Vow: I promise to choose you every day, to laugh through the storms, to celebrate the quiet evenings, and to be your partner for all of our tomorrows.”");
     });
 
     // Initial Build
