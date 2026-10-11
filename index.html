@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Rahul &amp; Sneha: Our Forever Journey</title>
 
-  <!-- Google Fonts: Playfair Display & Plus Jakarta Sans -->
+  <!-- Google Fonts: Playfair Display, Plus Jakarta Sans, and Noto Sans Telugu -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -27,7 +27,8 @@
           },
           fontFamily: {
             serif: ['"Playfair Display"', 'Georgia', 'serif'],
-            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            sans: ['"Plus Jakarta Sans"', '"Noto Sans Telugu"', 'system-ui', 'sans-serif'],
+            telugu: ['"Noto Sans Telugu"', '"Plus Jakarta Sans"', 'sans-serif'],
           }
         }
       }
@@ -47,7 +48,7 @@
     body {
       background-color: #07080E;
       color: #FFFFFF;
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-family: 'Plus Jakarta Sans', 'Noto Sans Telugu', sans-serif;
       overflow: hidden;
       margin: 0;
       padding: 0;
@@ -110,13 +111,13 @@
       <div>
         <div class="flex items-center space-x-2">
           <h1 class="font-serif text-lg sm:text-2xl font-bold tracking-wide gold-gradient-text">
-            Rahul &amp; Sneha
+            రాహుల్ &amp; స్నేహ
           </h1>
           <span class="text-xs text-[#D4AF37]/60 hidden xs:inline">•</span>
-          <span class="text-xs font-serif italic text-[#F3E5AB]/90 hidden xs:inline">Our Forever Journey</span>
+          <span class="text-xs font-serif italic text-[#F3E5AB]/90 hidden xs:inline">మా ప్రేమ కథ (Our Forever Journey)</span>
         </div>
         <p class="text-[10px] sm:text-xs text-[#F3E5AB]/70 font-sans tracking-wider uppercase mt-0.5">
-          Together since 2018 • Married Nov 24, 2024
+          2018 నుండి నేటివరకు • వివాహ బంధం: నవంబర్ 24, 2024
         </p>
       </div>
     </div>
@@ -126,7 +127,7 @@
       <!-- Active Memory Counter -->
       <div class="hidden md:flex items-center space-x-2 px-3.5 py-1.5 rounded-full glass-card text-xs">
         <span class="w-2 h-2 rounded-full bg-[#D4AF37] animate-pulse"></span>
-        <span id="counterText" class="font-medium text-[#F3E5AB]">Memory 4 of 7</span>
+        <span id="counterText" class="font-medium text-[#F3E5AB]">జ్ఞాపకం 4 / 7</span>
       </div>
 
       <!-- Add Our Memory Button -->
@@ -137,7 +138,7 @@
         <svg class="w-3.5 h-3.5 text-[#D4AF37]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M12 5v14M5 12h14"/>
         </svg>
-        <span>Add Our Memory</span>
+        <span>జ్ఞాపకం జోడించండి</span>
       </button>
 
       <!-- Play Full Wedding Film CTA Button -->
@@ -145,7 +146,7 @@
         id="watchMovieBtn"
         class="px-4 sm:px-5 py-1.5 rounded-full bg-gradient-to-r from-[#F6E05E] to-[#D4AF37] text-black text-xs font-sans font-semibold tracking-wider hover:shadow-[0_0_20px_rgba(212,175,55,0.6)] hover:scale-105 active:scale-95 transition-all"
       >
-        Play Wedding Film
+        పెళ్లి సినిమా చూడండి
       </button>
     </div>
   </header>
@@ -181,7 +182,7 @@
           <span class="inline-block w-[2px] h-4 bg-[#D4AF37] rounded-full animate-pulse"></span>
           <span class="inline-block w-[2px] h-2.5 bg-[#D4AF37] rounded-full animate-bounce"></span>
         </div>
-        <span class="font-medium">Listen to our wedding vows</span>
+        <span class="font-medium">మా పెళ్లి ప్రమాణాలు వినండి</span>
       </button>
     </div>
 
@@ -207,15 +208,15 @@
     <!-- Right: 3D Wedding Ring Keepsake (Three.js 360° Rotatable) -->
     <div 
       id="ringVaultWidget"
-      title="Click and drag to rotate Rahul & Sneha's wedding ring in 3D"
+      title="రాహుల్ & స్నేహ వివాహ ఉంగరాన్ని 360 డిగ్రీలు తిప్పడానికి మౌస్‌తో డ్రాగ్ చేయండి"
       class="hidden sm:flex items-center space-x-3 p-2 rounded-2xl glass-card border border-[#D4AF37]/40 hover:border-[#D4AF37] cursor-pointer transition-all shadow-lg"
     >
       <div class="w-[52px] h-[52px] relative rounded-xl overflow-hidden bg-gradient-to-b from-white/5 to-transparent flex items-center justify-center">
         <canvas id="ringCanvas" class="w-full h-full"></canvas>
       </div>
       <div class="text-left pr-2">
-        <span class="block text-xs font-serif font-bold text-white">Our 3D Wedding Ring</span>
-        <span class="block text-[10px] text-[#F3E5AB]/70 font-sans">Drag to rotate 360°</span>
+        <span class="block text-xs font-serif font-bold text-white">మా 3D పెళ్లి ఉంగరం</span>
+        <span class="block text-[10px] text-[#F3E5AB]/70 font-sans">360° తిప్పండి</span>
       </div>
     </div>
   </footer>
@@ -361,72 +362,72 @@
       {
         id: "rs-mem-1",
         year: "2018",
-        title: "The First Coffee",
-        chapter: "Chapter 1",
-        badge: "How We Met",
+        title: "మొదటి కాఫీ కలయిక (The First Coffee)",
+        chapter: "అధ్యాయం 1",
+        badge: "మొదటి పరిచయం",
         videoUrl: "https://assets.mixkit.co/videos/42835/42835-720.mp4",
         poster: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=1200&q=80",
-        story: "A rainy Sunday evening at our neighborhood cafe. We shared the last empty table, ordered two cappuccinos, and talked until the cafe closed."
+        story: "వర్షం పడుతున్న ఒక ఆదివారం సాయంత్రం మా ఊరి కేఫ్‌లో... ఖాళీగా ఉన్న ఏకైక టేబుల్‌ను ఇద్దరం పంచుకున్నాం. రెండు కప్పుల వేడి కాఫీతో మొదలైన మాటలు, కేఫ్ మూసేసేదాకా ఆగలేదు. అలా మా ప్రయాణం మొదలైంది."
       },
       {
         id: "rs-mem-2",
         year: "2020",
-        title: "Our First Road Trip",
-        chapter: "Chapter 2",
-        badge: "Adventure",
+        title: "మా మొదటి రోడ్ ట్రిప్ (Our First Road Trip)",
+        chapter: "అధ్యాయం 2",
+        badge: "మధుర ప్రయాణం",
         videoUrl: "https://assets.mixkit.co/videos/42825/42825-720.mp4",
         poster: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=1200&q=80",
-        story: "Our first trip out of the city. We lost cell network, played our favorite playlist on repeat, and watched the sunset from the hilltop."
+        story: "నగర రద్దీని వదిలి పచ్చని కొండల వైపు వెళ్ళిన మొదటి ప్రయాణం. ఫోన్ సిగ్నల్ పోయింది, మాకిష్టమైన పాటలు రిపీట్‌లో వింటూ, కొండపై కూర్చొని ఆకాశంలో సూర్యాస్తమయాన్ని చూస్తూ గడిపిన అందమైన రోజు."
       },
       {
         id: "rs-mem-3",
         year: "2022",
-        title: "The Quiet Proposal",
-        chapter: "Chapter 3",
-        badge: "The Promise",
+        title: "సముద్రతీరాన ప్రపోజల్ (The Quiet Proposal)",
+        chapter: "అధ్యాయం 3",
+        badge: "జీవితాంతం తోడుగా",
         videoUrl: "https://assets.mixkit.co/videos/42797/42797-720.mp4",
         poster: "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=1200&q=80",
-        story: "No stage, no crowd. Just an evening walk by the sea. He stopped, pulled out a ring, and asked to spend forever together."
+        story: "ఎటువంటి ఆర్భాటాలు లేకుండా, సాయంత్రం సంధ్యా సమయంలో సముద్రపు ఒడ్డున నడుస్తూ... రాహుల్ ఆగి, చేతిలో ఉంగరం పెట్టి 'జీవితాంతం నా తోడుగా ఉంటావా?' అని అడిగాడు. ఆ క్షణం ఇద్దరి కళ్ళల్లో ఆనంద భాష్పాలు."
       },
       {
         id: "rs-mem-4",
         year: "2024",
-        title: "Our Wedding Vows",
-        chapter: "Chapter 4",
-        badge: "The Big Day",
+        title: "ఏడడుగుల పెళ్లి బంధం (Our Wedding Vows)",
+        chapter: "అధ్యాయం 4",
+        badge: "మంగళసూత్రం",
         videoUrl: "https://assets.mixkit.co/videos/42813/42813-720.mp4",
         poster: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80",
-        story: "November 24, 2024. Surrounded by our parents and closest family, we took our pheras and promised to be partners for life."
+        story: "నవంబర్ 24, 2024. పెద్దల ఆశీర్వాదాలు, సన్నిహితుల చిరునవ్వుల మధ్య, అగ్నిసాక్షిగా ఏడడుగులు వేసి జీవితాంతం ఒకరికొకరం తోడుగా ఉంటామని ప్రమాణం చేసుకున్నాం."
       },
       {
         id: "rs-mem-5",
         year: "2024",
-        title: "The Reception Dance",
-        chapter: "Chapter 5",
-        badge: "First Dance",
+        title: "రిసెప్షన్ వేడుక & నాట్యం (The Reception Dance)",
+        chapter: "అధ్యాయం 5",
+        badge: "మొదటి డ్యాన్స్",
         videoUrl: "https://assets.mixkit.co/videos/42807/42807-720.mp4",
         poster: "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=1200&q=80",
-        story: "Our first dance as husband and wife. With all our friends cheering, it still felt like the world was completely quiet around us."
+        story: "భార్యాభర్తలుగా మా మొదటి డ్యాన్స్. చుట్టూ మిత్రుల కేరింతలు, వెలుగుతున్న దీపాల కాంతుల్లో... ఆ క్షణం ప్రపంచం మొత్తం ఆగిపోయినట్లు, కేవలం మేము ఇద్దరమే ఉన్నట్లు అనిపించింది."
       },
       {
         id: "rs-mem-6",
         year: "2025",
-        title: "Keys to Our First Home",
-        chapter: "Chapter 6",
-        badge: "Our Sanctuary",
+        title: "మా తొలి గృహప్రవేశం (Keys to Our First Home)",
+        chapter: "అధ్యాయం 6",
+        badge: "మా సొంత ఇల్లు",
         videoUrl: "https://assets.mixkit.co/videos/42823/42823-720.mp4",
         poster: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80",
-        story: "Our first apartment together. Sitting on the bare wooden floor, eating takeout from paper plates, and putting our nameplate on the door."
+        story: "మా స్వంత అపార్ట్‌మెంట్ తాళం చేతికి వచ్చిన రోజు. ఇంకా ఫర్నిచర్ కూడా లేని ఖాళీ నేలపై కూర్చొని పేపర్ ప్లేట్లలో తింటూ, ఇంటి గుమ్మానికి మా పేరు బోర్డు పెట్టుకుని సంబరపడ్డాం."
       },
       {
         id: "rs-mem-7",
         year: "2026",
-        title: "Everyday Married Life",
-        chapter: "Chapter 7",
-        badge: "Forever Starts Here",
+        title: "అనుదిన దాంపత్య సుఖం (Everyday Married Life)",
+        chapter: "అధ్యాయం 7",
+        badge: "నిత్య ప్రేమ",
         videoUrl: "https://assets.mixkit.co/videos/42819/42819-720.mp4",
         poster: "https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=1200&q=80",
-        story: "Real marriage is in the small things: grocery runs on Sunday, cooking together after a long work day, and having your favorite person to come home to."
+        story: "నిజమైన దాంపత్యం చిన్న చిన్న క్షణాల్లోనే ఉంటుంది. పని ముగించుకుని వచ్చి ఇద్దరం కలిసి వంట చేయడం, నవ్వుకోవడం, ప్రతి సాయంత్రం ఎదురుచూసే ప్రాణస్నేహితుడు పక్కనే ఉండటం."
       }
     ];
 
@@ -934,7 +935,7 @@
 
     // Ceremony Audio Vows Alert Feedback
     document.getElementById('audioVowsBtn').addEventListener('click', () => {
-      alert("“Rahul & Sneha • Wedding Vow: I promise to choose you every day, to laugh through the storms, to celebrate the quiet evenings, and to be your partner for all of our tomorrows.”");
+      alert("“రాహుల్ & స్నేహ పెళ్లి ప్రమాణం:\n\n'కష్టసుఖాల్లో నీకు తోడుగా ఉంటానని, ప్రతి రోజూ నిన్ను అమితంగా ప్రేమిస్తానని, మన జీవితాంతం నీ చేయి వీడనని నా ప్రాణసఖికి మాట ఇస్తున్నాను.' — రాహుల్ & స్నేహ”");
     });
 
     // Initial Build
