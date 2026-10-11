@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import { PlayIcon, Volume2Icon, ChevronLeftIcon, ChevronRightIcon, SparklesIcon, CalendarIcon, MapPinIcon } from './Icons';
+import { PlayIcon, ChevronLeftIcon, ChevronRightIcon, SparklesIcon, CalendarIcon, MapPinIcon } from './Icons';
 
 export const Timeline3D = ({ chaptersList, onSelectChapter, onAddMemory, onPlayMovie }) => {
   const containerRef = useRef(null);
@@ -14,7 +14,6 @@ export const Timeline3D = ({ chaptersList, onSelectChapter, onAddMemory, onPlayM
   // GSAP drag & momentum state
   const isDraggingRef = useRef(false);
   const startXRef = useRef(0);
-  const currentDragXRef = useRef(0);
   const velocityRef = useRef(0);
   const lastXRef = useRef(0);
   const lastTimeRef = useRef(0);
@@ -33,12 +32,12 @@ export const Timeline3D = ({ chaptersList, onSelectChapter, onAddMemory, onPlayM
     let height = (canvas.height = canvas.parentElement.clientHeight);
 
     const particles = [];
-    const count = 75;
+    const count = window.innerWidth < 768 ? 40 : 75;
     for (let i = 0; i < count; i++) {
       particles.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        r: Math.random() * 2.5 + 0.8,
+        r: Math.random() * 2.2 + 0.8,
         speedX: (Math.random() - 0.5) * 0.4,
         speedY: -Math.random() * 0.6 - 0.1,
         alpha: Math.random() * 0.7 + 0.2,
@@ -92,8 +91,8 @@ export const Timeline3D = ({ chaptersList, onSelectChapter, onAddMemory, onPlayM
     if (!canvas || !window.THREE) return;
 
     const THREE = window.THREE;
-    const width = canvas.clientWidth;
-    const height = canvas.clientHeight;
+    const width = canvas.clientWidth || 56;
+    const height = canvas.clientHeight || 56;
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 100);
@@ -161,42 +160,56 @@ export const Timeline3D = ({ chaptersList, onSelectChapter, onAddMemory, onPlayM
     };
     animateRing();
 
+    const handleResize = () => {
+      if (!canvas) return;
+      const w = canvas.clientWidth || 56;
+      const h = canvas.clientHeight || 56;
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+      renderer.setSize(w, h);
+    };
+    window.addEventListener('resize', handleResize);
+
     return () => {
       cancelAnimationFrame(reqId);
+      window.removeEventListener('resize', handleResize);
       renderer.dispose();
     };
   }, []);
 
-  // 3. GSAP 3D Spatial Calculation Loop
-  // Updates CSS 3D transforms (translateZ, translateX, rotateY, scale, blur, opacity)
+  // 3. Responsive GSAP 3D Spatial Calculation Loop
+  // Dynamically adapts spacing, tilt, and depth based on viewport width
   const updateSpatialPositions = useCallback((progress) => {
     const gsap = window.gsap;
     const cards = document.querySelectorAll('.spatial-3d-card');
     if (!cards || cards.length === 0) return;
 
+    const isMobile = window.innerWidth < 640;
+    const isTablet = window.innerWidth >= 640 && window.innerWidth < 1024;
+
+    // Responsive Spacing & Depth
+    const spacingX = isMobile ? 180 : isTablet ? 230 : 280;
+    const depthZ = isMobile ? 180 : isTablet ? 220 : 260;
+    const maxTilt = isMobile ? 18 : 25;
+
     cards.forEach((card, idx) => {
       const diff = idx - progress; // distance from center (can be fractional)
       const absDiff = Math.abs(diff);
 
-      // Core formula from specification:
-      // Active: scale(1.08), translateZ(0px), blur(0px), full opacity, subtle gold border glow
-      // Neighboring: rotateY(±25deg), translateZ(-200px to -800px), blur(4px to 12px), lower opacity
-      const translateX = diff * 280; // horizontal spacing in px
-      const translateZ = -absDiff * 260; // push back in 3D depth
-      const rotateY = gsap ? gsap.utils.clamp(-45, 45, -diff * 25) : -diff * 25; // tilt inward
-      const scale = Math.max(0.75, 1.08 - absDiff * 0.14);
-      const opacity = Math.max(0.15, 1.0 - absDiff * 0.32);
-      const blurPx = Math.max(0, (absDiff - 0.2) * 5.5);
+      const translateX = diff * spacingX;
+      const translateZ = -absDiff * depthZ;
+      const rotateY = gsap ? gsap.utils.clamp(-maxTilt * 1.5, maxTilt * 1.5, -diff * maxTilt) : -diff * maxTilt;
+      const scale = Math.max(0.72, (isMobile ? 1.03 : 1.08) - absDiff * 0.13);
+      const opacity = Math.max(0.12, 1.0 - absDiff * (isMobile ? 0.38 : 0.32));
+      const blurPx = Math.max(0, (absDiff - 0.2) * (isMobile ? 4.0 : 5.5));
       const zIndex = Math.round(100 - absDiff * 10);
 
-      // Apply CSS 3D transforms directly
       card.style.transform = `translateX(${translateX}px) translateZ(${translateZ}px) rotateY(${rotateY}deg) scale(${scale})`;
       card.style.opacity = opacity;
       card.style.filter = blurPx > 0.5 ? `blur(${blurPx}px)` : 'none';
       card.style.zIndex = zIndex;
       card.style.pointerEvents = absDiff < 0.8 ? 'auto' : 'none';
 
-      // Border glow on active card
       if (absDiff < 0.4) {
         card.classList.add('active-spatial-card');
       } else {
@@ -211,11 +224,9 @@ export const Timeline3D = ({ chaptersList, onSelectChapter, onAddMemory, onPlayM
       animFrameRef.current = requestAnimationFrame(loop);
 
       if (!isDraggingRef.current) {
-        // Smooth lerp damping towards targetIndexRef
         const diff = targetIndexRef.current - currentProgressRef.current;
         currentProgressRef.current += diff * 0.085;
 
-        // Sync integer state when close
         const rounded = Math.round(currentProgressRef.current);
         if (Math.abs(diff) < 0.01 && activeIndexRef.current !== rounded) {
           activeIndexRef.current = rounded;
@@ -249,8 +260,8 @@ export const Timeline3D = ({ chaptersList, onSelectChapter, onAddMemory, onPlayM
     lastXRef.current = clientX;
     lastTimeRef.current = now;
 
-    // Convert pixel drag to fractional index change (sensitivity factor: 1 card = 400px)
-    const deltaIndex = -dx / 380;
+    const dragFactor = window.innerWidth < 640 ? 260 : 380;
+    const deltaIndex = -dx / dragFactor;
     currentProgressRef.current = Math.max(-0.2, Math.min(totalChapters - 0.8, currentProgressRef.current + deltaIndex));
   };
 
@@ -258,24 +269,23 @@ export const Timeline3D = ({ chaptersList, onSelectChapter, onAddMemory, onPlayM
     if (!isDraggingRef.current) return;
     isDraggingRef.current = false;
 
-    // Apply momentum throw based on velocity
+    const dragFactor = window.innerWidth < 640 ? 260 : 380;
     const momentum = -velocityRef.current * 120;
-    let projectedTarget = currentProgressRef.current + momentum / 380;
+    let projectedTarget = currentProgressRef.current + momentum / dragFactor;
     let finalIndex = Math.round(projectedTarget);
     finalIndex = Math.max(0, Math.min(totalChapters - 1, finalIndex));
 
     targetIndexRef.current = finalIndex;
   };
 
-  // Wheel scroll interaction
   const handleWheel = (e) => {
-    e.preventDefault();
-    const delta = e.deltaY * 0.0018;
-    const newTarget = Math.max(0, Math.min(totalChapters - 1, targetIndexRef.current + (delta > 0 ? 1 : -1)));
-    targetIndexRef.current = newTarget;
+    if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+      e.preventDefault();
+      const delta = e.deltaX * 0.002;
+      targetIndexRef.current = Math.max(0, Math.min(totalChapters - 1, targetIndexRef.current + (delta > 0 ? 1 : -1)));
+    }
   };
 
-  // Direct chapter jump button
   const jumpTo = (idx) => {
     targetIndexRef.current = Math.max(0, Math.min(totalChapters - 1, idx));
   };
@@ -294,7 +304,7 @@ export const Timeline3D = ({ chaptersList, onSelectChapter, onAddMemory, onPlayM
       onTouchStart={(e) => handleDragStart(e.touches[0].clientX)}
       onTouchMove={(e) => handleDragMove(e.touches[0].clientX)}
       onTouchEnd={handleDragEnd}
-      className="relative w-full h-screen min-h-[750px] overflow-hidden bg-[#07080E] select-none flex flex-col justify-between cursor-grab active:cursor-grabbing"
+      className="relative w-full min-h-[680px] sm:min-h-[750px] lg:h-screen overflow-hidden bg-[#07080E] select-none flex flex-col justify-between cursor-grab active:cursor-grabbing pt-20 pb-6 sm:pb-8"
       style={{ perspective: '1200px' }}
     >
       {/* Background Floating Gold Dust Particle Canvas */}
@@ -304,39 +314,39 @@ export const Timeline3D = ({ chaptersList, onSelectChapter, onAddMemory, onPlayM
 
       {/* Atmospheric Radial Shading */}
       <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_50%_45%,rgba(212,175,55,0.06)_0%,transparent_60%,#07080E_95%)] z-0" />
-      <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-[#07080E] to-transparent pointer-events-none z-10" />
-      <div className="absolute bottom-0 left-0 right-0 h-36 bg-gradient-to-t from-[#07080E] via-[#07080E]/80 to-transparent pointer-events-none z-10" />
+      <div className="absolute top-0 left-0 right-0 h-28 sm:h-32 bg-gradient-to-b from-[#07080E] to-transparent pointer-events-none z-10" />
+      <div className="absolute bottom-0 left-0 right-0 h-32 sm:h-36 bg-gradient-to-t from-[#07080E] via-[#07080E]/80 to-transparent pointer-events-none z-10" />
 
       {/* ========================================================= */}
       {/* Sub-Header: Active Milestone Progress & Header Controls */}
       {/* ========================================================= */}
-      <div className="relative z-20 mx-auto max-w-7xl w-full px-6 pt-24 flex items-center justify-between">
+      <div className="relative z-20 mx-auto max-w-7xl w-full px-4 sm:px-6 pt-4 sm:pt-6 flex flex-wrap items-center justify-between gap-3">
         {/* Active Chapter Index Counter */}
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center space-x-2.5 sm:space-x-3">
           <div className="flex items-baseline space-x-1 font-cinzel">
-            <span className="text-2xl sm:text-3xl font-extrabold text-[#D4AF37] tracking-wider">
+            <span className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-[#D4AF37] tracking-wider">
               {String(activeIndex + 1).padStart(2, '0')}
             </span>
-            <span className="text-sm text-[#F3E5AB]/40 font-light">/</span>
-            <span className="text-xs sm:text-sm text-[#F3E5AB]/60 font-medium">
+            <span className="text-xs sm:text-sm text-[#F3E5AB]/40 font-light">/</span>
+            <span className="text-[11px] sm:text-xs lg:text-sm text-[#F3E5AB]/60 font-medium">
               {String(totalChapters).padStart(2, '0')}
             </span>
           </div>
           <div className="h-4 w-[1px] bg-[#D4AF37]/30" />
-          <span className="text-xs uppercase tracking-[0.2em] text-[#F3E5AB]/80 font-sans font-medium hidden sm:inline">
+          <span className="text-[11px] sm:text-xs uppercase tracking-[0.16em] sm:tracking-[0.2em] text-[#F3E5AB]/80 font-sans font-medium line-clamp-1">
             {activeChapter.title.split('–')[0]?.trim()}
           </span>
         </div>
 
         {/* Action Buttons: Add Memory & Play Cinematic Reel */}
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center space-x-2 sm:space-x-3">
           <button
             data-magnetic="true"
             data-cursor="ADD"
             onClick={onAddMemory}
-            className="px-4 py-1.5 rounded-full glass-gold border border-[#D4AF37]/40 text-[#F3E5AB] text-xs font-sans font-medium tracking-wider hover:border-[#D4AF37] hover:bg-[#D4AF37]/15 hover:text-white transition-all shadow-[0_0_12px_rgba(212,175,55,0.15)] flex items-center space-x-1.5"
+            className="px-3 sm:px-4 py-1.5 rounded-full glass-gold border border-[#D4AF37]/40 text-[#F3E5AB] text-[11px] sm:text-xs font-sans font-medium tracking-wider hover:border-[#D4AF37] hover:bg-[#D4AF37]/15 hover:text-white transition-all shadow-[0_0_12px_rgba(212,175,55,0.15)] flex items-center space-x-1.5"
           >
-            <SparklesIcon className="w-3.5 h-3.5 text-[#D4AF37]" />
+            <SparklesIcon className="w-3 sm:w-3.5 h-3 sm:h-3.5 text-[#D4AF37]" />
             <span>Add Memory</span>
           </button>
 
@@ -344,9 +354,9 @@ export const Timeline3D = ({ chaptersList, onSelectChapter, onAddMemory, onPlayM
             data-magnetic="true"
             data-cursor="REEL"
             onClick={onPlayMovie}
-            className="px-4 sm:px-5 py-1.5 rounded-full bg-gradient-to-r from-[#DFBE5B] to-[#D4AF37] text-black text-xs font-sans font-semibold tracking-wider hover:shadow-[0_0_20px_rgba(212,175,55,0.5)] hover:scale-105 active:scale-95 transition-all"
+            className="px-3.5 sm:px-5 py-1.5 rounded-full bg-gradient-to-r from-[#DFBE5B] to-[#D4AF37] text-black text-[11px] sm:text-xs font-sans font-semibold tracking-wider hover:shadow-[0_0_20px_rgba(212,175,55,0.5)] hover:scale-105 active:scale-95 transition-all"
           >
-            Play Cinematic Reel
+            Play Reel
           </button>
         </div>
       </div>
@@ -354,10 +364,10 @@ export const Timeline3D = ({ chaptersList, onSelectChapter, onAddMemory, onPlayM
       {/* ========================================================= */}
       {/* 3D Spatial Carousel Stage */}
       {/* ========================================================= */}
-      <div className="relative z-10 w-full flex-1 flex items-center justify-center overflow-visible">
+      <div className="relative z-10 w-full flex-1 flex items-center justify-center overflow-visible py-4 sm:py-6">
         <div
           ref={cardsWrapperRef}
-          className="relative w-[340px] sm:w-[460px] md:w-[500px] h-[450px] sm:h-[490px] flex items-center justify-center"
+          className="relative w-[300px] xs:w-[330px] sm:w-[440px] md:w-[480px] lg:w-[500px] h-[410px] sm:h-[460px] md:h-[490px] flex items-center justify-center"
           style={{ transformStyle: 'preserve-3d' }}
         >
           {chaptersList.map((chapter, idx) => {
@@ -372,7 +382,7 @@ export const Timeline3D = ({ chaptersList, onSelectChapter, onAddMemory, onPlayM
                     jumpTo(idx);
                   }
                 }}
-                className="spatial-3d-card absolute top-0 left-0 w-full h-full glass-gold rounded-3xl p-5 sm:p-6 border border-[#D4AF37]/35 shadow-2xl transition-shadow duration-300 flex flex-col justify-between cursor-pointer group"
+                className="spatial-3d-card absolute top-0 left-0 w-full h-full glass-gold rounded-3xl p-4 sm:p-5 md:p-6 border border-[#D4AF37]/35 shadow-2xl transition-shadow duration-300 flex flex-col justify-between cursor-pointer group"
                 style={{
                   transformStyle: 'preserve-3d',
                   willChange: 'transform, opacity, filter',
@@ -385,23 +395,23 @@ export const Timeline3D = ({ chaptersList, onSelectChapter, onAddMemory, onPlayM
                 {/* Card Header: Year, Date, Badge */}
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-2">
-                    <span className="font-cinzel text-xl sm:text-2xl font-bold text-[#D4AF37] tracking-wider">
+                    <span className="font-cinzel text-lg sm:text-xl md:text-2xl font-bold text-[#D4AF37] tracking-wider">
                       {chapter.year}
                     </span>
                     <span className="h-3 w-[1px] bg-[#D4AF37]/40" />
-                    <div className="flex items-center text-[11px] text-[#F3E5AB]/70 tracking-widest uppercase font-sans">
-                      <CalendarIcon className="w-3.5 h-3.5 mr-1 text-[#D4AF37]" />
-                      {chapter.date}
+                    <div className="flex items-center text-[10px] sm:text-[11px] text-[#F3E5AB]/70 tracking-widest uppercase font-sans">
+                      <CalendarIcon className="w-3 sm:w-3.5 h-3 sm:h-3.5 mr-1 text-[#D4AF37]" />
+                      <span className="truncate max-w-[110px] sm:max-w-none">{chapter.date}</span>
                     </div>
                   </div>
 
-                  <span className="px-3 py-1 rounded-full text-[10px] font-sans font-semibold uppercase tracking-widest bg-white/5 border border-[#D4AF37]/30 text-[#F3E5AB]">
+                  <span className="px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full text-[9px] sm:text-[10px] font-sans font-semibold uppercase tracking-widest bg-white/5 border border-[#D4AF37]/30 text-[#F3E5AB]">
                     {chapter.badge}
                   </span>
                 </div>
 
                 {/* Card Media Preview */}
-                <div className="relative w-full h-52 sm:h-60 rounded-2xl overflow-hidden border border-white/10 group-hover:border-[#D4AF37]/50 transition-colors my-3">
+                <div className="relative w-full h-44 sm:h-52 md:h-60 rounded-2xl overflow-hidden border border-white/10 group-hover:border-[#D4AF37]/50 transition-colors my-2 sm:my-3">
                   <img
                     src={chapter.image}
                     alt={chapter.title}
@@ -411,39 +421,39 @@ export const Timeline3D = ({ chaptersList, onSelectChapter, onAddMemory, onPlayM
 
                   {/* Play Button Node */}
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-13 h-13 rounded-full bg-black/60 backdrop-blur-md border border-[#D4AF37] flex items-center justify-center text-[#D4AF37] shadow-[0_0_20px_rgba(212,175,55,0.6)] group-hover:scale-110 group-hover:bg-[#D4AF37] group-hover:text-black transition-all">
-                      <PlayIcon className="w-6 h-6 ml-0.5" />
+                    <div className="w-11 sm:w-13 h-11 sm:h-13 rounded-full bg-black/60 backdrop-blur-md border border-[#D4AF37] flex items-center justify-center text-[#D4AF37] shadow-[0_0_20px_rgba(212,175,55,0.6)] group-hover:scale-110 group-hover:bg-[#D4AF37] group-hover:text-black transition-all">
+                      <PlayIcon className="w-5 sm:w-6 h-5 sm:h-6 ml-0.5" />
                     </div>
                   </div>
 
                   {/* Location Tag */}
-                  <div className="absolute bottom-2.5 left-2.5 flex items-center space-x-1 px-2.5 py-1 rounded-lg bg-black/60 backdrop-blur-md text-[10px] text-[#F3E5AB] border border-white/10">
-                    <MapPinIcon className="w-3 h-3 text-[#D4AF37]" />
-                    <span>{chapter.location}</span>
+                  <div className="absolute bottom-2 left-2 sm:bottom-2.5 sm:left-2.5 flex items-center space-x-1 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-lg bg-black/60 backdrop-blur-md text-[9px] sm:text-[10px] text-[#F3E5AB] border border-white/10">
+                    <MapPinIcon className="w-2.5 sm:w-3 h-2.5 sm:h-3 text-[#D4AF37]" />
+                    <span className="truncate max-w-[140px] sm:max-w-none">{chapter.location}</span>
                   </div>
                 </div>
 
                 {/* Card Narrative */}
                 <div>
-                  <h3 className="font-serif text-lg sm:text-xl font-bold text-white group-hover:text-[#F3E5AB] transition-colors leading-snug">
+                  <h3 className="font-serif text-base sm:text-lg md:text-xl font-bold text-white group-hover:text-[#F3E5AB] transition-colors leading-snug line-clamp-1">
                     {chapter.title}
                   </h3>
-                  <p className="font-serif italic text-xs text-[#D4AF37]/90 mt-0.5">
+                  <p className="font-serif italic text-[11px] sm:text-xs text-[#D4AF37]/90 mt-0.5 line-clamp-1">
                     {chapter.subtitle}
                   </p>
-                  <p className="mt-1.5 text-xs text-[#F3E5AB]/75 line-clamp-2 font-sans font-normal leading-relaxed">
+                  <p className="mt-1 sm:mt-1.5 text-[11px] sm:text-xs text-[#F3E5AB]/75 line-clamp-2 font-sans font-normal leading-relaxed">
                     {chapter.summary}
                   </p>
                 </div>
 
                 {/* Card Bottom Prompt */}
-                <div className="pt-2 border-t border-[#D4AF37]/20 flex items-center justify-between text-[11px] text-[#D4AF37] font-sans">
+                <div className="pt-2 border-t border-[#D4AF37]/20 flex items-center justify-between text-[10px] sm:text-[11px] text-[#D4AF37] font-sans">
                   <span className="uppercase tracking-widest font-semibold flex items-center space-x-1">
                     <span>Open Cinematic Story</span>
                     <span className="group-hover:translate-x-1 transition-transform">→</span>
                   </span>
-                  <span className="text-[10px] text-[#F3E5AB]/50">
-                    Milestone {idx + 1} of {totalChapters}
+                  <span className="text-[9px] sm:text-[10px] text-[#F3E5AB]/50">
+                    {idx + 1} / {totalChapters}
                   </span>
                 </div>
               </div>
@@ -455,10 +465,10 @@ export const Timeline3D = ({ chaptersList, onSelectChapter, onAddMemory, onPlayM
       {/* ========================================================= */}
       {/* Floating Keepsakes & Navigation Controls Footer */}
       {/* ========================================================= */}
-      <div className="relative z-20 mx-auto max-w-7xl w-full px-6 pb-8 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div className="relative z-20 mx-auto max-w-7xl w-full px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
         
-        {/* Left: Floating "Play Wedding Vows" audio player pill with animated waveform */}
-        <div className="flex items-center space-x-3">
+        {/* Left: Floating "Play Wedding Vows" audio player pill */}
+        <div className="w-full sm:w-auto flex justify-center sm:justify-start">
           <button
             data-magnetic="true"
             data-cursor="VOWS"
@@ -466,41 +476,40 @@ export const Timeline3D = ({ chaptersList, onSelectChapter, onAddMemory, onPlayM
               const el = document.getElementById('vault');
               if (el) el.scrollIntoView({ behavior: 'smooth' });
             }}
-            className="flex items-center space-x-3 px-4 py-2 rounded-full glass-gold border border-[#D4AF37]/50 text-[#F3E5AB] text-xs font-sans tracking-wide hover:border-[#D4AF37] hover:bg-[#D4AF37]/15 transition-all shadow-[0_0_15px_rgba(212,175,55,0.2)] group"
+            className="flex items-center space-x-2.5 px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full glass-gold border border-[#D4AF37]/50 text-[#F3E5AB] text-[11px] sm:text-xs font-sans tracking-wide hover:border-[#D4AF37] hover:bg-[#D4AF37]/15 transition-all shadow-[0_0_15px_rgba(212,175,55,0.2)] group"
           >
-            {/* Animated Audio Waveform Visualizer */}
-            <div className="w-6 h-6 rounded-full bg-[#D4AF37]/20 flex items-center justify-center space-x-[2px] px-1 text-[#D4AF37]">
-              <span className="inline-block w-[2px] h-3.5 bg-[#D4AF37] rounded-full animate-pulse" />
-              <span className="inline-block w-[2px] h-2 bg-[#D4AF37] rounded-full animate-ping" />
-              <span className="inline-block w-[2px] h-4 bg-[#D4AF37] rounded-full animate-pulse" />
-              <span className="inline-block w-[2px] h-2.5 bg-[#D4AF37] rounded-full animate-bounce" />
+            <div className="w-5 sm:w-6 h-5 sm:h-6 rounded-full bg-[#D4AF37]/20 flex items-center justify-center space-x-[2px] px-1 text-[#D4AF37]">
+              <span className="inline-block w-[2px] h-3 sm:h-3.5 bg-[#D4AF37] rounded-full animate-pulse" />
+              <span className="inline-block w-[2px] h-1.5 sm:h-2 bg-[#D4AF37] rounded-full animate-ping" />
+              <span className="inline-block w-[2px] h-3.5 sm:h-4 bg-[#D4AF37] rounded-full animate-pulse" />
+              <span className="inline-block w-[2px] h-2 sm:h-2.5 bg-[#D4AF37] rounded-full animate-bounce" />
             </div>
             <span className="font-medium">Play Wedding Vows</span>
           </button>
         </div>
 
         {/* Center: Interactive Stepper & Timeline Progress Scrub */}
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center space-x-2 sm:space-x-3">
           <button
             onClick={() => jumpTo(activeIndex - 1)}
             disabled={activeIndex === 0}
-            className="p-2 rounded-full glass-gold border border-[#D4AF37]/40 text-[#F3E5AB] disabled:opacity-30 disabled:pointer-events-none hover:bg-[#D4AF37]/20 transition-all shadow-md"
+            className="p-1.5 sm:p-2 rounded-full glass-gold border border-[#D4AF37]/40 text-[#F3E5AB] disabled:opacity-30 disabled:pointer-events-none hover:bg-[#D4AF37]/20 transition-all shadow-md"
             title="Previous Milestone"
           >
-            <ChevronLeftIcon className="w-4 h-4" />
+            <ChevronLeftIcon className="w-3.5 sm:w-4 h-3.5 sm:h-4" />
           </button>
 
-          <div className="flex items-center space-x-1.5 glass-gold rounded-full px-3 py-1.5 border border-[#D4AF37]/30 shadow-gold-subtle">
+          <div className="flex items-center space-x-1 sm:space-x-1.5 glass-gold rounded-full px-2.5 sm:px-3 py-1 sm:py-1.5 border border-[#D4AF37]/30 shadow-gold-subtle">
             {chaptersList.map((chap, idx) => {
               const isSelected = activeIndex === idx;
               return (
                 <button
                   key={chap.id}
                   onClick={() => jumpTo(idx)}
-                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                  className={`h-2 rounded-full transition-all duration-300 ${
                     isSelected
-                      ? 'w-6 bg-[#D4AF37] shadow-[0_0_10px_#D4AF37]'
-                      : 'bg-white/20 hover:bg-white/50'
+                      ? 'w-5 sm:w-6 bg-[#D4AF37] shadow-[0_0_10px_#D4AF37]'
+                      : 'w-2 bg-white/20 hover:bg-white/50'
                   }`}
                   title={chap.title}
                 />
@@ -511,10 +520,10 @@ export const Timeline3D = ({ chaptersList, onSelectChapter, onAddMemory, onPlayM
           <button
             onClick={() => jumpTo(activeIndex + 1)}
             disabled={activeIndex === totalChapters - 1}
-            className="p-2 rounded-full glass-gold border border-[#D4AF37]/40 text-[#F3E5AB] disabled:opacity-30 disabled:pointer-events-none hover:bg-[#D4AF37]/20 transition-all shadow-md"
+            className="p-1.5 sm:p-2 rounded-full glass-gold border border-[#D4AF37]/40 text-[#F3E5AB] disabled:opacity-30 disabled:pointer-events-none hover:bg-[#D4AF37]/20 transition-all shadow-md"
             title="Next Milestone"
           >
-            <ChevronRightIcon className="w-4 h-4" />
+            <ChevronRightIcon className="w-3.5 sm:w-4 h-3.5 sm:h-4" />
           </button>
         </div>
 
@@ -526,16 +535,16 @@ export const Timeline3D = ({ chaptersList, onSelectChapter, onAddMemory, onPlayM
             const el = document.getElementById('vault');
             if (el) el.scrollIntoView({ behavior: 'smooth' });
           }}
-          className="glass-gold rounded-2xl p-2.5 border border-[#D4AF37]/40 hover:border-[#D4AF37] cursor-pointer group transition-all duration-300 shadow-xl flex items-center space-x-3"
+          className="hidden sm:flex glass-gold rounded-2xl p-2 sm:p-2.5 border border-[#D4AF37]/40 hover:border-[#D4AF37] cursor-pointer group transition-all duration-300 shadow-xl items-center space-x-2.5"
         >
-          <div className="w-14 h-14 relative flex items-center justify-center overflow-hidden rounded-xl bg-gradient-to-b from-white/5 to-transparent">
+          <div className="w-11 sm:w-14 h-11 sm:h-14 relative flex items-center justify-center overflow-hidden rounded-xl bg-gradient-to-b from-white/5 to-transparent">
             <canvas ref={ringCanvasRef} className="w-full h-full" />
           </div>
           <div className="text-left pr-2">
-            <span className="block text-xs font-serif font-bold text-white group-hover:text-[#F3E5AB] transition-colors">
+            <span className="block text-[11px] sm:text-xs font-serif font-bold text-white group-hover:text-[#F3E5AB] transition-colors">
               3D Artifact Vault
             </span>
-            <span className="block text-[10px] text-[#F3E5AB]/70 font-sans mt-0.5">
+            <span className="block text-[9px] sm:text-[10px] text-[#F3E5AB]/70 font-sans mt-0.5">
               360° Gold Solitaire Ring
             </span>
           </div>

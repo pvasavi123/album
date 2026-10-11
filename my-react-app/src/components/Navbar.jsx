@@ -115,9 +115,10 @@ export const Navbar = ({ onPlayMovie, activeSection, onNavigate, isAudioPlaying,
               data-magnetic="true"
               data-cursor="MOVIE"
               onClick={onPlayMovie}
-              className="relative px-5 py-2 rounded-full bg-gradient-to-r from-[#DFBE5B] via-[#E5CD7C] to-[#D4AF37] text-[#1E1704] font-medium text-xs sm:text-sm tracking-wide shadow-[0_0_22px_rgba(212,175,55,0.45)] hover:shadow-[0_0_30px_rgba(212,175,55,0.7)] hover:scale-105 active:scale-95 transition-all duration-300 font-sans"
+              className="relative px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-full bg-gradient-to-r from-[#DFBE5B] via-[#E5CD7C] to-[#D4AF37] text-[#1E1704] font-medium text-[11px] sm:text-xs md:text-sm tracking-wide shadow-[0_0_22px_rgba(212,175,55,0.45)] hover:shadow-[0_0_30px_rgba(212,175,55,0.7)] hover:scale-105 active:scale-95 transition-all duration-300 font-sans"
             >
-              Watch Cinematic Movie
+              <span className="hidden xs:inline">Watch Cinematic Movie</span>
+              <span className="xs:hidden">Movie</span>
             </button>
 
             {/* Mobile Hamburger toggle */}
