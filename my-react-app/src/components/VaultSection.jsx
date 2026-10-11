@@ -71,92 +71,293 @@ export const VaultSection = () => {
     shadowMesh.position.y = -1.85;
     scene.add(shadowMesh);
 
+    // Dark Velvet & Gold-Rimmed Pedestal Base
+    const pedestalGroup = new THREE.Group();
+    pedestalGroup.position.y = -1.75;
+    scene.add(pedestalGroup);
+
+    const velvetMat = new THREE.MeshStandardMaterial({
+      color: 0x0a0c16,
+      roughness: 0.9,
+      metalness: 0.1,
+    });
+    const goldRimMat = new THREE.MeshStandardMaterial({
+      color: 0xd4af37,
+      roughness: 0.22,
+      metalness: 0.92,
+      emissive: 0x3d2e08,
+      emissiveIntensity: 0.3,
+    });
+
+    const pedestalBase = new THREE.Mesh(new THREE.CylinderGeometry(2.3, 2.5, 0.22, 48), velvetMat);
+    pedestalGroup.add(pedestalBase);
+
+    const pedestalRim = new THREE.Mesh(new THREE.TorusGeometry(2.32, 0.04, 16, 48), goldRimMat);
+    pedestalRim.rotation.x = Math.PI / 2;
+    pedestalRim.position.y = 0.11;
+    pedestalGroup.add(pedestalRim);
+
+    // 3D Ambient Gold Dust / Bokeh Particles in Space
+    const particleCount = 65;
+    const particleGeo = new THREE.BufferGeometry();
+    const particlePositions = new Float32Array(particleCount * 3);
+    for (let i = 0; i < particleCount * 3; i += 3) {
+      particlePositions[i] = (Math.random() - 0.5) * 8;
+      particlePositions[i + 1] = (Math.random() - 0.5) * 7;
+      particlePositions[i + 2] = (Math.random() - 0.5) * 6;
+    }
+    particleGeo.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
+    const particleMat = new THREE.PointsMaterial({
+      color: 0xf3e5ab,
+      size: 0.065,
+      transparent: true,
+      opacity: 0.7,
+      blending: THREE.AdditiveBlending,
+    });
+    const particleSystem = new THREE.Points(particleGeo, particleMat);
+    scene.add(particleSystem);
+
     // Dynamic Artifact Group
     const group = new THREE.Group();
     meshGroupRef.current = group;
     scene.add(group);
 
-    // Build 3D mesh according to selected artifact
-    const goldMat = new THREE.MeshStandardMaterial({
-      color: 0xd4af37,
-      metalness: 0.94,
-      roughness: 0.2,
-      emissive: 0x3d2e08,
-      emissiveIntensity: 0.25,
-    });
-
+    // =========================================================
+    // 1. "Maa Kalyanam Rings" / The Eternal Bands (Wedding Rings)
+    // =========================================================
     if (selectedArtifact.id === 'vault-ring') {
-      // 1. Dual Wedding Rings
-      const ring1 = new THREE.Mesh(new THREE.TorusGeometry(1.2, 0.14, 32, 64), goldMat);
+      const champagneGoldMat = new THREE.MeshStandardMaterial({
+        color: 0xdfbe5b,
+        metalness: 0.95,
+        roughness: 0.15,
+        emissive: 0x2e2105,
+        emissiveIntensity: 0.2,
+      });
+
+      const platinumMat = new THREE.MeshStandardMaterial({
+        color: 0xf7f8fc,
+        metalness: 0.96,
+        roughness: 0.12,
+      });
+
+      // 18k Brushed Champagne Gold Band with inner engraving feel
+      const ring1 = new THREE.Mesh(new THREE.TorusGeometry(1.22, 0.15, 32, 64), champagneGoldMat);
       ring1.rotation.x = Math.PI / 3;
+      ring1.rotation.y = 0.15;
       group.add(ring1);
 
-      const whiteMat = new THREE.MeshStandardMaterial({ color: 0xf5f3ea, metalness: 0.92, roughness: 0.18 });
-      const ring2 = new THREE.Mesh(new THREE.TorusGeometry(1.18, 0.12, 32, 64), whiteMat);
-      ring2.rotation.x = Math.PI / 2.6;
-      ring2.rotation.y = 0.25;
+      // Interlocking Polished Platinum Band
+      const ring2 = new THREE.Mesh(new THREE.TorusGeometry(1.20, 0.13, 32, 64), platinumMat);
+      ring2.rotation.x = Math.PI / 2.5;
+      ring2.rotation.y = -0.3;
       group.add(ring2);
 
-      // Solitaire Diamond
+      // Brilliant-cut Solitaire Diamond with dispersion & transmission
       const diamondMat = new THREE.MeshPhysicalMaterial({
         color: 0xffffff,
         metalness: 0.05,
-        roughness: 0.05,
-        transmission: 0.92,
-        thickness: 0.9,
-        ior: 2.4,
+        roughness: 0.04,
+        transmission: 0.96,
+        thickness: 1.1,
+        ior: 2.42,
+        transparent: true,
+        opacity: 0.98,
       });
-      const diamond = new THREE.Mesh(new THREE.OctahedronGeometry(0.38, 1), diamondMat);
-      diamond.position.set(0, 1.35, 0.2);
+      const diamond = new THREE.Mesh(new THREE.OctahedronGeometry(0.42, 2), diamondMat);
+      diamond.position.set(0, 1.4, 0.22);
       group.add(diamond);
 
-      // Diamond Light
-      const pLight = new THREE.PointLight(0xffffff, 2, 5);
-      pLight.position.set(0, 1.4, 0.3);
-      group.add(pLight);
+      // Four delicate gold/platinum prongs holding the solitaire
+      const prongGeo = new THREE.CylinderGeometry(0.035, 0.035, 0.38, 8);
+      for (let i = 0; i < 4; i++) {
+        const prong = new THREE.Mesh(prongGeo, platinumMat);
+        const ang = (i * Math.PI) / 2 + Math.PI / 4;
+        prong.position.set(Math.cos(ang) * 0.22, 1.3, Math.sin(ang) * 0.22 + 0.22);
+        prong.rotation.z = Math.cos(ang) * 0.12;
+        group.add(prong);
+      }
+
+      // Diamond Refraction Glow
+      const diamondGlow = new THREE.PointLight(0xfff8e7, 2.5, 4);
+      diamondGlow.position.set(0, 1.45, 0.35);
+      group.add(diamondGlow);
+
+    // =========================================================
+    // 2. "Inti Key" / The Sanctuary Key (Our First Home Key)
+    // =========================================================
     } else if (selectedArtifact.id === 'vault-key') {
-      // 2. Antique Sanctuary Brass Key
-      const keyHead = new THREE.Mesh(new THREE.TorusGeometry(0.65, 0.12, 24, 48), goldMat);
-      keyHead.position.set(0, 1.2, 0);
-      group.add(keyHead);
-
-      const shaft = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.1, 2.2, 24), goldMat);
-      shaft.position.set(0, -0.1, 0);
-      group.add(shaft);
-
-      const tooth1 = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.15, 0.15), goldMat);
-      tooth1.position.set(0.2, -0.9, 0);
-      group.add(tooth1);
-
-      const tooth2 = new THREE.Mesh(new THREE.BoxGeometry(0.55, 0.15, 0.15), goldMat);
-      tooth2.position.set(0.25, -1.15, 0);
-      group.add(tooth2);
-    } else if (selectedArtifact.id === 'vault-flutes') {
-      // 3. Venetian Champagne Flute
-      const glassMat = new THREE.MeshPhysicalMaterial({
-        color: 0xffffff,
-        metalness: 0.1,
-        roughness: 0.1,
-        transmission: 0.95,
-        thickness: 0.6,
-        ior: 1.52,
+      const agedBrassMat = new THREE.MeshStandardMaterial({
+        color: 0xb58e38,
+        metalness: 0.88,
+        roughness: 0.38,
+        emissive: 0x1f1604,
+        emissiveIntensity: 0.15,
       });
-      const bowl = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.25, 2.0, 32, 1, true), glassMat);
-      bowl.position.set(0, 0.6, 0);
-      group.add(bowl);
 
-      const rim = new THREE.Mesh(new THREE.TorusGeometry(0.5, 0.02, 16, 32), goldMat);
-      rim.rotation.x = Math.PI / 2;
-      rim.position.set(0, 1.6, 0);
-      group.add(rim);
+      const antiqueDarkMat = new THREE.MeshStandardMaterial({
+        color: 0x6e521c,
+        metalness: 0.82,
+        roughness: 0.55,
+      });
 
-      const stem = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 1.6, 16), glassMat);
-      stem.position.set(0, -1.0, 0);
-      group.add(stem);
+      const maroonSilkMat = new THREE.MeshStandardMaterial({
+        color: 0x7a0c1e, // Auspicious Gruhapravesam Maroon
+        roughness: 0.75,
+        metalness: 0.1,
+      });
 
-      const base = new THREE.Mesh(new THREE.CylinderGeometry(0.7, 0.7, 0.06, 32), glassMat);
-      base.position.set(0, -1.8, 0);
-      group.add(base);
+      const keyGroup = new THREE.Group();
+
+      // Ornamental Skeleton Key Bow (Head)
+      const outerRing = new THREE.Mesh(new THREE.TorusGeometry(0.72, 0.11, 24, 48), agedBrassMat);
+      outerRing.position.set(0, 1.3, 0);
+      keyGroup.add(outerRing);
+
+      // Inner Filigree Heart / Clover Motif in Bow
+      for (let i = 0; i < 4; i++) {
+        const leaf = new THREE.Mesh(new THREE.TorusGeometry(0.24, 0.05, 16, 24), agedBrassMat);
+        const ang = (i * Math.PI) / 2;
+        leaf.position.set(Math.cos(ang) * 0.25, 1.3 + Math.sin(ang) * 0.25, 0);
+        keyGroup.add(leaf);
+      }
+      const centerPin = new THREE.Mesh(new THREE.SphereGeometry(0.12, 16, 16), agedBrassMat);
+      centerPin.position.set(0, 1.3, 0);
+      keyGroup.add(centerPin);
+
+      // Fluted Cylindrical Key Shaft with Collar Rings
+      const shaft = new THREE.Mesh(new THREE.CylinderGeometry(0.11, 0.095, 2.4, 24), agedBrassMat);
+      shaft.position.set(0, -0.1, 0);
+      keyGroup.add(shaft);
+
+      const collar1 = new THREE.Mesh(new THREE.TorusGeometry(0.16, 0.04, 16, 24), agedBrassMat);
+      collar1.position.set(0, 0.65, 0);
+      collar1.rotation.x = Math.PI / 2;
+      keyGroup.add(collar1);
+
+      const collar2 = new THREE.Mesh(new THREE.TorusGeometry(0.15, 0.035, 16, 24), agedBrassMat);
+      collar2.position.set(0, -0.6, 0);
+      collar2.rotation.x = Math.PI / 2;
+      keyGroup.add(collar2);
+
+      // Intricate Antique Key Bit (Teeth) with Grooves
+      const bitBase = new THREE.Mesh(new THREE.BoxGeometry(0.58, 0.75, 0.12), agedBrassMat);
+      bitBase.position.set(0.32, -1.05, 0);
+      keyGroup.add(bitBase);
+
+      const groove1 = new THREE.Mesh(new THREE.BoxGeometry(0.25, 0.14, 0.14), antiqueDarkMat);
+      groove1.position.set(0.48, -0.9, 0);
+      keyGroup.add(groove1);
+
+      const groove2 = new THREE.Mesh(new THREE.BoxGeometry(0.32, 0.14, 0.14), antiqueDarkMat);
+      groove2.position.set(0.44, -1.22, 0);
+      keyGroup.add(groove2);
+
+      // Auspicious Maroon Braided Silk Thread & Tassel hanging from Bow
+      const threadTorus = new THREE.Mesh(new THREE.TorusGeometry(0.14, 0.03, 12, 24), maroonSilkMat);
+      threadTorus.position.set(0, 2.05, 0);
+      keyGroup.add(threadTorus);
+
+      const cord = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 1.0, 12), maroonSilkMat);
+      cord.position.set(-0.25, 2.4, 0);
+      cord.rotation.z = 0.45;
+      keyGroup.add(cord);
+
+      const tassel = new THREE.Mesh(new THREE.ConeGeometry(0.16, 0.55, 16), maroonSilkMat);
+      tassel.position.set(-0.55, 2.8, 0);
+      tassel.rotation.z = Math.PI + 0.35;
+      keyGroup.add(tassel);
+
+      keyGroup.rotation.z = 0.18;
+      group.add(keyGroup);
+
+    // =========================================================
+    // 3. "Toast Flutes" / Maa Glassware (Celebration Flutes)
+    // =========================================================
+    } else if (selectedArtifact.id === 'vault-flutes') {
+      const flutesGroup = new THREE.Group();
+
+      const crystalMat = new THREE.MeshPhysicalMaterial({
+        color: 0xffffff,
+        metalness: 0.05,
+        roughness: 0.04,
+        transmission: 0.98,
+        thickness: 0.75,
+        ior: 1.52,
+        transparent: true,
+        opacity: 0.95,
+      });
+
+      const goldFoilMat = new THREE.MeshStandardMaterial({
+        color: 0xe5cd7c,
+        metalness: 0.95,
+        roughness: 0.18,
+        emissive: 0x3d2e08,
+        emissiveIntensity: 0.25,
+      });
+
+      const champagneLiquidMat = new THREE.MeshPhysicalMaterial({
+        color: 0xfde08b,
+        metalness: 0.1,
+        roughness: 0.12,
+        transmission: 0.88,
+        ior: 1.34,
+        transparent: true,
+        opacity: 0.85,
+      });
+
+      const createFlute = (offsetX, rotZ) => {
+        const flute = new THREE.Group();
+
+        // Slender crystal bowl
+        const bowl = new THREE.Mesh(new THREE.CylinderGeometry(0.48, 0.22, 2.1, 32, 1, true), crystalMat);
+        bowl.position.set(0, 0.75, 0);
+        flute.add(bowl);
+
+        // 24K Gold Foil Top Rim
+        const rim = new THREE.Mesh(new THREE.TorusGeometry(0.48, 0.025, 16, 32), goldFoilMat);
+        rim.rotation.x = Math.PI / 2;
+        rim.position.set(0, 1.8, 0);
+        flute.add(rim);
+
+        // Effervescent Champagne Liquid inside
+        const liquid = new THREE.Mesh(new THREE.CylinderGeometry(0.42, 0.2, 1.3, 24), champagneLiquidMat);
+        liquid.position.set(0, 0.45, 0);
+        flute.add(liquid);
+
+        // Slender elongated stem
+        const stem = new THREE.Mesh(new THREE.CylinderGeometry(0.045, 0.045, 1.8, 16), crystalMat);
+        stem.position.set(0, -1.05, 0);
+        flute.add(stem);
+
+        // Gold collar on stem joint
+        const stemJoint = new THREE.Mesh(new THREE.TorusGeometry(0.06, 0.02, 12, 24), goldFoilMat);
+        stemJoint.rotation.x = Math.PI / 2;
+        stemJoint.position.set(0, -0.15, 0);
+        flute.add(stemJoint);
+
+        // Crystal flat circular foot
+        const foot = new THREE.Mesh(new THREE.CylinderGeometry(0.68, 0.68, 0.06, 32), crystalMat);
+        foot.position.set(0, -1.95, 0);
+        flute.add(foot);
+
+        flute.position.x = offsetX;
+        flute.rotation.z = rotZ;
+        return flute;
+      };
+
+      flutesGroup.add(createFlute(-0.65, 0.08));
+      flutesGroup.add(createFlute(0.65, -0.08));
+
+      // Golden toast spark light
+      const toastLight = new THREE.PointLight(0xffe89e, 2.0, 5);
+      toastLight.position.set(0, 0.6, 0.3);
+      flutesGroup.add(toastLight);
+
+      group.add(flutesGroup);
+
+    // =========================================================
+    // 4. "Our Lagnapatrika" / The Vow Parchment (Vows & Promises Scroll)
+    // =========================================================
     } else {
       // =========================================================
       // 4. Antique Archival Vow Parchment Scroll (Detailed Mesh & PBR)
@@ -202,22 +403,26 @@ export const VaultSection = () => {
       pctx.lineWidth = 2;
       pctx.strokeRect(75, 75, 874, 874);
 
-      // Antique Telugu / English Vow Calligraphy Text
+      // Traditional Gold Telugu Letters & Ornate Calligraphy Header
       pctx.textAlign = 'center';
+      pctx.fillStyle = '#b8860b';
+      pctx.font = 'bold 44px "Cinzel", "Playfair Display", serif';
+      pctx.fillText('॥ శ్రీరస్తు • శుభమస్తు ॥', 512, 145);
+
       pctx.fillStyle = '#6b4423'; // Rich Sepia Ink
-      pctx.font = 'bold 36px "Cinzel", "Playfair Display", serif';
-      pctx.fillText('SACRED WEDDING COVENANT', 512, 160);
+      pctx.font = 'bold 30px "Cinzel", "Playfair Display", serif';
+      pctx.fillText('OUR LAGNAPATRIKA & WEDDING VOWS', 512, 190);
 
       pctx.strokeStyle = '#d4af37';
       pctx.lineWidth = 2;
       pctx.beginPath();
-      pctx.moveTo(300, 190);
-      pctx.lineTo(724, 190);
+      pctx.moveTo(260, 210);
+      pctx.lineTo(764, 210);
       pctx.stroke();
 
       pctx.fillStyle = '#8a5a2b';
-      pctx.font = 'italic 25px "Playfair Display", serif';
-      pctx.fillText('Rahul & Sneha • Est. September 18, 2024', 512, 240);
+      pctx.font = 'italic 23px "Playfair Display", serif';
+      pctx.fillText('Rahul & Sneha • Kalyanam 24.11.2024', 512, 250);
 
       // Handwritten cursive vows in Sepia with gold reflections
       pctx.fillStyle = '#4a3018';
@@ -498,29 +703,47 @@ export const VaultSection = () => {
           </div>
         </div>
 
-        {/* Right: Artifact Details & Selector (5 columns) */}
-        <div className="lg:col-span-5 space-y-6">
+        {/* Right: Artifact Details & Selector with Curved 3D Card Flow (5 columns) */}
+        <div className="lg:col-span-5 space-y-5">
           {/* Active Artifact Card */}
-          <div className="glass-gold rounded-3xl p-6 sm:p-7 border border-[#D4AF37]/30 shadow-xl space-y-4">
+          <div className="glass-gold rounded-3xl p-5 sm:p-7 border border-[#D4AF37]/35 shadow-2xl space-y-3.5 transition-all duration-500">
             <div className="flex items-center justify-between">
-              <span className="text-[10px] uppercase tracking-[0.25em] text-[#D4AF37] font-semibold">
-                {selectedArtifact.type}
-              </span>
+              <div>
+                <span className="text-[10px] uppercase tracking-[0.25em] text-[#D4AF37] font-semibold block">
+                  {selectedArtifact.type}
+                </span>
+                <span className="text-xs text-[#F3E5AB]/60 font-serif italic">
+                  {selectedArtifact.subtitle}
+                </span>
+              </div>
               <SparklesIcon className="w-4 h-4 text-[#D4AF37]" />
             </div>
 
-            <h3 className="font-cinzel text-2xl font-bold text-white">
+            <h3 className="font-cinzel text-2xl sm:text-3xl font-bold text-white tracking-wide">
               {selectedArtifact.name}
             </h3>
 
+            {/* Auspicious Inscription Box */}
             <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10 space-y-1">
               <span className="text-[10px] uppercase tracking-widest text-[#F3E5AB]/50 block">
                 Archival Inscription
               </span>
-              <p className="font-serif italic text-sm text-[#D4AF37]">
+              <p className="font-serif italic text-sm text-[#D4AF37] leading-relaxed">
                 {selectedArtifact.inscription}
               </p>
             </div>
+
+            {/* Tenglish Heartfelt Story */}
+            {selectedArtifact.teluguStory && (
+              <div className="p-3 rounded-2xl bg-[#D4AF37]/10 border border-[#D4AF37]/25 space-y-0.5">
+                <span className="text-[9px] uppercase tracking-widest text-[#D4AF37] font-semibold block">
+                  Mana Memory (Telugu)
+                </span>
+                <p className="font-sans italic text-xs text-[#F3E5AB]/90 leading-relaxed">
+                  “{selectedArtifact.teluguStory}”
+                </p>
+              </div>
+            )}
 
             <div className="space-y-1">
               <span className="text-[10px] uppercase tracking-widest text-[#F3E5AB]/50 block">
@@ -533,7 +756,7 @@ export const VaultSection = () => {
 
             <div className="space-y-1 pt-1">
               <span className="text-[10px] uppercase tracking-widest text-[#F3E5AB]/50 block">
-                Provenance & History
+                Provenance & Story
               </span>
               <p className="text-xs sm:text-sm text-[#F3E5AB]/75 leading-relaxed font-sans">
                 {selectedArtifact.story}
@@ -541,30 +764,46 @@ export const VaultSection = () => {
             </div>
           </div>
 
-          {/* Artifact Selector List */}
-          <div className="space-y-2">
-            <span className="text-[11px] uppercase tracking-widest text-[#D4AF37] font-semibold block px-1">
-              Select Keepsake to Inspect
-            </span>
-            <div className="grid grid-cols-2 gap-3">
+          {/* Interactive Artifact Selector with Curved Drag & Touch Cards */}
+          <div className="space-y-2.5">
+            <div className="flex items-center justify-between px-1">
+              <span className="text-[11px] uppercase tracking-widest text-[#D4AF37] font-semibold">
+                Tap to Inspect Keepsake
+              </span>
+              <span className="text-[10px] text-[#F3E5AB]/50 font-sans">
+                {vaultArtifacts.findIndex(a => a.id === selectedArtifact.id) + 1} of {vaultArtifacts.length}
+              </span>
+            </div>
+
+            {/* Horizontal Curved Interactive Card Carousel */}
+            <div className="grid grid-cols-2 gap-2.5 sm:gap-3">
               {vaultArtifacts.map((art) => {
                 const isSelected = selectedArtifact.id === art.id;
                 return (
                   <button
                     key={art.id}
                     onClick={() => setSelectedArtifact(art)}
-                    className={`p-3.5 rounded-2xl text-left transition-all duration-300 border flex flex-col justify-between ${
+                    className={`p-3 sm:p-3.5 rounded-2xl text-left transition-all duration-300 border flex flex-col justify-between group ${
                       isSelected
-                        ? 'bg-[#D4AF37]/20 border-[#D4AF37] shadow-[0_0_15px_rgba(212,175,55,0.3)]'
-                        : 'glass-gold border-white/10 hover:border-[#D4AF37]/50 text-[#F3E5AB]/75'
+                        ? 'bg-[#D4AF37]/25 border-[#D4AF37] shadow-[0_0_22px_rgba(212,175,55,0.4)] scale-[1.03] ring-1 ring-[#D4AF37]/50'
+                        : 'glass-gold border-white/10 hover:border-[#D4AF37]/50 text-[#F3E5AB]/75 hover:scale-[1.01]'
                     }`}
                   >
-                    <span className="font-cinzel text-xs font-bold text-white">
-                      {art.name}
-                    </span>
-                    <span className="text-[10px] text-[#D4AF37]/80 mt-1">
-                      {art.type.split('/')[0]}
-                    </span>
+                    <div>
+                      <span className={`block font-cinzel text-xs sm:text-sm font-bold transition-colors ${isSelected ? 'text-[#FFF6D6]' : 'text-white group-hover:text-[#F3E5AB]'}`}>
+                        {art.name}
+                      </span>
+                      <span className="block text-[10px] text-[#D4AF37]/90 font-serif italic mt-0.5 truncate">
+                        {art.subtitle}
+                      </span>
+                    </div>
+
+                    <div className="mt-2 pt-1.5 border-t border-white/10 flex items-center justify-between text-[9px] text-[#F3E5AB]/60">
+                      <span className="uppercase tracking-widest">3D PBR</span>
+                      <span className={isSelected ? 'text-[#D4AF37] font-bold' : ''}>
+                        {isSelected ? '● Active' : 'Inspect →'}
+                      </span>
+                    </div>
                   </button>
                 );
               })}

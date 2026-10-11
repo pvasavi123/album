@@ -246,43 +246,51 @@ export const galleryItems = [
 export const vaultArtifacts = [
   {
     id: "vault-ring",
-    name: "The Eternal Bands",
-    type: "Jewelry / 3D Model",
-    material: "18k Champagne Gold & Brilliant Solitaire",
-    inscription: "“Everlasting • 18.09.2024”",
-    story: "Forged in Florence by Master Goldsmith Bellini, featuring dual intertwining bands symbolizing two lives meeting in harmonious orbit.",
+    name: "Maa Kalyanam Rings",
+    subtitle: "The Eternal Bands",
+    type: "Sacred Jewelry / 3D Model",
+    material: "18k Brushed Champagne Gold & Platinum Solitaire",
+    inscription: "“Rahul & Sneha • 24.11.24”",
+    story: "Intertwined loops crafted with fine gold engraving on the inner loop, interlocking with a platinum band holding a brilliant solitaire in four delicate prongs. Forever covenant.",
+    teluguStory: "Mana kalyanam roju pettukunna sacred rings. Prathi kshanam mana prema gurthu chesthundi.",
     color: "#D4AF37",
     interactive: true
   },
   {
     id: "vault-key",
-    name: "The Sanctuary Key",
-    type: "Keepsake / 3D Model",
-    material: "Solid Antique Brass & Silk Cord",
-    inscription: "“Home is wherever you are • 2025”",
-    story: "Hand-turned key commemorating the day we stepped over the threshold into our first designed architectural home.",
+    name: "Inti Key",
+    subtitle: "The Sanctuary Key",
+    type: "Our First Home / 3D Model",
+    material: "Heavy Antique Brass & Maroon Silk Thread",
+    inscription: "“Mana kottha illu, mana kottha prapancham • 2025”",
+    story: "Intricate heavy antique brass skeleton key with ornamental filigree in the circular handle and aged grooves, tied with an auspicious maroon thread for our Gruhapravesam.",
+    teluguStory: "Gruhapravesam roju lock open chesina roju. Mana dreams anni start ayyina key idi.",
     color: "#E5CD7C",
     interactive: true
   },
   {
     id: "vault-vows",
-    name: "The Vow Parchment",
-    type: "Archival Manuscript",
-    material: "Handmade Amalfi Cotton Paper & Gold Ink",
-    inscription: "“In every lifetime, I will seek you out”",
-    story: "Archival letterpress scroll preserving the exact promises read by Julian and Elena during the sunset ceremony.",
+    name: "Our Lagnapatrika",
+    subtitle: "The Vow Parchment",
+    type: "Archival Manuscript / 3D Model",
+    material: "Aged Handmade Paper, Dark Wood & Gold Rollers",
+    inscription: "“Traditional Kalyanam vows of Rahul & Sneha, preserved in 3D interactive clarity.”",
+    story: "Unrolled antique scroll featuring traditional gold Telugu blessing 'శ్రీరస్తు' (Sreerastu) and handwritten Tenglish wedding vows, mounted on ornate wood and gold finials.",
+    teluguStory: "Peddalu andaru ashirvadinchi rasina lagnapatrika. Sannayi melam, jeelakarra bellam kshanalu indulo unnay.",
     color: "#F3E5AB",
-    interactive: false
+    interactive: true
   },
   {
     id: "vault-flutes",
-    name: "The Crystal Toast Flutes",
-    type: "Ceremonial Glassware",
-    material: "Hand-Blown Venetian Crystal with 24K Leaf",
-    inscription: "“To a hundred summers”",
-    story: "Specially commissioned flutes raised during the midnight lake fireworks to toast to the next fifty years.",
+    name: "Toast Flutes",
+    subtitle: "Maa Glassware",
+    type: "Celebration Glassware / 3D Model",
+    material: "Slender Venetian Crystal with 24K Gold Foil Trim",
+    inscription: "“To our laughter, our travels & lifelong tomorrows”",
+    story: "Two slender crystal champagne flutes with elongated stems and 24K gold foil trim, reflecting golden effervescence and warm wedding celebration memories.",
+    teluguStory: "Pelli taruvatha andari mundhu chesina first toast. Anandam tho nindina mana celebration glasses.",
     color: "#FFFFFF",
-    interactive: false
+    interactive: true
   }
 ];
 
