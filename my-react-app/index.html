@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23D4AF37'><path d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/></svg>" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EVERLASTING — Interactive 3D Wedding Memory Archive</title>
+    <meta name="description" content="A private cinematic interactive 3D spatial archive celebrating our love story, marriage milestones, vows, and digital keepsakes." />
+    
+    <!-- Google Fonts: Cinzel, Playfair Display, Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN with configuration -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              midnight: '#08090E',
+              'midnight-card': 'rgba(16, 18, 27, 0.75)',
+              gold: {
+                50: '#FDFBF7',
+                100: '#F9F5EA',
+                200: '#F3E5AB',
+                300: '#E5CD7C',
+                400: '#DFBE5B',
+                500: '#D4AF37',
+                600: '#B89225',
+                700: '#8E6F18',
+                800: '#644D0F',
+                900: '#3D2E08',
+              }
+            },
+            fontFamily: {
+              cinzel: ['Cinzel', 'serif'],
+              serif: ['"Playfair Display"', 'Cinzel', 'serif'],
+              sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            },
+            boxShadow: {
+              'gold-glow': '0 0 25px rgba(212, 175, 55, 0.25)',
+              'gold-glow-lg': '0 0 45px rgba(212, 175, 55, 0.4)',
+              'gold-subtle': '0 0 15px rgba(212, 175, 55, 0.12)',
+              'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.5)',
+            },
+            animation: {
+              'pulse-subtle': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              'float': 'float 6s ease-in-out infinite',
+              'spin-slow': 'spin 18s linear infinite',
+              'shimmer': 'shimmer 2.5s linear infinite',
+            },
+            keyframes: {
+              float: {
+                '0%, 100%': { transform: 'translateY(0px)' },
+                '50%': { transform: 'translateY(-8px)' },
+              },
+              shimmer: {
+                '0%': { backgroundPosition: '-200% 0' },
+                '100%': { backgroundPosition: '200% 0' },
+              }
+            }
+          }
+        }
+      }
+    </script>
+    
+    <!-- Three.js (r128) for 3D timeline ribbons and artifact vault -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- GSAP for ultra-smooth animations, timelines, and spatial motion -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <!-- Lenis Smooth Scroll (Huy Phan signature feel) -->
+    <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
+    <!-- Canvas Confetti for celebrations -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.4/dist/confetti.browser.min.js"></script>
+  </head>
+  <body class="bg-[#08090E] text-[#F3E5AB] antialiased overflow-x-hidden selection:bg-[#D4AF37]/30 selection:text-[#FFF]">
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
