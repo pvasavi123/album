@@ -2,202 +2,177 @@ export const chapters = [
   {
     id: "chap-1",
     year: "2018",
-    date: "October 14, 2018",
-    title: "Chapter 1 – How We Met",
-    subtitle: "A serendipitous rainy afternoon at Café de Flore",
-    location: "Saint-Germain-des-Prés, Paris",
-    summary: "Two strangers caught in an autumn downpour sharing the last dry table under the awning, arguing over art and ending with espresso and three hours of laughter.",
-    quote: "“You spilled coffee on my notebook, apologized three times, and then asked for my name.”",
-    badge: "The Beginning",
+    date: "November 18, 2018",
+    title: "Chapter 1 – First Chai Date",
+    subtitle: "One Irani chai, two samosas, and non-stop kaburlu",
+    location: "Niloufer Café, Hyderabad",
+    summary: "One Irani chai, two samosas, and non-stop kaburlu. Appude anipinchindi, this is special.",
+    quote: "“Appude anipinchindi, this person is going to be my forever conversation.”",
+    badge: "First Date",
+    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-young-couple-talking-and-drinking-coffee-in-a-cafe-42795-large.mp4",
     image: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=1400&q=80",
     videoThumbnail: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=1400&q=80",
     media: [
       {
-        type: "image",
-        url: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=1600&q=85",
-        caption: "Our first table on Boulevard Saint-Germain"
-      },
-      {
-        type: "image",
-        url: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1600&q=85",
-        caption: "Walking across Pont des Arts as the evening lights flared"
+        type: "video",
+        url: "https://assets.mixkit.co/videos/preview/mixkit-young-couple-talking-and-drinking-coffee-in-a-cafe-42795-large.mp4",
+        caption: "Laughing over steaming cups of chai and hot samosas"
       },
       {
         type: "image",
         url: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=1600&q=85",
-        caption: "The café journal where our first doodle remains"
+        caption: "Our first café corner table where three hours felt like three minutes"
       }
     ],
-    details: "That autumn afternoon began with sudden rain and ended with an unspoken understanding that neither of us wanted the evening to finish. We walked five miles through Paris without feeling the cold.",
+    details: "One Irani chai, two samosas, and non-stop kaburlu. Appude anipinchindi, this is special.",
     zPos: 0,
     accent: "#D4AF37"
   },
   {
     id: "chap-2",
-    year: "2022",
-    date: "June 21, 2022",
-    title: "Chapter 2 – The Proposal",
-    subtitle: "Sunset cliffside on the Amalfi Coast",
-    location: "Positano, Italy",
-    summary: "High above the Tyrrhenian Sea as dusk bathed the cliffs in warm terracotta and amber, a question asked under a canopy of blooming bougainvillea.",
-    quote: "“The world went completely quiet. When you opened the little velvet box, the whole horizon mirrored gold.”",
-    badge: "The Promise",
-    image: "https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=1400&q=80",
-    videoThumbnail: "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=1400&q=80",
+    year: "2021",
+    date: "July 24, 2021",
+    title: "Chapter 2 – The Hilltop Trip",
+    subtitle: "Scenic road trip drive through mist and hills",
+    location: "Ananthagiri Hills & Araku Valley",
+    summary: "Car puncture ayyindi during rain, but we shared hot corn and old songs. Pure memories.",
+    quote: "“Rain on the windshield, Kishore Kumar melodies, and steaming hot makka butta.”",
+    badge: "Road Trip",
+    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-couple-in-a-car-looking-at-the-landscape-43183-large.mp4",
+    image: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=1400&q=80",
+    videoThumbnail: "https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=1400&q=80",
     media: [
       {
-        type: "image",
-        url: "https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=1600&q=85",
-        caption: "Sunset over Positano cliffs seconds before the proposal"
+        type: "video",
+        url: "https://assets.mixkit.co/videos/preview/mixkit-couple-in-a-car-looking-at-the-landscape-43183-large.mp4",
+        caption: "Driving together through winding misty ghat roads"
       },
       {
         type: "image",
-        url: "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=1600&q=85",
-        caption: "The radiant cut diamond catching the Mediterranean sun"
-      },
-      {
-        type: "image",
-        url: "https://images.unsplash.com/photo-1469371670807-013ccf25f16a?auto=format&fit=crop&w=1600&q=85",
-        caption: "Toasting with vintage Franciacorta by the cliff edge"
+        url: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=1600&q=85",
+        caption: "Waiting out the drizzle under the eucalyptus trees"
       }
     ],
-    details: "Four years of growing together led to this evening. With the sun melting into the Mediterranean waters, Elena said yes before the question was even fully whispered.",
+    details: "Car puncture ayyindi during rain, but we shared hot corn and old songs. Pure memories.",
     zPos: 1,
     accent: "#F3E5AB"
   },
   {
     id: "chap-3",
-    year: "2024",
-    date: "September 18, 2024",
-    title: "Chapter 3 – The Wedding Day",
-    subtitle: "Exchanging vows surrounded by candlelit arches and loved ones",
-    location: "Villa Balbianello, Lake Como",
-    summary: "Our marriage ceremony under ancient cypress trees overlooking Lake Como, followed by a champagne toast, our first dance beneath fairy lights, and lifelong vows.",
-    quote: "“I choose you today, in this quiet moment and in every storm to come, for all my tomorrows.”",
-    badge: "View Ceremony 3D",
-    highlight: true,
-    image: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1400&q=80",
-    videoThumbnail: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1400&q=80",
+    year: "2023",
+    date: "October 10, 2023",
+    title: "Chapter 3 – Peddalu Kudirchina Match",
+    subtitle: "Families meeting, smiling, and exchanging sweets",
+    location: "Family Courtyard, Vijayawada",
+    summary: "Nervous smiles during pelli choopulu. Within minutes, family said 'Pakka idi fix!'",
+    quote: "“Kallaloki choodagane tension poyindi. Peddalu andaru full happy!”",
+    badge: "Pelli Choopulu",
+    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-family-gathered-around-a-table-laughing-42884-large.mp4",
+    image: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1400&q=80",
+    videoThumbnail: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1400&q=80",
     media: [
       {
-        type: "image",
-        url: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1600&q=85",
-        caption: "The altar framed with white garden roses and olive branches"
+        type: "video",
+        url: "https://assets.mixkit.co/videos/preview/mixkit-family-gathered-around-a-table-laughing-42884-large.mp4",
+        caption: "Families laughing together and exchanging traditional sweets"
       },
       {
         type: "image",
-        url: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1600&q=85",
-        caption: "First dance under the grand crystal chandelier arbor"
-      },
-      {
-        type: "image",
-        url: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1600&q=85",
-        caption: "Golden hour boat departure across Lake Como"
-      },
-      {
-        type: "image",
-        url: "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=1600&q=85",
-        caption: "Exchanging gold bands crafted with inner engravings"
+        url: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1600&q=85",
+        caption: "The silver sweet platter and first blessings from elders"
       }
     ],
-    details: "Eighty of our dearest family and friends traveled across continents. The string quartet played Debussy's Clair de Lune as Elena walked the aisle, and as dusk settled, fireworks bloomed across the water.",
+    details: "Nervous smiles during pelli choopulu. Within minutes, family said 'Pakka idi fix!'",
     zPos: 2,
     accent: "#D4AF37"
   },
   {
     id: "chap-4",
     year: "2024",
-    date: "October 02, 2024",
-    title: "Chapter 4 – The Honeymoon",
-    subtitle: "Overwater sanctuary and starlit lagoons",
-    location: "Bora Bora, French Polynesia",
-    summary: "Secluded bliss suspended above turquoise waters, waking up to the gentle lap of the ocean lagoon, night scuba dives, and unhurried days.",
-    quote: "“Floating together between the endless Pacific sky and coral reefs, without any clocks or alarms.”",
-    badge: "The Voyage",
-    image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1400&q=80",
-    videoThumbnail: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1400&q=80",
+    date: "September 18, 2024",
+    title: "Chapter 4 – Kalyanam & Jeelakarra Bellam",
+    subtitle: "Traditional South Indian wedding vows & akshinthalu",
+    location: "Kalyana Mandapam, Hyderabad",
+    summary: "Sannayi melam, holy mantras, and lifelong promises made in front of everyone.",
+    quote: "“Jeelakarra bellam pettina kshanam, time aagipoyinattu anipinchindi.”",
+    badge: "Subha Muhurtham",
+    highlight: true,
+    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-bride-and-groom-celebrating-with-confetti-42881-large.mp4",
+    image: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1400&q=80",
+    videoThumbnail: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1400&q=80",
     media: [
       {
-        type: "image",
-        url: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=85",
-        caption: "Our private overwater bungalow deck at dawn"
+        type: "video",
+        url: "https://assets.mixkit.co/videos/preview/mixkit-bride-and-groom-celebrating-with-confetti-42881-large.mp4",
+        caption: "Akshinthalu showers, mangalasutram, and joyful wedding vows"
       },
       {
         type: "image",
-        url: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1600&q=85",
-        caption: "Dipping our feet in crystalline warm turquoise waters"
-      },
-      {
-        type: "image",
-        url: "https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?auto=format&fit=crop&w=1600&q=85",
-        caption: "Private candlelit beach dinner beneath the Southern Cross"
+        url: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1600&q=85",
+        caption: "Talambralu fun and smiles surrounded by friends and family"
       }
     ],
-    details: "Two weeks unplugged from the world. Every morning breakfast was delivered by wooden outrigger canoe, and each dusk was painted in magenta and liquid gold.",
+    details: "Sannayi melam, holy mantras, and lifelong promises made in front of everyone.",
     zPos: 3,
-    accent: "#F3E5AB"
+    accent: "#D4AF37"
   },
   {
     id: "chap-5",
     year: "2025",
     date: "March 15, 2025",
-    title: "Chapter 5 – Our First Home",
-    subtitle: "The golden key to our sanctuary and next chapter",
-    location: "Kyoto Hills Sanctuary / The Glass Villa",
-    summary: "Unlocking the doorway to the home we designed together, filling tall oak bookshelves, planting Japanese maple saplings, and building our forever nest.",
-    quote: "“The key was heavy brass in my palm. You turned it in the lock, looked back at me, and whispered: We are home.”",
-    badge: "Forever Begins",
-    isKeyNode: true,
+    title: "Chapter 5 – Gruhapravesam",
+    subtitle: "Walking into our new home and boiling auspicious milk",
+    location: "Our Forever Home, Gachibowli",
+    summary: "Boiling milk in our new kitchen and eating dinner on the floor. First home happiness.",
+    quote: "“Paalu pongina santhosham, illu mottam chindina velugu. Mana kottha prapancham.”",
+    badge: "Kottha Illu",
+    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-couple-entering-their-new-home-43187-large.mp4",
     image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1400&q=80",
-    videoThumbnail: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1400&q=80",
+    videoThumbnail: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1400&q=80",
     media: [
+      {
+        type: "video",
+        url: "https://assets.mixkit.co/videos/preview/mixkit-couple-entering-their-new-home-43187-large.mp4",
+        caption: "Stepping inside our home with right foot forward and wide smiles"
+      },
       {
         type: "image",
         url: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=85",
-        caption: "The sun-drenched living room framed by natural cedar and glass"
-      },
-      {
-        type: "image",
-        url: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1600&q=85",
-        caption: "The garden terrace where our morning tea takes place"
-      },
-      {
-        type: "image",
-        url: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1600&q=85",
-        caption: "Engraved brass key resting on our white marble kitchen island"
+        caption: "Rangoli at the threshold and boiling fresh milk in the brass vessel"
       }
     ],
-    details: "Moving in during the early spring bloom. Our first dinner on a cardboard moving box with a single candle, celebrating the foundation of a lifetime together.",
+    details: "Boiling milk in our new kitchen and eating dinner on the floor. First home happiness.",
     zPos: 4,
-    accent: "#D4AF37"
+    accent: "#F3E5AB"
   },
   {
     id: "chap-6",
     year: "2026",
-    date: "September 18, 2026",
-    title: "Chapter 6 – Two Years of Us",
-    subtitle: "Anniversary reflections and lifelong memories in our sanctuary",
-    location: "Lake Como & Kyoto Sanctuary",
-    summary: "Reflecting on two years of marriage, countless sunsets together, shared dreams turned into reality, and looking forward to an eternity of tomorrows.",
-    quote: "“Two years of laughter, growth, and unconditional love. The story is only just beginning.”",
-    badge: "Anniversary",
-    image: "https://images.unsplash.com/photo-1529636798458-92182e662485?auto=format&fit=crop&w=1400&q=80",
-    videoThumbnail: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1400&q=80",
+    date: "October 11, 2026",
+    title: "Chapter 6 – Everyday Life",
+    subtitle: "Cooking dinner together at night and laughing",
+    location: "Our Cozy Living Room & Balcony",
+    summary: "Fighting for the TV remote, sunday filter coffee, and small sweet moments.",
+    quote: "“Pedda pedda plans kante, ee chinna chinna moments ae mana asalu premalo andham.”",
+    badge: "Anandam",
+    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-young-couple-cooking-together-in-the-kitchen-42796-large.mp4",
+    image: "https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=1400&q=80",
+    videoThumbnail: "https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=1400&q=80",
     media: [
       {
-        type: "image",
-        url: "https://images.unsplash.com/photo-1529636798458-92182e662485?auto=format&fit=crop&w=1600&q=85",
-        caption: "Second anniversary toast overlooking the garden"
+        type: "video",
+        url: "https://assets.mixkit.co/videos/preview/mixkit-young-couple-cooking-together-in-the-kitchen-42796-large.mp4",
+        caption: "Cooking dinner together, sharing spoons, and teasing each other"
       },
       {
         type: "image",
-        url: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1600&q=85",
-        caption: "Revisiting our vow parchment two years later"
+        url: "https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=1600&q=85",
+        caption: "Late evening balcony coffee enjoying the city breeze"
       }
     ],
-    details: "Celebrating two years of marriage with handwritten letters to each other, listening back to our vows recording, and toasting to our future adventures.",
+    details: "Fighting for the TV remote, sunday filter coffee, and small sweet moments.",
     zPos: 5,
-    accent: "#F3E5AB"
+    accent: "#D4AF37"
   }
 ];
 

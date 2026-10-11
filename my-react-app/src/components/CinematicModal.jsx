@@ -85,13 +85,25 @@ export const CinematicModal = ({ chapter, onClose, onSelectNext, onSelectPrev })
           <div className="absolute top-0 left-0 right-0 h-4 sm:h-7 bg-black z-10 pointer-events-none" />
           <div className="absolute bottom-0 left-0 right-0 h-4 sm:h-7 bg-black z-10 pointer-events-none" />
 
-          {/* Active Media Image with Crossfade */}
-          <img
-            key={currentMedia.url}
-            src={currentMedia.url}
-            alt={currentMedia.caption}
-            className="w-full h-full object-cover sm:object-contain animate-fadeIn transition-all duration-700"
-          />
+          {/* Active Media Video or Image with Crossfade */}
+          {currentMedia.type === 'video' || (currentMedia.url && currentMedia.url.endsWith('.mp4')) ? (
+            <video
+              key={currentMedia.url}
+              src={currentMedia.url}
+              autoPlay
+              loop
+              controls
+              playsInline
+              className="w-full h-full object-contain animate-fadeIn"
+            />
+          ) : (
+            <img
+              key={currentMedia.url}
+              src={currentMedia.url}
+              alt={currentMedia.caption}
+              className="w-full h-full object-cover sm:object-contain animate-fadeIn transition-all duration-700"
+            />
+          )}
 
           {/* Carousel Arrows */}
           <button

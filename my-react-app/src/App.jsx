@@ -139,11 +139,11 @@ export function App() {
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-6 text-xs text-[#F3E5AB]/60 uppercase tracking-widest pt-2">
-            <span>Julian & Elena</span>
+            <span>Rahul & Sneha</span>
             <span>•</span>
             <span>Est. September 18, 2024</span>
             <span>•</span>
-            <span>Private Family Archive</span>
+            <span>Our Forever Journey</span>
           </div>
 
           <p className="text-[10px] text-white/30 pt-4 font-sans">

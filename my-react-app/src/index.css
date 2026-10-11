@@ -10,7 +10,9 @@
     color: #F3E5AB;
     font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
     scroll-behavior: smooth;
+    scroll-padding-top: 80px;
     overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
   }
 
   /* Custom luxury scrollbar */

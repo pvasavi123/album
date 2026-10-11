@@ -30,21 +30,46 @@ export const VaultSection = () => {
     container.innerHTML = '';
     container.appendChild(renderer.domElement);
 
-    // Lights
-    const ambLight = new THREE.AmbientLight(0xfff7e6, 1.0);
+    // Warm Studio Spotlight & Lighting Setup
+    const ambLight = new THREE.AmbientLight(0xfff7e6, 1.2);
     scene.add(ambLight);
 
-    const keyLight = new THREE.DirectionalLight(0xffebad, 2.8);
-    keyLight.position.set(5, 7, 6);
-    scene.add(keyLight);
+    const spotLight = new THREE.SpotLight(0xfffaed, 3.2);
+    spotLight.position.set(2, 6, 5);
+    spotLight.angle = Math.PI / 4;
+    spotLight.penumbra = 0.8;
+    scene.add(spotLight);
 
-    const fillLight = new THREE.DirectionalLight(0xd4af37, 1.8);
-    fillLight.position.set(-6, -3, 3);
+    const fillLight = new THREE.DirectionalLight(0xd4af37, 1.6);
+    fillLight.position.set(-5, -2, 3);
     scene.add(fillLight);
 
-    const backLight = new THREE.DirectionalLight(0xffffff, 2.0);
-    backLight.position.set(0, -5, -4);
+    const backLight = new THREE.DirectionalLight(0xffe8b5, 1.8);
+    backLight.position.set(0, -4, -3);
     scene.add(backLight);
+
+    // Soft Contact Shadow Underneath
+    const shadowGeo = new THREE.PlaneGeometry(3.6, 3.6);
+    const shadowCanvas = document.createElement('canvas');
+    shadowCanvas.width = 128;
+    shadowCanvas.height = 128;
+    const sctx = shadowCanvas.getContext('2d');
+    const shadowGrad = sctx.createRadialGradient(64, 64, 0, 64, 64, 64);
+    shadowGrad.addColorStop(0, 'rgba(0,0,0,0.65)');
+    shadowGrad.addColorStop(0.5, 'rgba(0,0,0,0.25)');
+    shadowGrad.addColorStop(1, 'rgba(0,0,0,0)');
+    sctx.fillStyle = shadowGrad;
+    sctx.fillRect(0, 0, 128, 128);
+    const shadowTex = new THREE.CanvasTexture(shadowCanvas);
+    const shadowMat = new THREE.MeshBasicMaterial({
+      map: shadowTex,
+      transparent: true,
+      depthWrite: false,
+    });
+    const shadowMesh = new THREE.Mesh(shadowGeo, shadowMat);
+    shadowMesh.rotation.x = -Math.PI / 2;
+    shadowMesh.position.y = -1.85;
+    scene.add(shadowMesh);
 
     // Dynamic Artifact Group
     const group = new THREE.Group();
@@ -133,23 +158,209 @@ export const VaultSection = () => {
       base.position.set(0, -1.8, 0);
       group.add(base);
     } else {
-      // 4. Archival Vow Scroll
-      const scrollBody = new THREE.Mesh(new THREE.CylinderGeometry(0.8, 0.8, 2.4, 32, 1, false, 0, Math.PI * 1.6), goldMat);
-      scrollBody.rotation.z = Math.PI / 2;
-      group.add(scrollBody);
+      // =========================================================
+      // 4. Antique Archival Vow Parchment Scroll (Detailed Mesh & PBR)
+      // =========================================================
+      // Generate realistic vintage calligraphy texture via procedural HTML5 Canvas
+      const parchmentCanvas = document.createElement('canvas');
+      parchmentCanvas.width = 1024;
+      parchmentCanvas.height = 1024;
+      const pctx = parchmentCanvas.getContext('2d');
 
-      const roller1 = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.12, 3.0, 16), goldMat);
-      roller1.rotation.z = Math.PI / 2;
-      roller1.position.set(0, 0.8, 0);
-      group.add(roller1);
+      // 1. Aged Parchment Gradient Background
+      const bgGrad = pctx.createLinearGradient(0, 0, 1024, 1024);
+      bgGrad.addColorStop(0, '#f9ecd1');
+      bgGrad.addColorStop(0.3, '#ebd4a8');
+      bgGrad.addColorStop(0.7, '#deb887');
+      bgGrad.addColorStop(1, '#caa067');
+      pctx.fillStyle = bgGrad;
+      pctx.fillRect(0, 0, 1024, 1024);
 
-      const roller2 = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.12, 3.0, 16), goldMat);
-      roller2.rotation.z = Math.PI / 2;
-      roller2.position.set(0, -0.8, 0);
-      group.add(roller2);
+      // Aged vintage stains & fiber noise
+      for (let i = 0; i < 1800; i++) {
+        pctx.fillStyle = `rgba(${120 + Math.random() * 60}, ${80 + Math.random() * 40}, 20, ${0.03 + Math.random() * 0.05})`;
+        pctx.beginPath();
+        pctx.arc(Math.random() * 1024, Math.random() * 1024, Math.random() * 30 + 5, 0, Math.PI * 2);
+        pctx.fill();
+      }
+
+      // Burned / aged vintage borders
+      const borderGradX = pctx.createLinearGradient(0, 0, 1024, 0);
+      borderGradX.addColorStop(0, 'rgba(68, 42, 14, 0.7)');
+      borderGradX.addColorStop(0.08, 'rgba(68, 42, 14, 0.15)');
+      borderGradX.addColorStop(0.5, 'rgba(255, 255, 255, 0)');
+      borderGradX.addColorStop(0.92, 'rgba(68, 42, 14, 0.15)');
+      borderGradX.addColorStop(1, 'rgba(68, 42, 14, 0.7)');
+      pctx.fillStyle = borderGradX;
+      pctx.fillRect(0, 0, 1024, 1024);
+
+      // Ornate Gold Double Filigree Border
+      pctx.strokeStyle = '#b8860b';
+      pctx.lineWidth = 6;
+      pctx.strokeRect(60, 60, 904, 904);
+      pctx.strokeStyle = '#d4af37';
+      pctx.lineWidth = 2;
+      pctx.strokeRect(75, 75, 874, 874);
+
+      // Antique Telugu / English Vow Calligraphy Text
+      pctx.textAlign = 'center';
+      pctx.fillStyle = '#6b4423'; // Rich Sepia Ink
+      pctx.font = 'bold 36px "Cinzel", "Playfair Display", serif';
+      pctx.fillText('SACRED WEDDING COVENANT', 512, 160);
+
+      pctx.strokeStyle = '#d4af37';
+      pctx.lineWidth = 2;
+      pctx.beginPath();
+      pctx.moveTo(300, 190);
+      pctx.lineTo(724, 190);
+      pctx.stroke();
+
+      pctx.fillStyle = '#8a5a2b';
+      pctx.font = 'italic 25px "Playfair Display", serif';
+      pctx.fillText('Rahul & Sneha • Est. September 18, 2024', 512, 240);
+
+      // Handwritten cursive vows in Sepia with gold reflections
+      pctx.fillStyle = '#4a3018';
+      pctx.font = '22px "Playfair Display", serif';
+      const vowLines = [
+        '“In the presence of our beloved families and holy agni,”',
+        '“We weave our hearts together for all seven lifetimes.”',
+        '',
+        '“Sannayi melam, jeelakarra bellam kshanam lo,”',
+        '“Mana kalalu, mana aashalu okatiga kalisipoyayi.”',
+        '',
+        '“I promise to stand with you through every rain and sunrise,”',
+        '“Laughing at our silly jokes and building our forever home.”',
+        '',
+        '“From the first chai cup to our everyday laughter,”',
+        '“You are my today, my tomorrow, and my eternity.”'
+      ];
+      vowLines.forEach((line, idx) => {
+        pctx.fillText(line, 512, 320 + idx * 42);
+      });
+
+      // Signature & Wax Seal impression at bottom
+      pctx.fillStyle = '#8b2500';
+      pctx.beginPath();
+      pctx.arc(512, 850, 48, 0, Math.PI * 2);
+      pctx.fill();
+      pctx.strokeStyle = '#ffd700';
+      pctx.lineWidth = 3;
+      pctx.stroke();
+      pctx.fillStyle = '#ffd700';
+      pctx.font = 'bold 20px "Cinzel", serif';
+      pctx.fillText('FOREVER', 512, 858);
+
+      const parchmentTex = new THREE.CanvasTexture(parchmentCanvas);
+      parchmentTex.anisotropy = 8;
+
+      // PBR Materials for Antique Scroll
+      const parchmentMat = new THREE.MeshStandardMaterial({
+        map: parchmentTex,
+        roughness: 0.85,
+        metalness: 0.05,
+        bumpScale: 0.02,
+        side: THREE.DoubleSide,
+      });
+
+      const goldRodMat = new THREE.MeshStandardMaterial({
+        color: 0xdfbe5b,
+        metalness: 0.85,
+        roughness: 0.28,
+        emissive: 0x2d1f05,
+        emissiveIntensity: 0.15,
+      });
+
+      const darkWoodMat = new THREE.MeshStandardMaterial({
+        color: 0x3d2110,
+        metalness: 0.15,
+        roughness: 0.6,
+      });
+
+      const scrollGroup = new THREE.Group();
+
+      // Middle Unrolled Sheet (curved slightly for realism)
+      const sheetGeo = new THREE.PlaneGeometry(2.3, 2.7, 32, 32);
+      const posAttr = sheetGeo.attributes.position;
+      for (let i = 0; i < posAttr.count; i++) {
+        const y = posAttr.getY(i);
+        // Soft parabolic curve outward
+        const zCurve = Math.cos((y / 1.35) * Math.PI * 0.5) * 0.15;
+        posAttr.setZ(i, zCurve);
+      }
+      sheetGeo.computeVertexNormals();
+
+      const parchmentSheet = new THREE.Mesh(sheetGeo, parchmentMat);
+      scrollGroup.add(parchmentSheet);
+
+      // Top Rolled Paper Cylinder
+      const topRollPaper = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.16, 0.16, 2.4, 32),
+        parchmentMat
+      );
+      topRollPaper.rotation.z = Math.PI / 2;
+      topRollPaper.position.set(0, 1.4, 0.08);
+      scrollGroup.add(topRollPaper);
+
+      // Bottom Rolled Paper Cylinder
+      const bottomRollPaper = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.18, 0.18, 2.4, 32),
+        parchmentMat
+      );
+      bottomRollPaper.rotation.z = Math.PI / 2;
+      bottomRollPaper.position.set(0, -1.4, 0.08);
+      scrollGroup.add(bottomRollPaper);
+
+      // Top Rod Spindle (Wooden & Gold Spindle running through scroll)
+      const topSpindle = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.08, 0.08, 2.9, 24),
+        darkWoodMat
+      );
+      topSpindle.rotation.z = Math.PI / 2;
+      topSpindle.position.set(0, 1.4, 0.08);
+      scrollGroup.add(topSpindle);
+
+      // Bottom Rod Spindle
+      const bottomSpindle = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.08, 0.08, 2.9, 24),
+        darkWoodMat
+      );
+      bottomSpindle.rotation.z = Math.PI / 2;
+      bottomSpindle.position.set(0, -1.4, 0.08);
+      scrollGroup.add(bottomSpindle);
+
+      // 4 Ornate Gold Finial Knobs on Rod Ends
+      const finialPositions = [
+        [1.48, 1.4, 0.08],
+        [-1.48, 1.4, 0.08],
+        [1.48, -1.4, 0.08],
+        [-1.48, -1.4, 0.08],
+      ];
+      finialPositions.forEach(([x, y, z]) => {
+        const knob = new THREE.Mesh(new THREE.SphereGeometry(0.14, 20, 20), goldRodMat);
+        knob.position.set(x, y, z);
+        scrollGroup.add(knob);
+
+        const ringTip = new THREE.Mesh(new THREE.TorusGeometry(0.09, 0.025, 12, 24), goldRodMat);
+        ringTip.position.set(x > 0 ? x + 0.08 : x - 0.08, y, z);
+        ringTip.rotation.y = Math.PI / 2;
+        scrollGroup.add(ringTip);
+      });
+
+      // Ribbon tie dangling softly at center
+      const ribbon = new THREE.Mesh(
+        new THREE.TorusGeometry(0.2, 0.02, 12, 32, Math.PI * 1.4),
+        goldRodMat
+      );
+      ribbon.rotation.x = Math.PI / 2;
+      ribbon.position.set(0, -1.45, 0.22);
+      scrollGroup.add(ribbon);
+
+      scrollGroup.rotation.y = 0.15;
+      group.add(scrollGroup);
     }
 
-    // Drag Rotate listeners
+    // Drag Rotate listeners (Mouse & Touch for full mobile responsiveness)
     const onMouseDown = (e) => {
       isDragging.current = true;
       prevMousePos.current = { x: e.clientX, y: e.clientY };
@@ -168,17 +379,47 @@ export const VaultSection = () => {
       isDragging.current = false;
     };
 
+    const onTouchStart = (e) => {
+      if (!e.touches || e.touches.length === 0) return;
+      isDragging.current = true;
+      prevMousePos.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    };
+
+    const onTouchMove = (e) => {
+      if (!isDragging.current || !meshGroupRef.current || !e.touches || e.touches.length === 0) return;
+      const dx = e.touches[0].clientX - prevMousePos.current.x;
+      const dy = e.touches[0].clientY - prevMousePos.current.y;
+      meshGroupRef.current.rotation.y += dx * 0.015;
+      meshGroupRef.current.rotation.x += dy * 0.015;
+      prevMousePos.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    };
+
+    const onTouchEnd = () => {
+      isDragging.current = false;
+    };
+
     const dom = renderer.domElement;
     dom.addEventListener('mousedown', onMouseDown);
     window.addEventListener('mousemove', onMouseMove);
     window.addEventListener('mouseup', onMouseUp);
 
-    // Render loop
+    dom.addEventListener('touchstart', onTouchStart, { passive: true });
+    window.addEventListener('touchmove', onTouchMove, { passive: true });
+    window.addEventListener('touchend', onTouchEnd);
+
+    // Render loop with smooth floating idle animation
     let reqId;
+    let clock = new THREE.Clock();
     const animate = () => {
       reqId = requestAnimationFrame(animate);
-      if (meshGroupRef.current && isAutoSpin && !isDragging.current) {
-        meshGroupRef.current.rotation.y += 0.008;
+      const elapsed = clock.getElapsedTime();
+
+      if (meshGroupRef.current) {
+        if (isAutoSpin && !isDragging.current) {
+          meshGroupRef.current.rotation.y += 0.007;
+        }
+        // Subtle floating idle bobbing
+        meshGroupRef.current.position.y = Math.sin(elapsed * 1.5) * 0.08;
       }
       renderer.render(scene, camera);
     };
@@ -199,6 +440,9 @@ export const VaultSection = () => {
       dom.removeEventListener('mousedown', onMouseDown);
       window.removeEventListener('mousemove', onMouseMove);
       window.removeEventListener('mouseup', onMouseUp);
+      dom.removeEventListener('touchstart', onTouchStart);
+      window.removeEventListener('touchmove', onTouchMove);
+      window.removeEventListener('touchend', onTouchEnd);
       window.removeEventListener('resize', handleResize);
       renderer.dispose();
       if (container) container.innerHTML = '';

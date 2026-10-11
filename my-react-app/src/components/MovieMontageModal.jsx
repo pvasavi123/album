@@ -95,13 +95,26 @@ export const MovieMontageModal = ({ isOpen, onClose }) => {
       <div className="relative w-full max-w-6xl aspect-[21/9] sm:aspect-[16/9] max-h-[80vh] overflow-hidden rounded-3xl border border-[#D4AF37]/35 shadow-[0_0_80px_rgba(212,175,55,0.25)] flex items-center justify-center bg-black">
         {/* Animated Background Media with Slow Cinematic Pan */}
         <div className="absolute inset-0 overflow-hidden">
-          <img
-            key={currentChapter.id}
-            src={currentChapter.image}
-            alt={currentChapter.title}
-            className="w-full h-full object-cover animate-pulse-subtle scale-105 transition-all duration-1000 ease-out"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-black/60" />
+          {currentChapter.videoUrl ? (
+            <video
+              key={currentChapter.id}
+              src={currentChapter.videoUrl}
+              poster={currentChapter.image}
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="w-full h-full object-cover scale-105 transition-all duration-1000 ease-out"
+            />
+          ) : (
+            <img
+              key={currentChapter.id}
+              src={currentChapter.image}
+              alt={currentChapter.title}
+              className="w-full h-full object-cover animate-pulse-subtle scale-105 transition-all duration-1000 ease-out"
+            />
+          )}
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-black/60 pointer-events-none" />
         </div>
 
         {/* Cinematic Subtitles & Title Cards */}
@@ -176,7 +189,7 @@ export const MovieMontageModal = ({ isOpen, onClose }) => {
           </div>
 
           <div className="text-[11px] uppercase tracking-widest text-[#F3E5AB]/60">
-            Preserved for Eternity • Julian & Elena
+            Preserved for Eternity • Rahul & Sneha
           </div>
         </div>
       </div>

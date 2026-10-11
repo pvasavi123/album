@@ -47,8 +47,8 @@ export const AddMemoryModal = ({ isOpen, onClose, onAddChapter }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fadeIn">
-      <div className="relative w-full max-w-lg glass-gold rounded-3xl p-6 sm:p-8 border border-[#D4AF37]/50 shadow-[0_0_50px_rgba(212,175,55,0.35)] overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-md animate-fadeIn overflow-y-auto">
+      <div className="relative w-full max-w-lg glass-gold rounded-3xl p-5 sm:p-8 border border-[#D4AF37]/50 shadow-[0_0_50px_rgba(212,175,55,0.35)] overflow-hidden my-auto max-h-[92vh] flex flex-col">
         {/* Shimmer line */}
         <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent" />
 
@@ -77,7 +77,7 @@ export const AddMemoryModal = ({ isOpen, onClose, onAddChapter }) => {
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="space-y-4 text-xs font-sans">
+        <form onSubmit={handleSubmit} className="space-y-4 text-xs font-sans overflow-y-auto pr-1">
           <div>
             <label className="block text-[#F3E5AB]/90 font-medium mb-1 tracking-wider uppercase text-[10px]">
               Chapter Title

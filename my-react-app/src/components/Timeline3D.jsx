@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import { PlayIcon, ChevronLeftIcon, ChevronRightIcon, SparklesIcon, CalendarIcon, MapPinIcon } from './Icons';
+import { PlayIcon, PauseIcon, ChevronLeftIcon, ChevronRightIcon, SparklesIcon, CalendarIcon, MapPinIcon, Volume2Icon, VolumeXIcon } from './Icons';
 
 export const Timeline3D = ({ chaptersList, onSelectChapter, onAddMemory, onPlayMovie }) => {
   const containerRef = useRef(null);
@@ -8,8 +8,10 @@ export const Timeline3D = ({ chaptersList, onSelectChapter, onAddMemory, onPlayM
   const ringCanvasRef = useRef(null);
 
   // Active index state (smoothly animated via GSAP)
-  const [activeIndex, setActiveIndex] = useState(2); // Start at Chapter 3 (The Wedding)
+  const [activeIndex, setActiveIndex] = useState(2); // Start at Chapter 3 (Peddalu Kudirchina Match)
   const activeIndexRef = useRef(2);
+  const [unmutedCardId, setUnmutedCardId] = useState(null);
+  const videoRefs = useRef({});
 
   // GSAP drag & momentum state
   const isDraggingRef = useRef(false);
@@ -184,13 +186,15 @@ export const Timeline3D = ({ chaptersList, onSelectChapter, onAddMemory, onPlayM
     const cards = document.querySelectorAll('.spatial-3d-card');
     if (!cards || cards.length === 0) return;
 
-    const isMobile = window.innerWidth < 640;
-    const isTablet = window.innerWidth >= 640 && window.innerWidth < 1024;
+    const width = window.innerWidth;
+    const isTinyMobile = width < 400;
+    const isMobile = width < 640;
+    const isTablet = width >= 640 && width < 1024;
 
-    // Responsive Spacing & Depth
-    const spacingX = isMobile ? 180 : isTablet ? 230 : 280;
-    const depthZ = isMobile ? 180 : isTablet ? 220 : 260;
-    const maxTilt = isMobile ? 18 : 25;
+    // Fluid responsive Spacing & Depth
+    const spacingX = isTinyMobile ? 140 : isMobile ? 175 : isTablet ? 230 : 280;
+    const depthZ = isTinyMobile ? 140 : isMobile ? 180 : isTablet ? 220 : 260;
+    const maxTilt = isMobile ? 16 : 24;
 
     cards.forEach((card, idx) => {
       const diff = idx - progress; // distance from center (can be fractional)
@@ -199,16 +203,17 @@ export const Timeline3D = ({ chaptersList, onSelectChapter, onAddMemory, onPlayM
       const translateX = diff * spacingX;
       const translateZ = -absDiff * depthZ;
       const rotateY = gsap ? gsap.utils.clamp(-maxTilt * 1.5, maxTilt * 1.5, -diff * maxTilt) : -diff * maxTilt;
-      const scale = Math.max(0.72, (isMobile ? 1.03 : 1.08) - absDiff * 0.13);
-      const opacity = Math.max(0.12, 1.0 - absDiff * (isMobile ? 0.38 : 0.32));
-      const blurPx = Math.max(0, (absDiff - 0.2) * (isMobile ? 4.0 : 5.5));
+      const baseScale = isTinyMobile ? 0.98 : isMobile ? 1.02 : 1.08;
+      const scale = Math.max(0.68, baseScale - absDiff * (isMobile ? 0.15 : 0.12));
+      const opacity = Math.max(0.12, 1.0 - absDiff * (isMobile ? 0.42 : 0.32));
+      const blurPx = Math.max(0, (absDiff - 0.25) * (isMobile ? 3.5 : 5.0));
       const zIndex = Math.round(100 - absDiff * 10);
 
       card.style.transform = `translateX(${translateX}px) translateZ(${translateZ}px) rotateY(${rotateY}deg) scale(${scale})`;
       card.style.opacity = opacity;
       card.style.filter = blurPx > 0.5 ? `blur(${blurPx}px)` : 'none';
       card.style.zIndex = zIndex;
-      card.style.pointerEvents = absDiff < 0.8 ? 'auto' : 'none';
+      card.style.pointerEvents = absDiff < 0.75 ? 'auto' : 'none';
 
       if (absDiff < 0.4) {
         card.classList.add('active-spatial-card');
@@ -217,6 +222,26 @@ export const Timeline3D = ({ chaptersList, onSelectChapter, onAddMemory, onPlayM
       }
     });
   }, []);
+
+  // Play/pause and mute/unmute management:
+  // Center active card plays with optional unmuted sound; neighboring cards stay muted and paused or quietly looping
+  useEffect(() => {
+    chaptersList.forEach((chap, idx) => {
+      const vid = videoRefs.current[chap.id];
+      if (!vid) return;
+
+      if (idx === activeIndex) {
+        // Center active card: plays smoothly
+        vid.muted = unmutedCardId !== chap.id;
+        vid.play().catch(() => {});
+      } else {
+        // Neighboring cards: keep muted
+        vid.muted = true;
+        // Keep looping seamlessly in background for instant responsiveness
+        vid.play().catch(() => {});
+      }
+    });
+  }, [activeIndex, unmutedCardId, chaptersList]);
 
   // Continuous physics RAF loop with damping
   useEffect(() => {
@@ -278,11 +303,29 @@ export const Timeline3D = ({ chaptersList, onSelectChapter, onAddMemory, onPlayM
     targetIndexRef.current = finalIndex;
   };
 
+  // Wheel / Trackpad Scrollview:
+  // Smoothly scrub through cards on horizontal swipe or touchpad gestures,
+  // without trapping vertical page scroll
+  const lastWheelTimeRef = useRef(0);
   const handleWheel = (e) => {
-    if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+    const isHorizontal = Math.abs(e.deltaX) > Math.abs(e.deltaY);
+    const now = performance.now();
+
+    if (isHorizontal) {
+      // Horizontal swipe on trackpad: scrub through timeline cards
+      if (Math.abs(e.deltaX) > 10 && now - lastWheelTimeRef.current > 180) {
+        lastWheelTimeRef.current = now;
+        const dir = e.deltaX > 0 ? 1 : -1;
+        targetIndexRef.current = Math.max(0, Math.min(totalChapters - 1, targetIndexRef.current + dir));
+      }
+    } else if (e.shiftKey) {
+      // Shift + Vertical Scroll: scrub horizontally
       e.preventDefault();
-      const delta = e.deltaX * 0.002;
-      targetIndexRef.current = Math.max(0, Math.min(totalChapters - 1, targetIndexRef.current + (delta > 0 ? 1 : -1)));
+      if (Math.abs(e.deltaY) > 8 && now - lastWheelTimeRef.current > 180) {
+        lastWheelTimeRef.current = now;
+        const dir = e.deltaY > 0 ? 1 : -1;
+        targetIndexRef.current = Math.max(0, Math.min(totalChapters - 1, targetIndexRef.current + dir));
+      }
     }
   };
 
@@ -364,10 +407,10 @@ export const Timeline3D = ({ chaptersList, onSelectChapter, onAddMemory, onPlayM
       {/* ========================================================= */}
       {/* 3D Spatial Carousel Stage */}
       {/* ========================================================= */}
-      <div className="relative z-10 w-full flex-1 flex items-center justify-center overflow-visible py-4 sm:py-6">
+      <div className="relative z-10 w-full flex-1 flex items-center justify-center overflow-visible py-2 sm:py-6 px-3">
         <div
           ref={cardsWrapperRef}
-          className="relative w-[300px] xs:w-[330px] sm:w-[440px] md:w-[480px] lg:w-[500px] h-[410px] sm:h-[460px] md:h-[490px] flex items-center justify-center"
+          className="relative w-[280px] xs:w-[320px] sm:w-[420px] md:w-[480px] lg:w-[500px] h-[390px] xs:h-[420px] sm:h-[460px] md:h-[490px] flex items-center justify-center"
           style={{ transformStyle: 'preserve-3d' }}
         >
           {chaptersList.map((chapter, idx) => {
@@ -410,24 +453,59 @@ export const Timeline3D = ({ chaptersList, onSelectChapter, onAddMemory, onPlayM
                   </span>
                 </div>
 
-                {/* Card Media Preview */}
-                <div className="relative w-full h-44 sm:h-52 md:h-60 rounded-2xl overflow-hidden border border-white/10 group-hover:border-[#D4AF37]/50 transition-colors my-2 sm:my-3">
-                  <img
-                    src={chapter.image}
-                    alt={chapter.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/30" />
+                {/* Card Media Preview (HTML5 Looping Video) */}
+                <div className="relative w-full h-44 sm:h-52 md:h-60 rounded-2xl overflow-hidden border border-white/10 group-hover:border-[#D4AF37]/50 transition-colors my-2 sm:my-3 bg-black">
+                  {chapter.videoUrl ? (
+                    <video
+                      ref={(el) => {
+                        if (el) videoRefs.current[chapter.id] = el;
+                      }}
+                      src={chapter.videoUrl}
+                      poster={chapter.image}
+                      autoPlay
+                      loop
+                      muted={unmutedCardId !== chapter.id || !isCenter}
+                      playsInline
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                  ) : (
+                    <img
+                      src={chapter.image}
+                      alt={chapter.title}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                  )}
+                  
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/30 pointer-events-none" />
 
-                  {/* Play Button Node */}
-                  <div className="absolute inset-0 flex items-center justify-center">
+                  {/* Play / Expand Button Node */}
+                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                     <div className="w-11 sm:w-13 h-11 sm:h-13 rounded-full bg-black/60 backdrop-blur-md border border-[#D4AF37] flex items-center justify-center text-[#D4AF37] shadow-[0_0_20px_rgba(212,175,55,0.6)] group-hover:scale-110 group-hover:bg-[#D4AF37] group-hover:text-black transition-all">
                       <PlayIcon className="w-5 sm:w-6 h-5 sm:h-6 ml-0.5" />
                     </div>
                   </div>
 
+                  {/* Center Audio Sound Toggle (Active Card Exclusive) */}
+                  {isCenter && chapter.videoUrl && (
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setUnmutedCardId((prev) => (prev === chapter.id ? null : chapter.id));
+                      }}
+                      className="absolute top-2.5 right-2.5 z-20 p-2 rounded-full bg-black/70 backdrop-blur-md border border-[#D4AF37]/60 text-[#D4AF37] hover:bg-[#D4AF37] hover:text-black transition-all shadow-md group/btn"
+                      title={unmutedCardId === chapter.id ? "Mute video audio" : "Play video audio"}
+                    >
+                      {unmutedCardId === chapter.id ? (
+                        <Volume2Icon className="w-3.5 h-3.5 animate-pulse" />
+                      ) : (
+                        <VolumeXIcon className="w-3.5 h-3.5" />
+                      )}
+                    </button>
+                  )}
+
                   {/* Location Tag */}
-                  <div className="absolute bottom-2 left-2 sm:bottom-2.5 sm:left-2.5 flex items-center space-x-1 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-lg bg-black/60 backdrop-blur-md text-[9px] sm:text-[10px] text-[#F3E5AB] border border-white/10">
+                  <div className="absolute bottom-2 left-2 sm:bottom-2.5 sm:left-2.5 flex items-center space-x-1 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-lg bg-black/60 backdrop-blur-md text-[9px] sm:text-[10px] text-[#F3E5AB] border border-white/10 z-10 pointer-events-none">
                     <MapPinIcon className="w-2.5 sm:w-3 h-2.5 sm:h-3 text-[#D4AF37]" />
                     <span className="truncate max-w-[140px] sm:max-w-none">{chapter.location}</span>
                   </div>
@@ -465,10 +543,10 @@ export const Timeline3D = ({ chaptersList, onSelectChapter, onAddMemory, onPlayM
       {/* ========================================================= */}
       {/* Floating Keepsakes & Navigation Controls Footer */}
       {/* ========================================================= */}
-      <div className="relative z-20 mx-auto max-w-7xl w-full px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
+      <div className="relative z-20 mx-auto max-w-7xl w-full px-4 sm:px-6 flex flex-row items-center justify-between gap-2 sm:gap-4 flex-wrap sm:flex-nowrap">
         
         {/* Left: Floating "Play Wedding Vows" audio player pill */}
-        <div className="w-full sm:w-auto flex justify-center sm:justify-start">
+        <div className="order-1 flex items-center">
           <button
             data-magnetic="true"
             data-cursor="VOWS"
@@ -476,20 +554,19 @@ export const Timeline3D = ({ chaptersList, onSelectChapter, onAddMemory, onPlayM
               const el = document.getElementById('vault');
               if (el) el.scrollIntoView({ behavior: 'smooth' });
             }}
-            className="flex items-center space-x-2.5 px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full glass-gold border border-[#D4AF37]/50 text-[#F3E5AB] text-[11px] sm:text-xs font-sans tracking-wide hover:border-[#D4AF37] hover:bg-[#D4AF37]/15 transition-all shadow-[0_0_15px_rgba(212,175,55,0.2)] group"
+            className="flex items-center space-x-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full glass-gold border border-[#D4AF37]/50 text-[#F3E5AB] text-[10px] sm:text-xs font-sans tracking-wide hover:border-[#D4AF37] hover:bg-[#D4AF37]/15 transition-all shadow-[0_0_15px_rgba(212,175,55,0.2)] group"
           >
-            <div className="w-5 sm:w-6 h-5 sm:h-6 rounded-full bg-[#D4AF37]/20 flex items-center justify-center space-x-[2px] px-1 text-[#D4AF37]">
-              <span className="inline-block w-[2px] h-3 sm:h-3.5 bg-[#D4AF37] rounded-full animate-pulse" />
-              <span className="inline-block w-[2px] h-1.5 sm:h-2 bg-[#D4AF37] rounded-full animate-ping" />
-              <span className="inline-block w-[2px] h-3.5 sm:h-4 bg-[#D4AF37] rounded-full animate-pulse" />
-              <span className="inline-block w-[2px] h-2 sm:h-2.5 bg-[#D4AF37] rounded-full animate-bounce" />
+            <div className="w-4 sm:w-6 h-4 sm:h-6 rounded-full bg-[#D4AF37]/20 flex items-center justify-center space-x-[2px] px-0.5 text-[#D4AF37]">
+              <span className="inline-block w-[1.5px] sm:w-[2px] h-2.5 sm:h-3.5 bg-[#D4AF37] rounded-full animate-pulse" />
+              <span className="inline-block w-[1.5px] sm:w-[2px] h-1.5 sm:h-2 bg-[#D4AF37] rounded-full animate-ping" />
+              <span className="inline-block w-[1.5px] sm:w-[2px] h-3 sm:h-4 bg-[#D4AF37] rounded-full animate-pulse" />
             </div>
-            <span className="font-medium">Play Wedding Vows</span>
+            <span className="font-medium whitespace-nowrap">Play Wedding Vows</span>
           </button>
         </div>
 
         {/* Center: Interactive Stepper & Timeline Progress Scrub */}
-        <div className="flex items-center space-x-2 sm:space-x-3">
+        <div className="order-3 sm:order-2 w-full sm:w-auto flex justify-center items-center space-x-2 sm:space-x-3 mt-2 sm:mt-0">
           <button
             onClick={() => jumpTo(activeIndex - 1)}
             disabled={activeIndex === 0}
@@ -535,17 +612,17 @@ export const Timeline3D = ({ chaptersList, onSelectChapter, onAddMemory, onPlayM
             const el = document.getElementById('vault');
             if (el) el.scrollIntoView({ behavior: 'smooth' });
           }}
-          className="hidden sm:flex glass-gold rounded-2xl p-2 sm:p-2.5 border border-[#D4AF37]/40 hover:border-[#D4AF37] cursor-pointer group transition-all duration-300 shadow-xl items-center space-x-2.5"
+          className="order-2 sm:order-3 flex glass-gold rounded-2xl p-1.5 sm:p-2.5 border border-[#D4AF37]/40 hover:border-[#D4AF37] cursor-pointer group transition-all duration-300 shadow-xl items-center space-x-2"
         >
-          <div className="w-11 sm:w-14 h-11 sm:h-14 relative flex items-center justify-center overflow-hidden rounded-xl bg-gradient-to-b from-white/5 to-transparent">
+          <div className="w-8 sm:w-12 h-8 sm:h-12 relative flex items-center justify-center overflow-hidden rounded-xl bg-gradient-to-b from-white/5 to-transparent">
             <canvas ref={ringCanvasRef} className="w-full h-full" />
           </div>
-          <div className="text-left pr-2">
-            <span className="block text-[11px] sm:text-xs font-serif font-bold text-white group-hover:text-[#F3E5AB] transition-colors">
-              3D Artifact Vault
+          <div className="text-left pr-1 sm:pr-2">
+            <span className="block text-[10px] sm:text-xs font-serif font-bold text-white group-hover:text-[#F3E5AB] transition-colors whitespace-nowrap">
+              3D Vault
             </span>
-            <span className="block text-[9px] sm:text-[10px] text-[#F3E5AB]/70 font-sans mt-0.5">
-              360° Gold Solitaire Ring
+            <span className="hidden xs:block text-[9px] sm:text-[10px] text-[#F3E5AB]/70 font-sans mt-0.5 whitespace-nowrap">
+              Solitaire Ring
             </span>
           </div>
         </div>
