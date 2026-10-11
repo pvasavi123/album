@@ -5,8 +5,6 @@ import { Timeline3D } from './components/Timeline3D';
 import { GallerySection } from './components/GallerySection';
 import { VaultSection } from './components/VaultSection';
 import { OurStorySection } from './components/OurStorySection';
-import { AudioVowsWidget } from './components/AudioVowsWidget';
-import { Vault3DWidget } from './components/Vault3DWidget';
 import { CinematicModal } from './components/CinematicModal';
 import { MovieMontageModal } from './components/MovieMontageModal';
 import { AddMemoryModal } from './components/AddMemoryModal';
@@ -100,14 +98,6 @@ export function App() {
         {/* Module: Our Chronicled Story & Digital Guestbook */}
         <OurStorySection />
       </main>
-
-      {/* Module C: Interactive Keepsake Floating Widgets */}
-      <AudioVowsWidget
-        isAudioPlaying={isAudioPlaying}
-        onToggleAudio={(playing) => setIsAudioPlaying(playing)}
-      />
-
-      <Vault3DWidget onOpenVault={handleOpenVault} />
 
       {/* Dynamic Milestone Addition Modal */}
       <AddMemoryModal
