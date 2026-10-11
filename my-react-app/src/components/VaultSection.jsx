@@ -4,6 +4,7 @@ import { SparklesIcon, KeyIcon, ShieldLockIcon, HeartIcon } from './Icons';
 
 export const VaultSection = () => {
   const [selectedArtifact, setSelectedArtifact] = useState(vaultArtifacts[0]);
+  const [viewMode, setViewMode] = useState('3d');
   const mountRef = useRef(null);
   const meshGroupRef = useRef(null);
   const isDragging = useRef(false);
@@ -403,58 +404,49 @@ export const VaultSection = () => {
       pctx.lineWidth = 2;
       pctx.strokeRect(75, 75, 874, 874);
 
-      // Traditional Gold Telugu Letters & Ornate Calligraphy Header
+      // Top Traditional 3D Embossed Golden Telugu 'శ్రీరస్తు'
       pctx.textAlign = 'center';
       pctx.fillStyle = '#b8860b';
-      pctx.font = 'bold 44px "Cinzel", "Playfair Display", serif';
-      pctx.fillText('॥ శ్రీరస్తు • శుభమస్తు ॥', 512, 145);
+      pctx.shadowColor = 'rgba(0, 0, 0, 0.4)';
+      pctx.shadowBlur = 8;
+      pctx.shadowOffsetX = 3;
+      pctx.shadowOffsetY = 4;
+      pctx.font = 'bold 74px "Cinzel", "Playfair Display", serif';
+      pctx.fillText('శ్రీరస్తు', 512, 170);
 
-      pctx.fillStyle = '#6b4423'; // Rich Sepia Ink
-      pctx.font = 'bold 30px "Cinzel", "Playfair Display", serif';
-      pctx.fillText('OUR LAGNAPATRIKA & WEDDING VOWS', 512, 190);
+      // Reset shadow for cursive vows
+      pctx.shadowColor = 'transparent';
+      pctx.shadowBlur = 0;
+      pctx.shadowOffsetX = 0;
+      pctx.shadowOffsetY = 0;
 
-      pctx.strokeStyle = '#d4af37';
-      pctx.lineWidth = 2;
-      pctx.beginPath();
-      pctx.moveTo(260, 210);
-      pctx.lineTo(764, 210);
-      pctx.stroke();
+      // Heartfelt Tenglish Calligraphy Vows from the image
+      pctx.fillStyle = '#5c3818'; // Deep warm chestnut ink
+      pctx.font = 'italic 34px "Playfair Display", Georgia, serif';
+      pctx.fillText('Nee chethilo cheyyi vesi...', 512, 290);
 
+      pctx.font = 'italic 32px "Playfair Display", Georgia, serif';
+      pctx.fillText('i will walk this life with you', 512, 360);
+
+      pctx.font = 'italic 35px "Playfair Display", Georgia, serif';
+      pctx.fillText('Mee blessing tho, together forever.', 512, 440);
+
+      // Fine archival subtitle script
       pctx.fillStyle = '#8a5a2b';
-      pctx.font = 'italic 23px "Playfair Display", serif';
-      pctx.fillText('Rahul & Sneha • Kalyanam 24.11.2024', 512, 250);
+      pctx.font = 'italic 18px "Playfair Display", serif';
+      pctx.fillText('Rahul & Sneha • Kalyanam 24.11.2024 • Sacred Covenant', 512, 530);
+      pctx.fillText('Traditional vows preserved for eternity in our interactive memory vault.', 512, 565);
 
-      // Handwritten cursive vows in Sepia with gold reflections
-      pctx.fillStyle = '#4a3018';
-      pctx.font = '22px "Playfair Display", serif';
-      const vowLines = [
-        '“In the presence of our beloved families and holy agni,”',
-        '“We weave our hearts together for all seven lifetimes.”',
-        '',
-        '“Sannayi melam, jeelakarra bellam kshanam lo,”',
-        '“Mana kalalu, mana aashalu okatiga kalisipoyayi.”',
-        '',
-        '“I promise to stand with you through every rain and sunrise,”',
-        '“Laughing at our silly jokes and building our forever home.”',
-        '',
-        '“From the first chai cup to our everyday laughter,”',
-        '“You are my today, my tomorrow, and my eternity.”'
-      ];
-      vowLines.forEach((line, idx) => {
-        pctx.fillText(line, 512, 320 + idx * 42);
-      });
+      // Bottom Traditional 3D Embossed Golden Telugu 'శ్రీరస్తు'
+      pctx.fillStyle = '#b8860b';
+      pctx.shadowColor = 'rgba(0, 0, 0, 0.4)';
+      pctx.shadowBlur = 8;
+      pctx.shadowOffsetX = 3;
+      pctx.shadowOffsetY = 4;
+      pctx.font = 'bold 70px "Cinzel", "Playfair Display", serif';
+      pctx.fillText('శ్రీరస్తు', 512, 720);
 
-      // Signature & Wax Seal impression at bottom
-      pctx.fillStyle = '#8b2500';
-      pctx.beginPath();
-      pctx.arc(512, 850, 48, 0, Math.PI * 2);
-      pctx.fill();
-      pctx.strokeStyle = '#ffd700';
-      pctx.lineWidth = 3;
-      pctx.stroke();
-      pctx.fillStyle = '#ffd700';
-      pctx.font = 'bold 20px "Cinzel", serif';
-      pctx.fillText('FOREVER', 512, 858);
+      pctx.shadowColor = 'transparent';
 
       const parchmentTex = new THREE.CanvasTexture(parchmentCanvas);
       parchmentTex.anisotropy = 8;
@@ -681,25 +673,53 @@ export const VaultSection = () => {
             </span>
           </div>
 
-          <div className="absolute top-4 right-6 z-10">
+          <div className="absolute top-4 right-6 z-10 flex items-center space-x-2">
+            <button
+              onClick={() => setViewMode(viewMode === '3d' ? 'render' : '3d')}
+              className="px-3 py-1 rounded-full text-xs font-semibold glass-gold border border-[#D4AF37]/50 text-[#F3E5AB] hover:border-[#D4AF37] hover:bg-[#D4AF37]/15 transition-all shadow-md flex items-center space-x-1"
+            >
+              <span>{viewMode === '3d' ? '📷 View Studio Render' : '🔄 3D Interactive'}</span>
+            </button>
             <button
               onClick={() => setIsAutoSpin(!isAutoSpin)}
-              className="px-3 py-1 rounded-full text-xs font-semibold glass-gold border border-white/20 text-[#F3E5AB] hover:border-[#D4AF37] transition-colors"
+              className={`px-3 py-1 rounded-full text-xs font-semibold glass-gold border transition-colors ${
+                viewMode === '3d' ? 'border-white/20 text-[#F3E5AB] hover:border-[#D4AF37]' : 'hidden'
+              }`}
             >
               {isAutoSpin ? 'Pause Orbit' : 'Auto Rotate'}
             </button>
           </div>
 
-          {/* 3D Container */}
-          <div 
-            ref={mountRef} 
-            className="w-full h-[380px] sm:h-[460px] rounded-2xl cursor-grab active:cursor-grabbing bg-radial from-[#D4AF37]/10 via-[#0D0F18]/40 to-transparent flex items-center justify-center border border-white/5"
-          />
+          {/* 3D / Render Presentation Container */}
+          <div className="relative w-full h-[380px] sm:h-[460px] rounded-2xl overflow-hidden bg-radial from-[#D4AF37]/10 via-[#0D0F18]/40 to-transparent border border-white/5 flex items-center justify-center">
+            {/* 3D Interactive WebGL Canvas */}
+            <div 
+              ref={mountRef} 
+              className={`w-full h-full cursor-grab active:cursor-grabbing flex items-center justify-center transition-opacity duration-500 ${
+                viewMode === '3d' ? 'opacity-100 z-10' : 'opacity-0 pointer-events-none absolute inset-0'
+              }`}
+            />
+
+            {/* Studio High-Definition Render View */}
+            {viewMode === 'render' && selectedArtifact.image && (
+              <div className="absolute inset-0 z-10 flex items-center justify-center p-3 animate-fadeIn">
+                <img
+                  src={selectedArtifact.image}
+                  alt={selectedArtifact.name}
+                  className="w-full h-full object-contain drop-shadow-[0_20px_35px_rgba(0,0,0,0.9)] rounded-xl transition-all duration-700 hover:scale-105"
+                />
+              </div>
+            )}
+          </div>
 
           {/* Bottom instructions */}
           <div className="mt-4 flex items-center justify-between text-xs text-[#F3E5AB]/60 px-2">
-            <span>Click & Drag to rotate 360°</span>
-            <span className="text-[#D4AF37]">PBR Metallic Shader</span>
+            <span>
+              {viewMode === '3d' ? 'Click & Drag to rotate 360° in WebGL' : 'High-Resolution PBR Studio Render'}
+            </span>
+            <span className="text-[#D4AF37]">
+              {selectedArtifact.material.split('&')[0]}
+            </span>
           </div>
         </div>
 

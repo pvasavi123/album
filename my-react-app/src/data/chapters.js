@@ -250,10 +250,11 @@ export const vaultArtifacts = [
     subtitle: "The Eternal Bands",
     type: "Sacred Jewelry / 3D Model",
     material: "18k Brushed Champagne Gold & Platinum Solitaire",
-    inscription: "“Rahul & Sneha • 24.11.24”",
-    story: "Intertwined loops crafted with fine gold engraving on the inner loop, interlocking with a platinum band holding a brilliant solitaire in four delicate prongs. Forever covenant.",
+    inscription: "“Rahul & Sneha • 24.11.2024”",
+    story: "Intertwined loops—one 18k brushed champagne gold band engraved on the inner loop with 'Rahul & Sneha • 24.11.2024' in fine gold, interlocking with a polished platinum band holding a brilliant solitaire diamond in four delicate prongs.",
     teluguStory: "Mana kalyanam roju pettukunna sacred rings. Prathi kshanam mana prema gurthu chesthundi.",
     color: "#D4AF37",
+    image: "/artifacts/kalyanam_rings.png",
     interactive: true
   },
   {
@@ -263,9 +264,10 @@ export const vaultArtifacts = [
     type: "Our First Home / 3D Model",
     material: "Heavy Antique Brass & Maroon Silk Thread",
     inscription: "“Mana kottha illu, mana kottha prapancham • 2025”",
-    story: "Intricate heavy antique brass skeleton key with ornamental filigree in the circular handle and aged grooves, tied with an auspicious maroon thread for our Gruhapravesam.",
+    story: "Intricate heavy antique brass skeleton key with ornamental filigree in the circular handle and tiny aged grooves, connected to a dangling maroon braided thread for our Gruhapravesam.",
     teluguStory: "Gruhapravesam roju lock open chesina roju. Mana dreams anni start ayyina key idi.",
     color: "#E5CD7C",
+    image: "/artifacts/inti_key.png",
     interactive: true
   },
   {
@@ -275,9 +277,11 @@ export const vaultArtifacts = [
     type: "Archival Manuscript / 3D Model",
     material: "Aged Handmade Paper, Dark Wood & Gold Rollers",
     inscription: "“Traditional Kalyanam vows of Rahul & Sneha, preserved in 3D interactive clarity.”",
-    story: "Unrolled antique scroll featuring traditional gold Telugu blessing 'శ్రీరస్తు' (Sreerastu) and handwritten Tenglish wedding vows, mounted on ornate wood and gold finials.",
-    teluguStory: "Peddalu andaru ashirvadinchi rasina lagnapatrika. Sannayi melam, jeelakarra bellam kshanalu indulo unnay.",
+    vowQuote: "“Nee chethilo cheyyi vesi... I will walk this life with you. Mee blessing tho, together forever.”",
+    story: "An unrolled aged paper scroll mounted on dark wood rollers with gold handles at both ends, bearing traditional gold Telugu letters 'శ్రీరస్తు' (Sreerastu) and handwritten vows: 'Nee chethilo cheyyi vesi... I will walk this life with you.'",
+    teluguStory: "శ్రీరస్తు • శుభమస్తు. Nee chethilo cheyyi vesi, mee blessing tho together forever.",
     color: "#F3E5AB",
+    image: "/artifacts/lagnapatrika_vows.jpg",
     interactive: true
   },
   {
@@ -287,9 +291,10 @@ export const vaultArtifacts = [
     type: "Celebration Glassware / 3D Model",
     material: "Slender Venetian Crystal with 24K Gold Foil Trim",
     inscription: "“To our laughter, our travels & lifelong tomorrows”",
-    story: "Two slender crystal champagne flutes with elongated stems and 24K gold foil trim, reflecting golden effervescence and warm wedding celebration memories.",
+    story: "Two slender Venetian crystal champagne flutes with elongated stems and 24K gold foil trim around the top rim, capturing transparent golden lighting and liquid caustics.",
     teluguStory: "Pelli taruvatha andari mundhu chesina first toast. Anandam tho nindina mana celebration glasses.",
     color: "#FFFFFF",
+    image: "/artifacts/toast_flutes.png",
     interactive: true
   }
 ];
