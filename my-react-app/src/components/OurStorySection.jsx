@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { storyMilestones } from '../data/chapters';
+import { storyMilestones, chapters } from '../data/chapters';
 import { HeartIcon, SparklesIcon, CalendarIcon } from './Icons';
 
 export const OurStorySection = () => {
+  const featuredStoryVideos = chapters.slice(0, 4);
   const [toasts, setToasts] = useState([
     {
       id: 1,
@@ -127,6 +128,52 @@ export const OurStorySection = () => {
                 </div>
               </div>
             ))}
+          </div>
+
+          <div className="mt-8 space-y-4">
+            <div className="flex items-center justify-between">
+              <h3 className="font-cinzel text-xl font-bold text-white tracking-wider flex items-center space-x-2">
+                <CalendarIcon className="w-5 h-5 text-[#D4AF37]" />
+                <span>Love Story Videos</span>
+              </h3>
+              <span className="text-[10px] uppercase tracking-[0.22em] text-[#D4AF37]/80">
+                {featuredStoryVideos.length} captured moments
+              </span>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              {featuredStoryVideos.map((chapter) => (
+                <article key={chapter.id} className="group overflow-hidden rounded-3xl border border-[#D4AF37]/25 bg-[#11131A]/80 shadow-[0_18px_40px_rgba(0,0,0,0.28)] transition-all duration-300 hover:-translate-y-1 hover:border-[#D4AF37]/60">
+                  <div className="relative aspect-video overflow-hidden">
+                    <video
+                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      src={chapter.videoUrl}
+                      poster={chapter.videoThumbnail || chapter.image}
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#08090E] via-[#08090E]/25 to-transparent" />
+                    <span className="absolute left-3 top-3 rounded-full border border-[#D4AF37]/60 bg-[#08090E]/70 px-2.5 py-1 text-[9px] uppercase tracking-[0.25em] text-[#F3E5AB]">
+                      {chapter.year}
+                    </span>
+                    <span className="absolute right-3 top-3 rounded-full bg-[#D4AF37]/20 px-2.5 py-1 text-[9px] uppercase tracking-[0.2em] text-[#D4AF37] border border-[#D4AF37]/40">
+                      video
+                    </span>
+                  </div>
+
+                  <div className="space-y-2 p-4">
+                    <h4 className="font-cinzel text-base font-bold text-white">
+                      {chapter.title}
+                    </h4>
+                    <p className="text-xs leading-relaxed text-[#F3E5AB]/80">
+                      {chapter.summary}
+                    </p>
+                  </div>
+                </article>
+              ))}
+            </div>
           </div>
         </div>
 
