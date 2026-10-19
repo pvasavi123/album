@@ -3,7 +3,7 @@ import { XIcon, ChevronLeftIcon, ChevronRightIcon, PlayIcon, PauseIcon, MapPinIc
 
 export const CinematicModal = ({ chapter, onClose, onSelectNext, onSelectPrev }) => {
   const [activeMediaIdx, setActiveMediaIdx] = useState(0);
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(false);
   const [showDrawer, setShowDrawer] = useState(true);
 
   if (!chapter) return null;
