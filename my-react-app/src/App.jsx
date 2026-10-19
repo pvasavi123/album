@@ -113,6 +113,7 @@ export function App() {
       {/* Module D: Cinematic Media Modal */}
       {selectedChapter && (
         <CinematicModal
+          key={selectedChapter.id}
           chapter={selectedChapter}
           onClose={() => setSelectedChapter(null)}
         />

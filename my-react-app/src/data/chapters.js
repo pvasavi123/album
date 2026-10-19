@@ -1,5 +1,6 @@
 import firstChapterVideo from "../assets/videos/gemini_generated_video_e9ce7fa0.mp4";
 import secondChapterVideo from "../assets/videos/gemini_generated_video_f40ea22c.mp4";
+import ceremonyPortrait from "../assets/aarav-ananya-wedding.jpg";
 
 export const chapters = [
   {
@@ -71,8 +72,8 @@ export const chapters = [
     quote: "“Kallaloki choodagane tension poyindi. Peddalu andaru full happy!”",
     badge: "Pelli Choopulu",
     videoUrl: firstChapterVideo,
-    image: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1400&q=80",
-    videoThumbnail: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1400&q=80",
+    image: ceremonyPortrait,
+    videoThumbnail: ceremonyPortrait,
     media: [
       {
         type: "video",
@@ -81,8 +82,8 @@ export const chapters = [
       },
       {
         type: "image",
-        url: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1600&q=85",
-        caption: "The silver sweet platter and first blessings from elders"
+        url: ceremonyPortrait,
+        caption: "A warm South Indian family ceremony filled with smiles and blessings"
       }
     ],
     details: "Nervous smiles during pelli choopulu. Within minutes, family said 'Pakka idi fix!'",
