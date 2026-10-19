@@ -255,6 +255,8 @@ export const vaultArtifacts = [
     teluguStory: "Mana kalyanam roju pettukunna sacred rings. Prathi kshanam mana prema gurthu chesthundi.",
     color: "#D4AF37",
     image: "/artifacts/kalyanam_rings.png",
+    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-wedding-rings-on-a-table-42743-large.mp4",
+    videoThumbnail: "/artifacts/kalyanam_rings.png",
     interactive: true
   },
   {
@@ -268,6 +270,8 @@ export const vaultArtifacts = [
     teluguStory: "Gruhapravesam roju lock open chesina roju. Mana dreams anni start ayyina key idi.",
     color: "#E5CD7C",
     image: "/artifacts/inti_key.png",
+    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-couple-entering-their-new-home-43187-large.mp4",
+    videoThumbnail: "/artifacts/inti_key.png",
     interactive: true
   },
   {
@@ -282,6 +286,8 @@ export const vaultArtifacts = [
     teluguStory: "శ్రీరస్తు • శుభమస్తు. Nee chethilo cheyyi vesi, mee blessing tho together forever.",
     color: "#F3E5AB",
     image: "/artifacts/lagnapatrika_vows.jpg",
+    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-bride-and-groom-celebrating-with-confetti-42881-large.mp4",
+    videoThumbnail: "/artifacts/lagnapatrika_vows.jpg",
     interactive: true
   },
   {
@@ -295,6 +301,8 @@ export const vaultArtifacts = [
     teluguStory: "Pelli taruvatha andari mundhu chesina first toast. Anandam tho nindina mana celebration glasses.",
     color: "#FFFFFF",
     image: "/artifacts/toast_flutes.png",
+    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-young-couple-celebrating-with-a-toast-42794-large.mp4",
+    videoThumbnail: "/artifacts/toast_flutes.png",
     interactive: true
   }
 ];

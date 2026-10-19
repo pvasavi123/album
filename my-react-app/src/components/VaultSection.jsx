@@ -42,12 +42,25 @@ export const VaultSection = () => {
 
           {/* Master Artifact Image Stage */}
           <div className="relative w-full h-[360px] xs:h-[400px] sm:h-[480px] rounded-2xl overflow-hidden bg-gradient-to-b from-[#0a0c16]/80 via-[#07080e] to-[#0d0f18] border border-white/5 flex items-center justify-center p-3 sm:p-6">
-            <img
-              key={selectedArtifact.id}
-              src={selectedArtifact.image}
-              alt={selectedArtifact.name}
-              className="w-full h-full object-contain drop-shadow-[0_25px_40px_rgba(0,0,0,0.95)] rounded-xl transition-all duration-700 hover:scale-105"
-            />
+            {selectedArtifact.videoUrl ? (
+              <video
+                key={selectedArtifact.id}
+                src={selectedArtifact.videoUrl}
+                poster={selectedArtifact.videoThumbnail || selectedArtifact.image}
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="w-full h-full object-cover rounded-xl shadow-[0_18px_32px_rgba(0,0,0,0.7)]"
+              />
+            ) : (
+              <img
+                key={selectedArtifact.id}
+                src={selectedArtifact.image}
+                alt={selectedArtifact.name}
+                className="w-full h-full object-contain drop-shadow-[0_25px_40px_rgba(0,0,0,0.95)] rounded-xl transition-all duration-700 hover:scale-105"
+              />
+            )}
           </div>
 
           {/* Bottom Card Labels */}
