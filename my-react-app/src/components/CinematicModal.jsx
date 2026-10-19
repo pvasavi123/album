@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { XIcon, ChevronLeftIcon, ChevronRightIcon, PlayIcon, PauseIcon, MapPinIcon, CalendarIcon, SparklesIcon, MaximizeIcon } from './Icons';
 
 export const CinematicModal = ({ chapter, onClose, onSelectNext, onSelectPrev }) => {
   const [activeMediaIdx, setActiveMediaIdx] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(false);
   const [showDrawer, setShowDrawer] = useState(true);
+  const [isVideoPlaying, setIsVideoPlaying] = useState(true);
+  const videoRef = useRef(null);
 
   if (!chapter) return null;
 
@@ -88,12 +90,15 @@ export const CinematicModal = ({ chapter, onClose, onSelectNext, onSelectPrev })
           {/* Active Media Video or Image with Crossfade */}
           {currentMedia.type === 'video' || (currentMedia.url && currentMedia.url.endsWith('.mp4')) ? (
             <video
+              ref={videoRef}
               key={currentMedia.url}
               src={currentMedia.url}
               autoPlay
               loop
               controls
               playsInline
+              onPlay={() => setIsVideoPlaying(true)}
+              onPause={() => setIsVideoPlaying(false)}
               className="w-full h-full object-contain animate-fadeIn"
             />
           ) : (
@@ -103,6 +108,29 @@ export const CinematicModal = ({ chapter, onClose, onSelectNext, onSelectPrev })
               alt={currentMedia.caption}
               className="w-full h-full object-cover sm:object-contain animate-fadeIn transition-all duration-700"
             />
+          )}
+
+          {(currentMedia.type === 'video' || (currentMedia.url && currentMedia.url.endsWith('.mp4'))) && (
+            <button
+              type="button"
+              onClick={() => {
+                const video = videoRef.current;
+                if (!video) return;
+
+                if (video.paused) {
+                  video.play().catch((error) => {
+                    console.error('Unable to play chapter video:', error);
+                  });
+                } else {
+                  video.pause();
+                }
+              }}
+              className="absolute left-1/2 top-1/2 z-20 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-[#D4AF37]/80 bg-black/65 text-[#F3E5AB] shadow-[0_0_24px_rgba(212,175,55,0.4)] backdrop-blur-md transition hover:scale-110 hover:bg-[#D4AF37] hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37]"
+              aria-label={isVideoPlaying ? 'Pause chapter video' : 'Play chapter video'}
+              title={isVideoPlaying ? 'Pause video' : 'Play video'}
+            >
+              {isVideoPlaying ? <PauseIcon className="h-6 w-6" /> : <PlayIcon className="h-6 w-6" />}
+            </button>
           )}
 
           {/* Carousel Arrows */}

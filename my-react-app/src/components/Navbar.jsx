@@ -96,7 +96,7 @@ export const Navbar = ({ onPlayMovie, activeSection, onNavigate, isAudioPlaying,
           {/* Right Actions: Audio switch + Watch Cinematic Movie button */}
           <div className="flex items-center space-x-3">
             {/* Ambient Sound Toggle */}
-            <button
+            {/* <button
               data-magnetic="true"
               onClick={onToggleAudio}
               title={isAudioPlaying ? "Mute ambient audio" : "Play ambient audio"}
@@ -111,7 +111,7 @@ export const Navbar = ({ onPlayMovie, activeSection, onNavigate, isAudioPlaying,
               ) : (
                 <VolumeXIcon className="w-4 h-4" />
               )}
-            </button>
+            </button> */}
 
             {/* Watch Cinematic Movie CTA Button */}
             <button
