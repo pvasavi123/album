@@ -23,6 +23,10 @@ export function App() {
     setChaptersList((prev) => [...prev, newChapter]);
   };
 
+  const handleSelectChapter = (chapter) => {
+    setSelectedChapter(chapter);
+  };
+
   // Initialize Lenis Smooth Scroll (Huy Phan signature buttery scrolling)
   useEffect(() => {
     if (!window.Lenis || !window.gsap) return;
@@ -84,7 +88,7 @@ export function App() {
         {/* Module B: 3D Spatial Timeline with Z-axis momentum dragging */}
         <Timeline3D 
           chaptersList={chaptersList}
-          onSelectChapter={(chap) => setSelectedChapter(chap)}
+          onSelectChapter={handleSelectChapter}
           onAddMemory={() => setIsAddMemoryOpen(true)}
           onPlayMovie={() => setIsMovieOpen(true)}
         />
@@ -96,7 +100,7 @@ export function App() {
         <VaultSection />
 
         {/* Module: Our Chronicled Story & Digital Guestbook */}
-        <OurStorySection />
+        <OurStorySection onSelectChapter={handleSelectChapter} />
       </main>
 
       {/* Dynamic Milestone Addition Modal */}

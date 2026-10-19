@@ -491,6 +491,18 @@ export const Timeline3D = ({ chaptersList, onSelectChapter, onAddMemory, onPlayM
                     </div>
                   </div>
 
+                  {chapter.videoUrl && (
+                    <button
+                      type="button"
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        onSelectChapter(chapter);
+                      }}
+                      className="absolute inset-0 z-10 cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-[#D4AF37]"
+                      aria-label={`Open video for ${chapter.title}`}
+                    />
+                  )}
+
                   {/* Center Audio Sound Toggle (Active Card Exclusive) */}
                   {isCenter && chapter.videoUrl && (
                     <button

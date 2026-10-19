@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { storyMilestones, chapters } from '../data/chapters';
 import { HeartIcon, SparklesIcon, CalendarIcon } from './Icons';
 
-export const OurStorySection = () => {
+export const OurStorySection = ({ onSelectChapter }) => {
   const featuredStoryVideos = chapters.slice(0, 4);
   const [toasts, setToasts] = useState([
     {
@@ -154,7 +154,13 @@ export const OurStorySection = () => {
                       loop
                       playsInline
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#08090E] via-[#08090E]/25 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#08090E] via-[#08090E]/25 to-transparent pointer-events-none" />
+                    <button
+                      type="button"
+                      onClick={() => onSelectChapter(chapter)}
+                      className="absolute inset-0 z-10 cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-[#D4AF37]"
+                      aria-label={`Open video for ${chapter.title}`}
+                    />
                     <span className="absolute left-3 top-3 rounded-full border border-[#D4AF37]/60 bg-[#08090E]/70 px-2.5 py-1 text-[9px] uppercase tracking-[0.25em] text-[#F3E5AB]">
                       {chapter.year}
                     </span>

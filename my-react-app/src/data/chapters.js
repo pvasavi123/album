@@ -12,8 +12,8 @@ export const chapters = [
     summary: "One Irani chai, two samosas, and non-stop kaburlu. Appude anipinchindi, this is special.",
     quote: "“Appude anipinchindi, this person is going to be my forever conversation.”",
     badge: "First Date",
-    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-young-couple-talking-and-drinking-coffee-in-a-cafe-42795-large.mp4",
-    image: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=1400&q=80",
+ videoUrl: firstChapterVideo,
+     image: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=1400&q=80",
 
     media: [
       {
@@ -41,8 +41,8 @@ export const chapters = [
     summary: "Car puncture ayyindi during rain, but we shared hot corn and old songs. Pure memories.",
     quote: "“Rain on the windshield, Kishore Kumar melodies, and steaming hot makka butta.”",
     badge: "Road Trip",
-    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-couple-in-a-car-looking-at-the-landscape-43183-large.mp4",
-    image: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=1400&q=80",
+ videoUrl: firstChapterVideo,
+     image: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=1400&q=80",
     videoThumbnail: "https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=1400&q=80",
     media: [
       {
