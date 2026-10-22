@@ -421,13 +421,7 @@ export const Timeline3D = ({ chaptersList, onSelectChapter, onAddMemory, onPlayM
             return (
               <div
                 key={chapter.id}
-                onClick={() => {
-                  if (isCenter) {
-                    onSelectChapter(chapter);
-                  } else {
-                    jumpTo(idx);
-                  }
-                }}
+                onClick={() => onSelectChapter(chapter)}
                 className="spatial-3d-card absolute top-0 left-0 w-full h-full glass-gold rounded-3xl p-4 sm:p-5 md:p-6 border border-[#D4AF37]/35 shadow-2xl transition-shadow duration-300 flex flex-col justify-between cursor-pointer group"
                 style={{
                   transformStyle: 'preserve-3d',
