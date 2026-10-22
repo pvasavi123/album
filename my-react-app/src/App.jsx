@@ -100,7 +100,10 @@ export function App() {
         <VaultSection />
 
         {/* Module: Our Chronicled Story & Digital Guestbook */}
-        <OurStorySection onSelectChapter={handleSelectChapter} />
+        <OurStorySection
+          chaptersList={chaptersList}
+          onSelectChapter={handleSelectChapter}
+        />
       </main>
 
       {/* Dynamic Milestone Addition Modal */}

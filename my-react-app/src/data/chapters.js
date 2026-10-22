@@ -2,6 +2,9 @@ import firstChapterVideo from "../assets/videos/gemini_generated_video_e9ce7fa0.
 import secondChapterVideo from "../assets/videos/gemini_generated_video_f40ea22c.mp4";
 import ceremonyPortrait from "../assets/aarav-ananya-wedding.jpg";
 
+const firstDateVideo = "https://assets.mixkit.co/videos/preview/mixkit-young-couple-talking-and-drinking-coffee-in-a-cafe-42795-large.mp4";
+const hilltopTripVideo = "https://assets.mixkit.co/videos/preview/mixkit-couple-in-a-car-looking-at-the-landscape-43183-large.mp4";
+
 export const chapters = [
   {
     id: "chap-1",
@@ -13,13 +16,13 @@ export const chapters = [
     summary: "One Irani chai, two samosas, and non-stop kaburlu. Appude anipinchindi, this is special.",
     quote: "“Appude anipinchindi, this person is going to be my forever conversation.”",
     badge: "First Date",
- videoUrl: firstChapterVideo,
+    videoUrl: firstDateVideo,
      image: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=1400&q=80",
 
     media: [
       {
         type: "video",
-        url: "https://assets.mixkit.co/videos/preview/mixkit-young-couple-talking-and-drinking-coffee-in-a-cafe-42795-large.mp4",
+        url: firstDateVideo,
         caption: "Laughing over steaming cups of chai and hot samosas"
       },
       {
@@ -42,13 +45,13 @@ export const chapters = [
     summary: "Car puncture ayyindi during rain, but we shared hot corn and old songs. Pure memories.",
     quote: "“Rain on the windshield, Kishore Kumar melodies, and steaming hot makka butta.”",
     badge: "Road Trip",
- videoUrl: firstChapterVideo,
+    videoUrl: hilltopTripVideo,
      image: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=1400&q=80",
     videoThumbnail: "https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=1400&q=80",
     media: [
       {
         type: "video",
-        url: "https://assets.mixkit.co/videos/preview/mixkit-couple-in-a-car-looking-at-the-landscape-43183-large.mp4",
+        url: hilltopTripVideo,
         caption: "Driving together through winding misty ghat roads"
       },
       {

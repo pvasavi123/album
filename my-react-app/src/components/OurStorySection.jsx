@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { storyMilestones, chapters } from '../data/chapters';
+import { useState } from 'react';
+import { storyMilestones } from '../data/chapters';
 import { HeartIcon, SparklesIcon, CalendarIcon } from './Icons';
 
-export const OurStorySection = ({ onSelectChapter }) => {
-  const featuredStoryVideos = chapters.slice(0, 4);
+export const OurStorySection = ({ chaptersList, onSelectChapter }) => {
+  const featuredStoryVideos = chaptersList;
   const [toasts, setToasts] = useState([
     {
       id: 1,
@@ -145,15 +145,23 @@ export const OurStorySection = ({ onSelectChapter }) => {
               {featuredStoryVideos.map((chapter) => (
                 <article key={chapter.id} className="group overflow-hidden rounded-3xl border border-[#D4AF37]/25 bg-[#11131A]/80 shadow-[0_18px_40px_rgba(0,0,0,0.28)] transition-all duration-300 hover:-translate-y-1 hover:border-[#D4AF37]/60">
                   <div className="relative aspect-video overflow-hidden">
-                    <video
-                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      src={chapter.videoUrl}
-                      poster={chapter.videoThumbnail || chapter.image}
-                      autoPlay
-                      muted
-                      loop
-                      playsInline
-                    />
+                    {chapter.videoUrl ? (
+                      <video
+                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        src={chapter.videoUrl}
+                        poster={chapter.videoThumbnail || chapter.image}
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                      />
+                    ) : (
+                      <img
+                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        src={chapter.image}
+                        alt={chapter.title}
+                      />
+                    )}
                     <div className="absolute inset-0 bg-gradient-to-t from-[#08090E] via-[#08090E]/25 to-transparent pointer-events-none" />
                     <button
                       type="button"
